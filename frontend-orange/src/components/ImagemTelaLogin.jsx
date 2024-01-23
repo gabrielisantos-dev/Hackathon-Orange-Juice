@@ -5,7 +5,7 @@ export default function ImagemTelaLogin(){
 
   return(
     <Box>
-      <img src={imagemPrincipal} alt="" />
+      <img src={imagemPrincipal} alt="Imagem inicial para tela de login do sistema" />
     </Box>
   )
 }
