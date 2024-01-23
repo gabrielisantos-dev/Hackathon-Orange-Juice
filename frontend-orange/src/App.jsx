@@ -1,9 +1,13 @@
+import ImagemTelaLogin from "./components/ImagemTelaLogin"
+import TextoTelaLogin from "./components/TextoTelaLogin"
+
 function App() {
   
 
   return (
     <>
-      Hello World
+      {/* <ImagemTelaLogin/> */}
+      <TextoTelaLogin variant='h3'/>
     </>
   )
 }
