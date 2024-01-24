@@ -4,7 +4,7 @@ const ImagemCheck = () => {
   return (
     <img
       src={imageCadastro}
-      alt="Check"
+      alt="Mulher sentada em frente a um notebook"
     />
   );
 };
