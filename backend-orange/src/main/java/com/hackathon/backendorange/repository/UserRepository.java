@@ -10,6 +10,5 @@ import com.hackathon.backendorange.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	Optional<User> findByNome(String nome);
-	
+	Optional<User> findByEmail(String email);	
 }
