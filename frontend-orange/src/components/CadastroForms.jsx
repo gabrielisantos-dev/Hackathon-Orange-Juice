@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button, TextField, Grid, Typography } from '@mui/material';
+import styles from '../styles';
 
 const CadastroFormulario = () => {
   const [nome, setNome] = useState('');
@@ -16,7 +17,7 @@ const CadastroFormulario = () => {
   };
 
   return (
-    <form>
+    <form style={styles.formularioContainer}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -68,7 +69,6 @@ const CadastroFormulario = () => {
         variant="contained"
         color="primary"
         onClick={handleCadastro}
-        style={{ marginTop: 20, backgroundColor: '#FF5522'}}
       >
         CADASTRAR
       </Button>

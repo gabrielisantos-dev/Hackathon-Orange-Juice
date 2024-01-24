@@ -1,6 +1,6 @@
 import imageCadastro from '../assets/tela-cadastro/tela-cadastro.svg';
 
-const ImagemCheck = () => {
+const RegisterImage = () => {
   return (
     <img
       src={imageCadastro}
@@ -9,4 +9,4 @@ const ImagemCheck = () => {
   );
 };
 
-export default ImagemCheck;
+export default RegisterImage;
