@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Button, TextField, Grid, Typography } from '@mui/material';
-import styles from '../styles';
+import { PropTypes } from 'prop-types';
+import { Button, TextField, Grid, Alert } from '@mui/material';
+import styles from '../styles.jsx';
 
-const CadastroFormulario = () => {
+const CadastroFormulario = ({ onCadastro }) => {
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
@@ -10,13 +11,32 @@ const CadastroFormulario = () => {
   const [mensagem, setMensagem] = useState('');
 
   const handleCadastro = () => {
-    // Simulando uma requisição assíncrona para o backend
-    setTimeout(() => {
-      setMensagem('Cadastro feito com sucesso');
-    }, 2000);
+    if (nome && sobrenome && email && senha) {
+      // Simulando uma requisição assíncrona para o backend
+      setTimeout(() => {
+        setMensagem('Cadastro feito com sucesso');
+        onCadastro('success');
+      }, 2000);
+    } else {
+      setMensagem('Por favor, preencha todos os campos.');
+      onCadastro('error');
+    }
   };
 
+
   return (
+    <>
+    <div>
+    {mensagem && (
+        <Alert
+          severity={nome && sobrenome && email && senha ? 'success' : 'error'}
+          variant="filled"
+          style={{ marginTop: 10 }}
+        >
+          {mensagem}
+        </Alert>
+      )}
+    </div>
     <form style={styles.formularioContainer}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
@@ -69,12 +89,17 @@ const CadastroFormulario = () => {
         variant="contained"
         color="primary"
         onClick={handleCadastro}
+        style={{ backgroundColor: '#FF5522', color: 'white', marginTop: '20px' }}
       >
         CADASTRAR
       </Button>
-      {mensagem && <Typography style={{ color: 'green' }}>{mensagem}</Typography>}
     </form>
+    </>
   );
+};
+
+CadastroFormulario.propTypes = {
+  onCadastro: PropTypes.func.isRequired,
 };
 
 export default CadastroFormulario;
