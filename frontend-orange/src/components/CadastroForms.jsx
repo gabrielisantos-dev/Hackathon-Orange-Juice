@@ -72,7 +72,7 @@ const CadastroFormulario = () => {
       >
         CADASTRAR
       </Button>
-      {mensagem && <Typography style={{ marginTop: 20, color: 'green' }}>{mensagem}</Typography>}
+      {mensagem && <Typography style={{ color: 'green' }}>{mensagem}</Typography>}
     </form>
   );
 };
