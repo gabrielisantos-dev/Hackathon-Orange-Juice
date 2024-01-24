@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class User {
 	@Column(nullable = false, unique = true)
 	@NotBlank(message = "O email não pode ficar em branco")
 	@Size(max = 255, message = "O email não pode ter mais que 255 caracteres")
+    @Email(message = "O email precisa ser válido")
 	private String email;
 	
 	@Column(nullable = false)
