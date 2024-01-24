@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
@@ -16,5 +16,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "SELECT * FROM project WHERE user_id = :user_id ")
-    Optional<Project> getUserProjects(@Param("user_id") Long user_id);
+    List<Project> getUserProjects(@Param("user_id") Long user_id);
 }
