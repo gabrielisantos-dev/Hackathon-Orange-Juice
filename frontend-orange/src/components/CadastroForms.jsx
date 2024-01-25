@@ -13,6 +13,9 @@ const CadastroFormulario = ({ onCadastro }) => {
   const [mensagem, setMensagem] = useState('');
 
   const handleCadastro = () => {
+    if(!isValidEmail(form.email)) {
+      setMensagem('Por favor, insira um email válido.');
+    }
     if (form.nome && form.sobrenome && form.email && form.senha) {
       // Simulando um cadastro
       setMensagem('Cadastro feito com sucesso');
@@ -23,10 +26,17 @@ const CadastroFormulario = ({ onCadastro }) => {
     }
   };
 
+  const isValidEmail = (email) => {
+    const regex = /\S+@\S+\.\S+/;
+    return regex.test(email);
+  }
+
+
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setMensagem('');
-    }, 3000);
+    }, 5000);
     return () => clearTimeout(timer);
   }
   , [mensagem]);
@@ -38,7 +48,7 @@ const CadastroFormulario = ({ onCadastro }) => {
         <Alert
           severity={form.nome && form.sobrenome && form.email && form.senha ? 'success' : 'error'}
           variant="filled"
-          style={{ marginTop: 10 }}
+          style={styles.alert}
         >
           {mensagem}
         </Alert>
@@ -73,7 +83,6 @@ const CadastroFormulario = ({ onCadastro }) => {
             label="Email address"
             type="email"
             variant="outlined"
-            required
             fullWidth
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -84,7 +93,6 @@ const CadastroFormulario = ({ onCadastro }) => {
             label="Password"
             type="password"
             variant="outlined"
-            required
             fullWidth
             value={form.senha}
             onChange={(e) => setForm({ ...form, senha: e.target.value })}
