@@ -1,42 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, TextField, Grid, Alert } from '@mui/material';
+import { Button, TextField, Grid, Alert, Box } from '@mui/material';
 import styles from '../styles.jsx';
 
 const CadastroFormulario = ({ onCadastro }) => {
-  const [nome, setNome] = useState('');
-  const [sobrenome, setSobrenome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [form, setForm] = useState({
+    nome: '',
+    sobrenome: '',
+    email: '',
+    senha: '',
+  });
   const [mensagem, setMensagem] = useState('');
 
   const handleCadastro = () => {
-    if (nome && sobrenome && email && senha) {
-      // Simulando uma requisição assíncrona para o backend
-      setTimeout(() => {
-        setMensagem('Cadastro feito com sucesso');
-        onCadastro('success');
-      }, 2000);
+    if (form.nome && form.sobrenome && form.email && form.senha) {
+      // Simulando um cadastro
+      setMensagem('Cadastro feito com sucesso');
+      onCadastro('success');
     } else {
       setMensagem('Por favor, preencha todos os campos.');
       onCadastro('error');
     }
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMensagem('');
+    }, 3000);
+    return () => clearTimeout(timer);
+  }
+  , [mensagem]);
 
   return (
     <>
-    <div>
+    <Box>
     {mensagem && (
         <Alert
-          severity={nome && sobrenome && email && senha ? 'success' : 'error'}
+          severity={form.nome && form.sobrenome && form.email && form.senha ? 'success' : 'error'}
           variant="filled"
           style={{ marginTop: 10 }}
         >
           {mensagem}
         </Alert>
       )}
-    </div>
+    </Box>
+    <Box>
     <form style={styles.formularioContainer}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
@@ -46,8 +54,8 @@ const CadastroFormulario = ({ onCadastro }) => {
             required
             fullWidth
             autoFocus
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            value={form.nome}
+            onChange={(e) => setForm({ ...form, nome: e.target.value })}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -56,8 +64,8 @@ const CadastroFormulario = ({ onCadastro }) => {
             variant="outlined"
             required
             fullWidth
-            value={sobrenome}
-            onChange={(e) => setSobrenome(e.target.value)}
+            value={form.sobrenome}
+            onChange={(e) => setForm({ ...form, sobrenome: e.target.value })}
           />
         </Grid>
         <Grid item xs={12}>
@@ -67,8 +75,8 @@ const CadastroFormulario = ({ onCadastro }) => {
             variant="outlined"
             required
             fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
         </Grid>
         <Grid item xs={12}>
@@ -78,8 +86,8 @@ const CadastroFormulario = ({ onCadastro }) => {
             variant="outlined"
             required
             fullWidth
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
+            value={form.senha}
+            onChange={(e) => setForm({ ...form, senha: e.target.value })}
           />
         </Grid>
       </Grid>
@@ -94,6 +102,7 @@ const CadastroFormulario = ({ onCadastro }) => {
         CADASTRAR
       </Button>
     </form>
+    </Box>
     </>
   );
 };

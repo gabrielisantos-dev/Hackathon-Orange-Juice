@@ -4,14 +4,19 @@ const textCadastro = () => {
     return (
         <Box>
             <Typography
-            font='Roboto'
-            weigth='400'
-            size='48px'
-            lineHeight='40px'
-            align='center'
-            >
-                <h3 className="register">Cadastre-se</h3>
-            </Typography>
+            variant="h2"
+            sx={{
+                color: '#222244',
+                width: '256px',
+                height: '40px',
+                top: '271px',
+                fontFamily: 'Roboto',
+                fontWeight: '500',
+                fontSize: '48px',
+                lineHeight: '40px',
+                textAlign: 'center',
+            }}
+            >Cadastre-se</Typography>
         </Box>
     );
 }
