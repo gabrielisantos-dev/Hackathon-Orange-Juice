@@ -2,12 +2,12 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box'
 
 
-export default function TextoTelaLogin(props){
+export default function TextoTelaLogin({variant}){
 
   return(
     <Box>
       <Typography
-      variant={props.variant}
+      variant={variant}
       >
         Entre no Orange Portfólio
       </Typography>
