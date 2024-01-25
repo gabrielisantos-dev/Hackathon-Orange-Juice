@@ -29,9 +29,16 @@ public class Project {
     @Column(nullable = false)
     private String links;
 
-    @NotBlank(message = "Adicione uma imagem ao projeto")
-    @Column(nullable = false)
-    private String imagem;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "project_image",
+            joinColumns = {
+                @JoinColumn(name = "project_id")
+            },
+            inverseJoinColumns = {
+                @JoinColumn(name = "image_id")
+            }
+    )
+    private Image image;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

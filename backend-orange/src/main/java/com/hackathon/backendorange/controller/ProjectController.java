@@ -1,11 +1,15 @@
 package com.hackathon.backendorange.controller;
 
 
+import com.hackathon.backendorange.model.Image;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.service.ProjectService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,13 +39,18 @@ public class ProjectController {
         }
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Project> save(@RequestBody Project newProject){
+    @PostMapping(value = {"/save"}, consumes =
+            {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public ResponseEntity<Project> save(@RequestPart("project") Project newProject,
+                                        @RequestPart("image")MultipartFile file) throws IOException {
         try{
-            service.saveProject(newProject);
+            service.saveProject(newProject, file);
             return ResponseEntity.ok(newProject);
         }catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
         }
     }
 

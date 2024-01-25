@@ -1,9 +1,13 @@
 package com.hackathon.backendorange.service;
 
+import com.hackathon.backendorange.dto.ProjectDTO;
+import com.hackathon.backendorange.model.Image;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +28,18 @@ public class ProjectService {
         return Optional.ofNullable(repository.getUserProjects(user_id));
     }
 
-    public Project saveProject(Project project) {
+    public Project saveProject(Project project, MultipartFile file) throws IOException {
+        Image image = uploadImage(file);
+        project.setImage(image);
         return repository.save(project);
+    }
+
+    public Image uploadImage(MultipartFile file) throws IOException {
+        Image image = new Image(file.getOriginalFilename(),
+                file.getContentType(),
+                file.getBytes()
+        );
+        return image;
     }
 
     public Optional<Project> updateProject(Long id, Project project) {
@@ -34,7 +48,7 @@ public class ProjectService {
         projectExists.setDescricao(project.getDescricao());
         projectExists.setTags(project.getTags());
         projectExists.setLinks(project.getLinks());
-        projectExists.setImagem(project.getImagem());
+        projectExists.setImage(project.getImage());
 
         return Optional.ofNullable(repository.save(projectExists));
     }
