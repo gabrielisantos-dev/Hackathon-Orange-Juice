@@ -4,9 +4,9 @@
 // import BotaoEntrarComGoogle from "./components/tela-login/BotaoEntrarComGoogle"
 // import LogoGoogle from "./components/tela-login/BotaoGoogleLogin"
 // import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
-// import Header from "./components/meu-portifólio/Header"
-
-import TelaLogin from "./pages/TelaLogin"
+// import TelaLogin from "./pages/TelaLogin"
+import "./main.css"
+import MainHeader from "./components/main-header/Header"
 
 
 
@@ -20,8 +20,8 @@ function App() {
       {/* <FormularioLogin /> */}
       {/* <BotaoEntrarComGoogle/> */}
       {/* <BotaoGoogleLogin/> */}
-      <TelaLogin/>
-      {/* <Header/> */}
+      {/* <TelaLogin/> */}
+      <MainHeader/>
       {/* <ContainerImagemTelaLogin/> */}
 
     </>
