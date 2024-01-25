@@ -31,5 +31,12 @@ public class UserService {
 
 		return savedUserDTO;
 	}
+	public Optional<UserDTO> getUserByEmailAndPassword(String email, String password){
+		Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+		return user.map(userAssembler::toDTO);
+	}
+	public boolean emailExists(String email) {
+		return userRepository.findByEmail(email).isPresent();
+	}
 	
 }
