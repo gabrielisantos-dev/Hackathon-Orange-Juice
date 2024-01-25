@@ -4,9 +4,7 @@ function App() {
   
 
   return (
-    <>
       <RegistrationPage />
-    </>
   )
 }
 

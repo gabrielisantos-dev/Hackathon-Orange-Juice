@@ -5,18 +5,6 @@ const styles = {
       flexDirection: 'column',
       alignItems: 'center',
     },
-    textCadastro: {
-      width: '256px',
-      height: '40px',
-      top: '268px',
-      left: '789px',
-      fontFamily: 'Roboto',
-      fontSize: '48px',
-      fontWeight: 400,
-      lineHeight: '40px',
-      letterSpacing: '0em',
-      textAlign: 'center',
-    },
     formularioContainer: {
       width: '517px',
       height: '258px',
