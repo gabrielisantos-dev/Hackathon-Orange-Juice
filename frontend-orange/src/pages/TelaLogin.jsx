@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 // import { theme } from "../utils/Theme"
 import { createTheme,ThemeProvider } from "@mui/material/styles";
 // import { Theme } from "@mui/material";
-
+import {useMediaQuery} from "@mui/material";
 
 const theme = createTheme({
   palette:{
@@ -37,32 +37,87 @@ const theme = createTheme({
       darkest:'#0B0C0D'
     }
   }
-})
+});
+
 
 export default function TelaLogin(){
+  
+  const responsivo1 = useMediaQuery(theme.breakpoints.up('lg')); 
+  const responsivo2 = useMediaQuery(theme.breakpoints.up('xl')); 
+
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{display: 'flex', gap:'103px'}}>
-          <Box>
-            <ContainerImagemTelaLogin width='525px' height='832px'/>    
-          </Box>
-          <Box 
+      <Box sx={{display: 'flex', gap:!responsivo2 ? '103px' : '403px'}}>
+      {responsivo1 ?  
+        <Box>
+          <ContainerImagemTelaLogin width='525px' height='832px'/>     
+        </Box> : null}
+        <Box 
             sx={{
               display:'flex',
               flexDirection:'column',
               gap:'10px',
-              marginTop:'210px',
+              marginTop:responsivo1 ? '210px' : '109px',
               // gap:'75px',
-              alignItems:'center',
-              
+              alignItems:'center',              
             }}>
-            <TituloTelaLogin variant='h3' sx={{marginTop:'210px'}}/>
-            <BotaoGoogleLogin sx={{marginTop:'282px'}}/>
+            <TituloTelaLogin variant={responsivo1 ? 'h3' : 'h5'} sx={{marginTop:responsivo1 ? '210px' : '109px'}}/>
+            <BotaoGoogleLogin sx={{marginTop:responsivo1 ? '282px' : '165px'}}/>
             <FormularioLogin 
-              sx={{marginTop:'360px'}}
+              sx={{marginTop:responsivo1 ? '360px' : '243px'}}
+              titulo= {responsivo1 ? 'h5' : 'subtitle1'}
+              formWidth={responsivo1 ? '517px' : '312px'}
+              buttonWidth={responsivo1 ? '517px' : "312px"}
+              buttonHeight={responsivo1 ? '42px' : '42px'}
+              paddingButton={responsivo1 ? '8px 22px 8px 22px' : '8px 22px 8px 22px'}
+              boxWidth={responsivo1 ? '517px' : '312px'}
+              topTotalbox={responsivo1 ?'360px' : '243px'}
+              widthTitle={responsivo1 ? '493px' : '288px'}
+              heightTitle={responsivo1 ? '24px' : '16px'}
+              formHeight={responsivo1 ? '271px' : '271px'}
               />
+               {/* <FormularioLogin 
+              sx={{marginTop:'360px'}}
+              titulo='h5'
+              formWidth='517px'
+              buttonWidth='517px'
+              buttonHeight='42px'
+              paddingButton='8px 22px 8px 22px'
+              boxWidth='517px'
+              topTotalbox='360px'
+              widthTitle='493px'
+              heightTitle='24px'
+              formHeight='271px'
+              /> */}
           </Box>
+          {/* Form mobile */}
+          {/* {!responsivo1 ? <Box 
+            sx={{
+              display:'flex',
+              flexDirection:'column',
+              gap:'10px',
+              marginTop:'109px',
+              // gap:'75px',
+              alignItems:'center',              
+            }}>
+            <TituloTelaLogin variant='h5' sx={{marginTop:'109px'}}/>
+            <BotaoGoogleLogin sx={{marginTop:'165px'}} width='181px' height='46px'/>
+            <FormularioLogin 
+              sx={{marginTop:'243px'}}
+              titulo='subtitle1'
+              formWidth='312px'
+              buttonWidth='312px'
+              buttonHeight='42px'
+              paddingButton='8px 22px 8px 22px'
+              boxWidth='312px'
+              topTotalbox='243px'
+              widthTitle='288px'
+              heightTitle='16px'
+              formHeight='271px'
+              />
+          </Box> : null} */}
+          
       </Box>
     </ThemeProvider>
   )

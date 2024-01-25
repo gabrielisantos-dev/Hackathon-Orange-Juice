@@ -1,26 +1,38 @@
-import {useForm} from 'react-hook-form'
-import Box from '@mui/material/Box'
+import {useForm} from 'react-hook-form';
+// import { useState } from 'react';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 
 
-export default function FormularioLogin(){
+export default function FormularioLogin(props){
 
-  const {register, handleSubmit} = useForm()
+  // const [email, setEmail] = useState()
+  // const [password, setPassword] = useState()
+  const emailAdress = 'Email adress'
+  const password = 'Password'
 
-  const onSubmit = () => console.log('funcionando')
+  const {register, handleSubmit, formState: {errors}} = useForm()
+
+  const onSubmit = async (data) => {
+    
+    
+    console.log(data)
+}
 
   return(
-    <Box sx={{width: '517px', height: '271px', top: '360px', left: '628px'}}>
-      <Box sx={{width: '493px', height: '24px'}}>
-        <Typography variant='h5'>Faça login com email</Typography>
+    <Box sx={{width: props.boxWidth, height: '271px'}}>
+      <Box sx={{width: props.widthTitle, height: props.heightTitle}}>
+        <Typography variant={props.titulo}>Faça login com email</Typography>
       </Box>
       <Box
         component='form'
         sx={{
-          width: '517px',
-          height: '128px',
+          // width: '517px',
+          width: props.formWidth,
+          height: props.formHeight,
           marginTop: '20px',
           display: 'flex',
           flexDirection: 'column',
@@ -31,32 +43,59 @@ export default function FormularioLogin(){
         <TextField  
           variant='outlined'
           fullWidth
-          label="Email Adress"
+          label={emailAdress}
+          // label="Email_adress"
           id="fullWidth"
-          {...register('Email Adress')}
+          {...register(emailAdress, {
+            required: 'Campo Obrigatório',
+            pattern: {
+              value:'',
+              message: 'Email inválido'
+            }
+          })}
+          error={!!errors?.Email_adress}
+          helperText={errors?.Email_adress ? errors.Email_adress.message : null}
         />     
         <TextField
+          type='password'
           variant='outlined'
           fullWidth label="Password"
           id="fullWidth"
-          {...register('Password')}
+          {...register(password, {
+            required: 'Campo Obrigatório',
+            pattern:{
+              value:'',
+              message: 'Password inválido'
+            }
+          })}
+          error={!!errors?.Password}
+          helperText={errors?.Password ? errors.Password.message : null}
           />
-
         <Button
           variant='contained'
+          color='secondary'
           sx={{
-            width:'517px',
-            height:'42px',
-            padding:'8px 22px 8px 22px'
+            width:props.buttonWidth,
+            height:props.buttonHeight,
+            padding:props.paddingButton
             }}
-            type='submit'
+            type='submit'            
             >
               Entrar
         </Button>
-
-        <Typography color='#818388' fontWeight='400' fontSize='16px' lineHeight='16px' letterSpacing='0.15px'>Cadastre-se</Typography>
+        <Box>
+          <Link
+            color='neutral.main'
+            marginTop='18px'
+            fontWeight='400'
+            fontSize='16px'
+            lineHeight='16px'
+            letterSpacing='0.15px'
+            underline='none'
+            href='#'
+            > Cadastre-se</Link>
+        </Box>
       </Box>
-
     </Box>
     
   )
