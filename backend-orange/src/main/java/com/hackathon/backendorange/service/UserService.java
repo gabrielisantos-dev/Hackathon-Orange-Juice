@@ -2,7 +2,10 @@ package com.hackathon.backendorange.service;
 
 import java.util.Optional;
 
+import com.hackathon.backendorange.exception.UserAlreadyExistsException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hackathon.backendorange.controller.assembler.UserAssembler;
@@ -19,24 +22,24 @@ public class UserService {
 	@Autowired
 	private UserAssembler userAssembler;
 
-	public UserDTO saveUser(UserDTO userDTO) {
+	public UserDTO register(UserDTO userDTO) {
 
-		if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-			throw new RuntimeException("E-mail já em uso");
+		if(userRepository.existsByEmail(userDTO.getEmail())){
+			throw new UserAlreadyExistsException();
 		}
 
-		User userEntity = userAssembler.toEntity(userDTO);
-		User savedUser = userRepository.save(userEntity);
-		UserDTO savedUserDTO = userAssembler.toDTO(savedUser);
+		String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
+		User user = new User();
+		BeanUtils.copyProperties(userDTO, user);
+		user.setPassword(encryptedPassword);
+		user = userRepository.save(user);
+		BeanUtils.copyProperties(user, userDTO);
 
-		return savedUserDTO;
+		return userDTO;
 	}
-	public Optional<UserDTO> getUserByEmailAndPassword(String email, String password){
-		Optional<User> user = userRepository.findByEmailAndPassword(email, password);
-		return user.map(userAssembler::toDTO);
-	}
-	public boolean emailExists(String email) {
-		return userRepository.findByEmail(email).isPresent();
+
+	public Boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
 	}
 	
 }

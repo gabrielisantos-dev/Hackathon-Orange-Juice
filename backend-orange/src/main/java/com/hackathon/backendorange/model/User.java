@@ -10,11 +10,17 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Data
 @Table
-public class User {
+public class User  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +46,6 @@ public class User {
 	@NotBlank(message = "A senha não pode ficar em branco")
 	@Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres")
 	private String password;
+
+	
 }
