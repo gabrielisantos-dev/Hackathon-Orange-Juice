@@ -11,7 +11,7 @@ const TextCadastro = () => {
           fontSize: '4em',
           marginRight: 'auto',
           maxWidth: '517px',
-          marginLeft: '120px',
+          marginLeft: '110px',
         }}
       >
         Cadastre-se
