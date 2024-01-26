@@ -2,11 +2,8 @@ import ContainerImagemTelaLogin from "../components/tela-login/ContainerImagemTe
 import BotaoGoogleLogin from "../components/tela-login/BotaoGoogleLogin";
 import FormularioLogin from "../components/tela-login/FormularioLogin";
 import TituloTelaLogin from "../components/tela-login/TituloTelaLogin";
-import { Box } from "@mui/material";
-// import { theme } from "../utils/Theme"
+import { Box, useMediaQuery } from "@mui/material";
 import { createTheme,ThemeProvider } from "@mui/material/styles";
-// import { Theme } from "@mui/material";
-import {useMediaQuery} from "@mui/material";
 
 const theme = createTheme({
   palette:{
@@ -77,7 +74,7 @@ export default function TelaLogin(){
               heightTitle={responsivo1 ? '24px' : '16px'}
               formHeight={responsivo1 ? '271px' : '271px'}
               />
-               {/* <FormularioLogin 
+              {/* <FormularioLogin 
               sx={{marginTop:'360px'}}
               titulo='h5'
               formWidth='517px'

@@ -1,11 +1,9 @@
-import { Box, ThemeProvider, Typography } from "@mui/material";
+import { Box, ThemeProvider, Typography, useMediaQuery } from "@mui/material";
 import {theme} from '../../utils/Theme';
 import logoOrange from '../../assets/logo-orange/logo-orange.svg';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import profilePicture from '../../assets/profile-picture/picture.svg';
 import MenuIcon from '@mui/icons-material/Menu';
-import {useMediaQuery} from "@mui/material";
-
 
 
 
@@ -38,13 +36,13 @@ export default function MainHeader(){
             <Box color='neutral.lightest'>
               <MenuIcon/>
             </Box>
-             : null}
+              : null}
             <Box>
               <img src={logoOrange} alt="Logo Orange Juice" width='111px' height='41px'/>  
             </Box>
-           </Box>
+            </Box>
 
-         { responsivo ? <Box 
+          { responsivo ? <Box 
             sx={{
               display:'flex',
               gap: '24px',
