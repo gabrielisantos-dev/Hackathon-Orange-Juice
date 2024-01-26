@@ -7,7 +7,7 @@ const TextCadastro = () => {
         variant="h2"
         sx={{
           color: '#222244',
-          fontFamily: 'Roboto',
+          font: 'Roboto',
           fontSize: '4em',
           marginRight: 'auto',
           maxWidth: '517px',
