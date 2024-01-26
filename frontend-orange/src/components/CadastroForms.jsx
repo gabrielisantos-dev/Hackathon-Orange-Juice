@@ -15,9 +15,9 @@ const CadastroFormulario = ({ onCadastro }) => {
   const handleCadastro = () => {
     if(!isValidEmail(form.email)) {
       setMensagem('Por favor, insira um email válido.');
+      onCadastro('error');
     }
-    if (form.nome && form.sobrenome && form.email && form.senha) {
-      // Simulando um cadastro
+    if (form.nome && form.sobrenome && form.email && form.senha && isValidEmail(form.email)) {
       setMensagem('Cadastro feito com sucesso');
       onCadastro('success');
     } else {
@@ -30,8 +30,6 @@ const CadastroFormulario = ({ onCadastro }) => {
     const regex = /\S+@\S+\.\S+/;
     return regex.test(email);
   }
-
-
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,7 +44,7 @@ const CadastroFormulario = ({ onCadastro }) => {
     <Box>
     {mensagem && (
         <Alert
-          severity={form.nome && form.sobrenome && form.email && form.senha ? 'success' : 'error'}
+          severity={isValidEmail(form.email) && form.nome && form.sobrenome && form.email && form.senha ? 'success' : 'error'}
           variant="filled"
           style={styles.alert}
         >
