@@ -1,31 +1,18 @@
-// import ContainerImagemTelaLogin from "./components/tela-login/ContainerImagemTelaLogin"
-// import TextoTelaLogin from "./components/TextoTelaLogin"
-// import FormularioLogin from "./components/tela-login/FormularioLogin"
-// import BotaoEntrarComGoogle from "./components/tela-login/BotaoEntrarComGoogle"
-// import LogoGoogle from "./components/tela-login/BotaoGoogleLogin"
-// import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
-// import TelaLogin from "./pages/TelaLogin"
-import "./main.css"
-import MainHeader from "./components/main-header/Header"
-
-
+import RegistrationPage from '../src/pages/registration-page';
+import TelaLogin from '../src/pages/TelaLogin';
+import MainHeader from '../src/components/main-header';
+import './main.css';
 
 function App() {
 
-
   return (
     <>
-      {/* <ImagemTelaLogin/> */}
-      {/* <TextoTelaLogin variant='h3'/> */}
-      {/* <FormularioLogin /> */}
-      {/* <BotaoEntrarComGoogle/> */}
-      {/* <BotaoGoogleLogin/> */}
-      {/* <TelaLogin/> */}
-      <MainHeader/>
-      {/* <ContainerImagemTelaLogin/> */}
-
+      <TelaLogin />
+      <RegistrationPage />
+      <MainHeader />
+      
     </>
   )
 }
 
-export default App
+export default App;
