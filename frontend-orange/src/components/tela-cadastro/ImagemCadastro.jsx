@@ -1,4 +1,4 @@
-import imageCadastro from '../assets/tela-cadastro/tela-cadastro.svg';
+import imageCadastro from '../../assets/tela-cadastro/tela-cadastro.svg';
 
 const RegisterImage = () => {
   return (

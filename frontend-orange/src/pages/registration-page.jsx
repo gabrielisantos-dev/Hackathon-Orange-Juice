@@ -1,7 +1,7 @@
 import { Box, useMediaQuery } from '@mui/material';
-import ImagemCadastro from '../components/ImagemCadastro';
-import CadastroForms from '../components/CadastroForms';
-import TextCadastro from '../components/TextCadastro';
+import ImagemCadastro from '../components/tela-cadastro/ImagemCadastro';
+import CadastroForms from '../components/tela-cadastro/CadastroForms';
+import TextCadastro from '../components/tela-cadastro/TextCadastro';
 import styles from '../styles';
 
 const RegistrationPage = () => {
