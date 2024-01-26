@@ -2,17 +2,16 @@ import { Box, Typography } from '@mui/material';
 
 const TextCadastro = () => {
   return (
-    <Box>
+    <Box sx={{ textAlign: 'center', marginTop: '20px', width: '100%' }}>
       <Typography
         variant="h2"
         sx={{
           color: '#222244',
-          width: '256px',
-          height: '40px',
           fontFamily: 'Roboto',
-          fontWeight: '500',
-          fontSize: '48px',
-          lineHeight: '40px',
+          fontSize: '4em',
+          marginRight: 'auto',
+          maxWidth: '517px',
+          marginLeft: '120px',
         }}
       >
         Cadastre-se
