@@ -1,11 +1,11 @@
 import { Box, Typography, Button, ThemeProvider } from "@mui/material";
+import profilePicture from '../../assets/profile-picture/picture.svg'; 
 import {theme} from '../../utils/Theme'
 import { useState } from "react";
-import profilePicture from '../../assets/profile-picture/picture.svg'; 
-import { padding } from "@mui/system";
 
 
-export default function CardPerfil(props){
+
+export default function CardPerfil(){
 
 
   const [pais, setPais] = useState('Brasil')
