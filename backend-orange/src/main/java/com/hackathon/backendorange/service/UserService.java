@@ -1,7 +1,5 @@
 package com.hackathon.backendorange.service;
 
-import java.util.Optional;
-
 import com.hackathon.backendorange.exception.UserAlreadyExistsException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ public class UserService {
 	public UserDTO register(UserDTO userDTO) {
 
 		if(userRepository.existsByEmail(userDTO.getEmail())){
-			//throw new UserAlreadyExistsException();
+			throw new UserAlreadyExistsException();
 		}
 
 		String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
