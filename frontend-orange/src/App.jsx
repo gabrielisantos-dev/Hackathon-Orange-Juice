@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import RegistrationPage from '../src/pages/registration-page';
-import TelaLogin from '../src/pages/TelaLogin';
-import MainHeader from '../src/components/main-header/Header';
-import './main.css';
-=======
 import "./main.css"
 // import ContainerImagemTelaLogin from "./components/tela-login/ContainerImagemTelaLogin"
 // import TextoTelaLogin from "./components/TextoTelaLogin"
@@ -20,20 +13,10 @@ import "./main.css"
 import MeuPortfolio from "./pages/MeuPortfolio";
 
 
->>>>>>> meu-portfolio
 
 function App() {
 
   return (
-<<<<<<< HEAD
-    <Router>
-      <MainHeader />
-      <Switch>
-        <Route path="/" exact={true} component={TelaLogin} />
-        <Route path="/registration" component={RegistrationPage} />
-      </Switch>
-    </Router>
-=======
     <>
       {/* <ImagemTelaLogin/> */}
       {/* <TextoTelaLogin variant='h3'/> */}
@@ -49,7 +32,6 @@ function App() {
       <MeuPortfolio/>
 
     </>
->>>>>>> meu-portfolio
   )
 }
 
