@@ -13,22 +13,25 @@ export default function MeuPortfolio(){
   const [cardPerfil] = useState({
     pais:'Brasil',
     avatar: profilePicture,
-    nome:'John Doe'
+    nome:'John Doe',
+    email:'john@doeux.com'
   })
-
 
 
   return(
     <ThemeProvider theme={theme}>
       <Header
-        avatar={cardPerfil.avatar}
+        avatar={cardPerfil.avatar} 
+        email={cardPerfil.email} 
+        nome={cardPerfil.nome}
+        pais={cardPerfil.pais}
       />
       <CardPerfil
         pais={cardPerfil.pais}
         avatar={cardPerfil.avatar}
         nome={cardPerfil.nome}
         marginAuto='auto'
-        marginTop='185px'
+        marginTop={responsivo1 ? '185px' : '49px'}
         flexDirection= {responsivo1 ? 'row' : 'column'}
         width={responsivo1 ? '364px' : '312px'}
         height={responsivo1 ? '122px' : '236px'}
