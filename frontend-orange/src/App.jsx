@@ -1,31 +1,20 @@
-// import ContainerImagemTelaLogin from "./components/tela-login/ContainerImagemTelaLogin"
-// import TextoTelaLogin from "./components/TextoTelaLogin"
-// import FormularioLogin from "./components/tela-login/FormularioLogin"
-// import BotaoEntrarComGoogle from "./components/tela-login/BotaoEntrarComGoogle"
-// import LogoGoogle from "./components/tela-login/BotaoGoogleLogin"
-// import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
-// import TelaLogin from "./pages/TelaLogin"
-import "./main.css"
-import MainHeader from "./components/main-header/Header"
-
-
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import RegistrationPage from '../src/pages/registration-page';
+import TelaLogin from '../src/pages/TelaLogin';
+import MainHeader from '../src/components/main-header/Header';
+import './main.css';
 
 function App() {
 
-
   return (
-    <>
-      {/* <ImagemTelaLogin/> */}
-      {/* <TextoTelaLogin variant='h3'/> */}
-      {/* <FormularioLogin /> */}
-      {/* <BotaoEntrarComGoogle/> */}
-      {/* <BotaoGoogleLogin/> */}
-      {/* <TelaLogin/> */}
-      <MainHeader/>
-      {/* <ContainerImagemTelaLogin/> */}
-
-    </>
+    <Router>
+      <MainHeader />
+      <Switch>
+        <Route path="/" exact={true} component={TelaLogin} />
+        <Route path="/registration" component={RegistrationPage} />
+      </Switch>
+    </Router>
   )
 }
 
-export default App
+export default App;
