@@ -8,8 +8,8 @@ import "./main.css"
 // import TelaLogin from "./pages/TelaLogin"
 // import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
-import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
-
+// import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
+import ListaProjetos from './components/meu-portfolio/ListaProjetos';
 
 
 function App() {
@@ -26,7 +26,8 @@ function App() {
       {/* <MainHeader/> */}
       {/* <ContainerImagemTelaLogin/> */}
       {/* <CardPerfil/> */}
-      <FormBuscarTags/>
+      {/* <FormBuscarTags/> */}
+      <ListaProjetos/>
 
     </>
   )
