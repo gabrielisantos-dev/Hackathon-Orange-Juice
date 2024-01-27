@@ -1,31 +1,26 @@
-import { Box, Typography, Button, ThemeProvider } from "@mui/material";
-import profilePicture from '../../assets/profile-picture/picture.svg'; 
-import {theme} from '../../utils/Theme'
-import { useState } from "react";
-
-
+import { Box, Typography, Button } from "@mui/material";
+ 
 
 export default function CardPerfil(props){
 
-
-  const [pais, setPais] = useState('Brasil')
-  const [avatar, setAvatar] = useState(profilePicture)
-  const [nomePerfil, setNomePerfil] = useState('John Doe')
+    
 
  return(
-  <ThemeProvider theme={theme}>
+  
     <Box 
       sx={{
         display:'flex',
-        width:'364px',
-        height:'122px',     
-        gap:'42px',
+        flexDirection: props.flexDirection,
+        width: props.width,
+        height:props.height,     
+        gap: props.gapCard,
         margin:props.marginAuto,
-        marginTop:props.marginTop
+        marginTop:props.marginTop,
+        alignItems:props.alignItens
         }}
         >
       <Box>
-        <img src={avatar} alt="Imagem de perfil do usuário" />
+        <img src={props.avatar} alt="Imagem de perfil do usuário" />
       </Box>
       <Box 
         sx={{
@@ -40,11 +35,23 @@ export default function CardPerfil(props){
             flexDirection:'column',
             width:'155px',
             height:'56px',
-            gap:'16px'
+            gap:'0px',
+            marginBottom: props.marginBottomTyp
             }}
             >
-          <Typography variant="h5">{nomePerfil}</Typography>
-          <Typography variant="subtitle1" sx={{opacity:'50%'}}>{pais}</Typography>          
+          <Typography 
+            variant="h5"
+            >
+              {props.nome}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              opacity:'50%'
+              }}
+            >
+              {props.pais}
+          </Typography>          
         </Box>       
           <Button 
             variant="contained"
@@ -61,6 +68,6 @@ export default function CardPerfil(props){
           </Button>
       </Box>
     </Box>
-  </ThemeProvider>
+  
  )
 }

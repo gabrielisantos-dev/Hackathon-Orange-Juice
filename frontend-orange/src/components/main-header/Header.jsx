@@ -9,7 +9,7 @@ import {useMediaQuery} from "@mui/material";
 
 
 
-export default function MainHeader(){
+export default function MainHeader(props){
 
   const responsivo = useMediaQuery(theme.breakpoints.up('sm'))
 
@@ -78,7 +78,7 @@ export default function MainHeader(){
         <Box
           sx={{display:'flex', alignItems:'center', gap:'16px'}}>
           <Box >
-            <img src={profilePicture} alt="Figura de perfil" width='40px' height='40px' />
+            <img src={props.avatar} alt="Figura de perfil" width='40px' height='40px' />
           </Box>
           <Box color='neutral.lightest'>
             <NotificationsIcon/>

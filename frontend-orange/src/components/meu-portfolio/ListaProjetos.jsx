@@ -1,16 +1,13 @@
 import { Box, Typography, ThemeProvider } from "@mui/material";
 import collections from '../../assets/collections/collections.svg';
 
-import {theme} from '../../utils/Theme'
-
-
-export default function ListaProjetos(){
+export default function ListaProjetos(props){
 
   return(
-  <ThemeProvider theme={theme}>
+  
     <Box  
       sx={{
-        width:'calc(33% - 17px)',
+        width:props.width,
         height:'258px',
         display:'flex',
         borderRadius:'5px',
@@ -40,6 +37,6 @@ export default function ListaProjetos(){
         <Typography variant="body2">Compartilhe seu talento com milhares de pessoas</Typography>
       </Box>
     </Box> 
-   </ThemeProvider>
+   
   )
 }

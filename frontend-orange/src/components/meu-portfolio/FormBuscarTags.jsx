@@ -1,12 +1,10 @@
-import {Box, TextField, Typography, ThemeProvider} from '@mui/material';
-import {theme} from '../../utils/Theme';
-import {useForm} from 'react-hook-form';
+import {Box, TextField, Typography} from '@mui/material';
 
-
-export default function FormBuscarTags(){
+export default function FormBuscarTags(props){
+ 
 
   return (
-    <ThemeProvider theme={theme}>
+   
       <Box 
         color='neutral.darkest'
         sx={{
@@ -19,8 +17,14 @@ export default function FormBuscarTags(){
           }}          
           >
         <Typography variant='h6' >Meus projetos</Typography>
-      <TextField variant='outlined' label='Buscar tags' sx={{width:'513px', height:'56px'}}/>
+      <TextField 
+        variant='outlined'
+        label='Buscar tags'
+        sx={{
+          width:props.width,
+          height:'56px'
+          }}/>
       </Box>
-    </ThemeProvider>
+    
   )
 }
