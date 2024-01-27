@@ -73,23 +73,7 @@ export default function TelaLogin(){
               heightTitle={responsivo1 ? '24px' : '16px'}
               formHeight={responsivo1 ? '271px' : '271px'}
               />
-<<<<<<< HEAD
                
-=======
-              {/* <FormularioLogin 
-              sx={{marginTop:'360px'}}
-              titulo='h5'
-              formWidth='517px'
-              buttonWidth='517px'
-              buttonHeight='42px'
-              paddingButton='8px 22px 8px 22px'
-              boxWidth='517px'
-              topTotalbox='360px'
-              widthTitle='493px'
-              heightTitle='24px'
-              formHeight='271px'
-              /> */}
->>>>>>> 831342f77ef1b6fe588a8841b07def4135e005e7
           </Box>
           
       </Box>
