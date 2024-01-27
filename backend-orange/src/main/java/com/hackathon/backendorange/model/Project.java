@@ -30,6 +30,7 @@ public class Project {
     private String links;
 
     private String image;
+    private String image_id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

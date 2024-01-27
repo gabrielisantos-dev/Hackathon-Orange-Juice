@@ -11,5 +11,6 @@ public class ProjectDTO {
     private String tags;
     private String links;
     private String image;
+    private String image_id;
     private User user;
 }
