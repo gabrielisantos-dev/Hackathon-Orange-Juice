@@ -10,7 +10,7 @@ export default function ListaProjetos(){
   <ThemeProvider theme={theme}>
     <Box  
       sx={{
-        width:'389px',
+        width:'calc(33% - 17px)',
         height:'258px',
         display:'flex',
         borderRadius:'5px',

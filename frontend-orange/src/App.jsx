@@ -9,7 +9,9 @@ import "./main.css"
 // import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
 // import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
-import ListaProjetos from './components/meu-portfolio/ListaProjetos';
+// import ListaProjetos from './components/meu-portfolio/ListaProjetos';
+import MeuPortfolio from "./pages/MeuPortfolio";
+
 
 
 function App() {
@@ -27,7 +29,8 @@ function App() {
       {/* <ContainerImagemTelaLogin/> */}
       {/* <CardPerfil/> */}
       {/* <FormBuscarTags/> */}
-      <ListaProjetos/>
+      {/* <ListaProjetos/> */}
+      <MeuPortfolio/>
 
     </>
   )

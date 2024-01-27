@@ -5,7 +5,7 @@ import { useState } from "react";
 
 
 
-export default function CardPerfil(){
+export default function CardPerfil(props){
 
 
   const [pais, setPais] = useState('Brasil')
@@ -19,7 +19,9 @@ export default function CardPerfil(){
         display:'flex',
         width:'364px',
         height:'122px',     
-        gap:'42px'
+        gap:'42px',
+        margin:props.marginAuto,
+        marginTop:props.marginTop
         }}
         >
       <Box>
