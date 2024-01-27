@@ -1,16 +1,15 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Modal, Button, TextField, Typography, Box, ThemeProvider } from '@mui/material';
-import collections from '../../assets/collections/collections.svg';
+// import { useState } from 'react';
+// import PropTypes from 'prop-types';
+import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link } from '@mui/material';
 import { theme } from '../../utils/Theme';
 
-const AddProjectModal = ({ open, onclose }) => {
-    const [projectData, setProjectData] = useState({
-        title: '',
-        tags: [],
-        link: '',
-        description: '',
-        });
+const AddProjectModal = () => {
+    // const [projectData, setProjectData] = useState({
+        // title: '',
+        // tags: [],
+        // link: '',
+        // description: '',
+        // });
 
         return (
             <ThemeProvider theme={theme}>
@@ -20,7 +19,6 @@ const AddProjectModal = ({ open, onclose }) => {
                     height: '522px',
                     top: '143px',
                     left: '207px',
-                    color: theme.neutral.dark,
                     backgroundColor: '#FEFEFE',
                     }}>
                     <Box>
@@ -28,31 +26,69 @@ const AddProjectModal = ({ open, onclose }) => {
                         </Box>
                         <Box
                         sx={{
-                            width: '389px',
-                            height: '336px',
-                            padding: '0px, 0px, 320px, 0px',
+                            width: 'Fixed (413px)',
+                            height: 'Fixed (336px)',
+                            left: '413px',
                             gap: '16px',
+                            display: 'flex',
+                            flexDirection: 'column',
 
                         }}
                         >
-                            <Typography variant='p'>Selecione o conteúdo que você deseja fazer upload</Typography>
-                            <Box
+                            <TextField
                             sx={{
-                                width:'389px',
-                                height:'304px',
-                                display:'flex',
-                                borderRadius:'5px',
-                                alignItems:'center',
-                                justifyContent:'center',
-                                backgroundColor:'neutral.secondaryLight',
+                                width: 'Fill (413px)',
+                                height: 'Hug (56px)',
+                                padding: '0px, 12px, 0px, 12px',
+                                borderRadius: '4px',
+                                border: '1px',
+                                color: '#0000003B'
+
                                 }}
-                            >
-                                <image src={collections} />
-                                <Typography variant="body2">Compartilhe seu talento com milhares de pessoas</Typography>
-                            </Box>
+                            label='Título'
+                            variant='outlined'
+                            />
+                            <TextField
+                            sx={{
+                                width: 'Fill (413px)',
+                                height: 'Hug (56px)',
+                                padding: '0px, 12px, 0px, 12px',
+                                borderRadius: '4px',
+                                border: '1px',
+                                color: '#0000003B'
+                                }}
+                            label='Tags'
+                            variant='outlined'
+                            />
+                            <TextField
+                            sx={{
+                                width: 'Fill (413px)',
+                                height: 'Hug (56px)',
+                                padding: '0px, 12px, 0px, 12px',
+                                borderRadius: '4px',
+                                border: '1px',
+                                color: '#0000003B'
+                                }}
+                            label='Link'
+                            variant='outlined'
+                            />
+                            <TextField
+                            sx={{
+                                width: 'Fill (413px)',
+                                height: 'Fixed (120px)',
+                                padding: '0px, 12px, 0px, 12px',
+                                borderRadius: '4px',
+                                border: '1px',
+                                color: '#0000003B'
+
+                                }}
+                            label='Descrição'
+                            variant='outlined'
+                            />
                         </Box>
                         <Box>
-                            <Button>Visualizar publicação</Button>
+                            <Link width='838px' underline='none' height='16px' href=''>Visualizar publicação do projeto</Link>
+                        </Box>
                             <Box
                             sx={{
                                 width: 'Hug (101px)',
@@ -62,20 +98,23 @@ const AddProjectModal = ({ open, onclose }) => {
 
                             }}                            
                             >
-                                <Button color='#FF5522'>Salvar</Button>
-                                <Button color='#0000001F'>Cancelar</Button>
+                                <Button>Salvar</Button>
                             </Box>
+                            <Box
+                            sx={{
+                                width: 'Hug (101px)',
+                                height: 'Hug (42px)',
+                                padding: '8px, 22px, 8px, 22px',
+                                borderRadius: '4px',
 
-                        </Box>
+                            }}
+                            >
+                                <Button>Cancelar</Button>
+                            </Box>
                 </Box>
     </Modal>
     </ThemeProvider>
         )
-}
-
-AddProjectModal.propTypes = {
-    open: PropTypes.bool.isRequired,
-    onclose: PropTypes.func.isRequired,
 }
 
 export default AddProjectModal;
