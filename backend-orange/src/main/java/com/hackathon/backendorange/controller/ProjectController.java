@@ -4,6 +4,7 @@ package com.hackathon.backendorange.controller;
 import com.hackathon.backendorange.dto.ProjectDTO;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.service.ProjectService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,24 +40,12 @@ public class ProjectController {
         }
     }
 
-//    @PostMapping("/save")
-//    public ResponseEntity<ProjectDTO> save(@RequestBody ProjectDTO newProjectDTO){
-//        try{
-//            service.saveProject(newProjectDTO);
-//            return ResponseEntity.ok(newProjectDTO);
-//        }catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> save(@RequestPart("projectDTO") ProjectDTO newProjectDTO,
+    public ResponseEntity<ProjectDTO> save(@RequestPart("projectDTO") ProjectDTO newProjectDTO,
                                                     @RequestPart("image") MultipartFile file) throws IOException {
         try {
-            Map<String, Object> data = service.saveProject(newProjectDTO, file);
-            return ResponseEntity.ok(data);
+            service.saveProject(newProjectDTO, file);
+            return ResponseEntity.ok(newProjectDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -65,9 +54,10 @@ public class ProjectController {
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Optional<ProjectDTO>> update(@PathVariable Long id, @RequestBody ProjectDTO updateProjectDTO) {
+    public ResponseEntity<Optional<ProjectDTO>> update(@PathVariable Long id, @RequestPart ProjectDTO updateProjectDTO,
+                                                       @RequestPart("image") MultipartFile file) throws IOException {
         try {
-            Optional<ProjectDTO> projectDTO = service.updateProject(id, updateProjectDTO);
+            Optional<ProjectDTO> projectDTO = service.updateProject(id, updateProjectDTO, file);
             return ResponseEntity.ok(projectDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
@@ -75,7 +65,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Optional<Project>> delete(@PathVariable Long id) {
+    public ResponseEntity<Optional<Project>> delete(@PathVariable Long id) throws IOException {
         try {
             Optional<Project> project = service.deleteProject(id);
             return ResponseEntity.ok(project);
