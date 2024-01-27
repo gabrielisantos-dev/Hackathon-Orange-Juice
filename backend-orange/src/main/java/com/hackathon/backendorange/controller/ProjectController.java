@@ -23,4 +23,5 @@ public class ProjectController {
  public List<Project> getAll(){
      return projectRepository.findAll();
  }
+
 }
