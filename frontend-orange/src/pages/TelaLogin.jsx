@@ -58,8 +58,7 @@ export default function TelaLogin(){
               display:'flex',
               flexDirection:'column',
               gap:'10px',
-              marginTop:responsivo1 ? '210px' : '109px',
-              // gap:'75px',
+              marginTop:responsivo1 ? '210px' : '109px',              
               alignItems:'center',              
             }}>
             <TituloTelaLogin variant={responsivo1 ? 'h3' : 'h5'} sx={{marginTop:responsivo1 ? '210px' : '109px'}}/>
@@ -77,46 +76,8 @@ export default function TelaLogin(){
               heightTitle={responsivo1 ? '24px' : '16px'}
               formHeight={responsivo1 ? '271px' : '271px'}
               />
-               {/* <FormularioLogin 
-              sx={{marginTop:'360px'}}
-              titulo='h5'
-              formWidth='517px'
-              buttonWidth='517px'
-              buttonHeight='42px'
-              paddingButton='8px 22px 8px 22px'
-              boxWidth='517px'
-              topTotalbox='360px'
-              widthTitle='493px'
-              heightTitle='24px'
-              formHeight='271px'
-              /> */}
+               
           </Box>
-          {/* Form mobile */}
-          {/* {!responsivo1 ? <Box 
-            sx={{
-              display:'flex',
-              flexDirection:'column',
-              gap:'10px',
-              marginTop:'109px',
-              // gap:'75px',
-              alignItems:'center',              
-            }}>
-            <TituloTelaLogin variant='h5' sx={{marginTop:'109px'}}/>
-            <BotaoGoogleLogin sx={{marginTop:'165px'}} width='181px' height='46px'/>
-            <FormularioLogin 
-              sx={{marginTop:'243px'}}
-              titulo='subtitle1'
-              formWidth='312px'
-              buttonWidth='312px'
-              buttonHeight='42px'
-              paddingButton='8px 22px 8px 22px'
-              boxWidth='312px'
-              topTotalbox='243px'
-              widthTitle='288px'
-              heightTitle='16px'
-              formHeight='271px'
-              />
-          </Box> : null} */}
           
       </Box>
     </ThemeProvider>
