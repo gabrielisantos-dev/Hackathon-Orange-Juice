@@ -16,7 +16,7 @@ export default function FormBuscarTags(props){
           gap:'7px'        
           }}          
           >
-        <Typography variant='h6' >Meus projetos</Typography>
+        <Typography variant='h6'sx={{display:props.titleForm}} >Meus projetos</Typography>
       <TextField 
         variant='outlined'
         label='Buscar tags'
