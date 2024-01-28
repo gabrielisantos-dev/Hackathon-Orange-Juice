@@ -14,19 +14,19 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O título não pode estar em branco")
-    @Column(nullable = false)
+    @NotBlank(message = "O título não pode estar em branco!")
+    @Column
     private String titulo;
 
-    @NotBlank(message = "Adicione uma descrição")
+    @NotBlank(message = "Adicione uma descrição sobre o projeto!")
     @Size(max = 255, message = "A descrição não pode ultrapassar 255 caracteres")
-    @Column(nullable = false)
+    @Column
     private String descricao;
 
     private String tags;
 
-    @NotBlank(message = "Adicione o link do repositório")
-    @Column(nullable = false)
+    @NotBlank(message = "Adicione o link do repositório ou outros links para acessar seu projeto!")
+    @Column
     private String links;
 
     private String image;

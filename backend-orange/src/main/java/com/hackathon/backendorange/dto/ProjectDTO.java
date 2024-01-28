@@ -1,6 +1,8 @@
 package com.hackathon.backendorange.dto;
 
 import com.hackathon.backendorange.model.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data

@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProjectService {
@@ -34,64 +36,89 @@ public class ProjectService {
         return Optional.ofNullable(repository.findAll());
     }
 
-    public Optional<List<Project>> getUserProjects(Long user_id) {
-        User user = userRepository.findById(user_id).orElseThrow(() -> new RuntimeException());
-        return Optional.ofNullable(repository.getUserProjects(user_id));
+    public List<Project> getUserProjects(Long user_id) {
+        Optional<User> user = userRepository.findById(user_id);
+
+        if (user.isPresent()) {
+            User userExists = user.get();
+            return repository.getUserProjects(userExists.getId());
+        } else {
+            throw new RuntimeException("Usuário não encontrado!");
+        }
     }
 
     public ProjectDTO saveProject(ProjectDTO projectDTO, MultipartFile file) throws IOException {
 
-        Map imageInfo = uploadImage(file);
-        String imageUrl = imageInfo.get("url").toString();
-        String imageId = imageInfo.get("public_id").toString();
+        if (projectDTO != null && projectDTO.getUser().getId() != null) {
+            User user = userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() -> new RuntimeException(
+                    "Usuário não encontrado!"));
 
-        Project projectEntity = projectAssembler.toEntity(projectDTO);
-        projectEntity.setImage(imageUrl);
-        projectEntity.setImage_id(imageId);
+            Map imageInfo = uploadImage(file);
+            String imageUrl = imageInfo.get("url").toString();
+            String imageId = imageInfo.get("public_id").toString();
 
-        Project savedProject = repository.save(projectEntity);
-        ProjectDTO savedProjectDTO = projectAssembler.toDTO(savedProject);
+            Project projectEntity = projectAssembler.toEntity(projectDTO);
+            projectEntity.setImage(imageUrl);
+            projectEntity.setImage_id(imageId);
 
-        return savedProjectDTO;
+            Project savedProject = repository.save(projectEntity);
+            ProjectDTO savedProjectDTO = projectAssembler.toDTO(savedProject);
+
+            return savedProjectDTO;
+
+        } else {
+            throw new IllegalArgumentException("Projeto ou usuário não fornecidos corretamente!");
+        }
     }
 
     public Optional<ProjectDTO> updateProject(Long id, ProjectDTO projectDTO, MultipartFile file) throws IOException {
+        if (projectDTO != null && projectDTO.getUser().getId() != null && id != null) {
+            User user = userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() -> new RuntimeException(
+                    "Usuário não encontrado!"));
+            Project projectExists = repository.findById(id).orElseThrow(() -> new RuntimeException(
+                    "Projeto não encontrado!"));
 
-        Project projectExists = repository.findById(id).orElseThrow(() -> new RuntimeException());
+            projectExists.setTitulo(projectDTO.getTitulo());
+            projectExists.setDescricao(projectDTO.getDescricao());
+            projectExists.setTags(projectDTO.getTags());
+            projectExists.setLinks(projectDTO.getLinks());
+            projectExists.setUser(projectDTO.getUser());
 
-        projectExists.setTitulo(projectDTO.getTitulo());
-        projectExists.setDescricao(projectDTO.getDescricao());
-        projectExists.setTags(projectDTO.getTags());
-        projectExists.setLinks(projectDTO.getLinks());
-        projectExists.setUser(projectDTO.getUser());
+            //delete -> imagem antiga
+            String imageIdExists = projectDTO.getImage_id();
+            deleteImage(imageIdExists);
 
-        //delete -> imagem antiga
-        String imageIdExists = projectDTO.getImage_id();
-        deleteImage(imageIdExists);
+            //upload -> imagem nova
+            Map imageInfo = uploadImage(file);
+            String imageUrl = imageInfo.get("url").toString();
+            String image_id = imageInfo.get("public_id").toString();
 
-        //upload -> imagem nova
-        Map imageInfo = uploadImage(file);
-        String imageUrl = imageInfo.get("url").toString();
-        String image_id = imageInfo.get("public_id").toString();
+            projectExists.setImage(imageUrl);
+            projectExists.setImage_id(image_id);
 
-        projectExists.setImage(imageUrl);
-        projectExists.setImage_id(image_id);
+            Project savedProject = repository.save(projectExists);
+            ProjectDTO savedProjectDTO = projectAssembler.toDTO(savedProject);
 
-        Project savedProject = repository.save(projectExists);
-        ProjectDTO savedProjectDTO = projectAssembler.toDTO(savedProject);
-
-        return Optional.ofNullable(savedProjectDTO);
+            return Optional.ofNullable(savedProjectDTO);
+        } else {
+            throw new IllegalArgumentException("Projeto ou usuário não fornecidos corretamente!");
+        }
     }
 
-    public Optional<Project> deleteProject(Long id) throws IOException {
+    public Project deleteProject(Long id) throws IOException {
+        if (id != null) {
+            Project projectExists = repository.findById(id).orElseThrow(() -> new RuntimeException(
+                    "Projeto não encontrado!"));
 
-        Optional<Project> project = repository.findById(id);
+            String image_id = projectExists.getImage_id();
+            deleteImage(image_id);
 
-        String image_id = project.get().getImage_id();
-        deleteImage(image_id);
+            repository.deleteById(projectExists.getId());
 
-        repository.deleteById(project.get().getId());
-        return project;
+            return projectExists;
+        }else {
+            throw new IllegalArgumentException("Projeto fornecido corretamente!");
+        }
     }
 
     //Armazenamento de Imagem -> Cloudinary
@@ -101,7 +128,7 @@ public class ProjectService {
                         Map.of("public_id", UUID.randomUUID().toString()));
     }
 
-    public void deleteImage(String image_id) throws IOException{
+    public void deleteImage(String image_id) throws IOException {
         cloudinary.uploader().destroy(image_id, Map.of());
     }
 }

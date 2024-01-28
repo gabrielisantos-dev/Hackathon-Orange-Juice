@@ -2,8 +2,10 @@ package com.hackathon.backendorange.controller;
 
 
 import com.hackathon.backendorange.dto.ProjectDTO;
+import com.hackathon.backendorange.exception.ProjectsNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.service.ProjectService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,46 +33,53 @@ public class ProjectController {
     }
 
     @GetMapping("/list-userprojects/{id}")
-    public ResponseEntity<Optional<List<Project>>> listUserProject(@PathVariable Long id) {
-        try {
-            Optional<List<Project>> userProjects = service.getUserProjects(id);
+    public ResponseEntity<List<Project>> listUserProject(@PathVariable Long id) {
+
+        if(service.getUserProjects(id).isEmpty()){
+            throw new ProjectsNotFoundException();
+        }else{
+            List<Project> userProjects = service.getUserProjects(id);
             return ResponseEntity.ok(userProjects);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ProjectDTO> save(@RequestPart("projectDTO") ProjectDTO newProjectDTO,
+    public ResponseEntity<String> save(@RequestPart("projectDTO") ProjectDTO newProjectDTO,
                                                     @RequestPart("image") MultipartFile file) throws IOException {
         try {
             service.saveProject(newProjectDTO, file);
-            return ResponseEntity.ok(newProjectDTO);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok("Projeto registrado com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Optional<ProjectDTO>> update(@PathVariable Long id, @RequestPart ProjectDTO updateProjectDTO,
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestPart ProjectDTO updateProjectDTO,
                                                        @RequestPart("image") MultipartFile file) throws IOException {
         try {
-            Optional<ProjectDTO> projectDTO = service.updateProject(id, updateProjectDTO, file);
-            return ResponseEntity.ok(projectDTO);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
+            service.updateProject(id, updateProjectDTO, file);
+            return ResponseEntity.ok("Projeto atualizado com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Optional<Project>> delete(@PathVariable Long id) throws IOException {
+    public ResponseEntity<String> delete(@PathVariable Long id) throws IOException {
         try {
-            Optional<Project> project = service.deleteProject(id);
-            return ResponseEntity.ok(project);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
+            service.deleteProject(id);
+            return ResponseEntity.ok("Projeto deletado com sucesso!");
+        }  catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }
