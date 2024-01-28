@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link } from '@mui/material';
 import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
@@ -10,14 +10,14 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const AddProjectModal = () => {
+const AddProjectModal = ({ onClose }) => {
     const [projectData, setProjectData] = useState({
         title: '',
         tags: [],
         link: '',
         description: '',
+        image: null,
     });
-    // const [image, setImage] = useState(null);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -29,9 +29,32 @@ const AddProjectModal = () => {
         setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
     };
 
+    const handleImageChange = (e) => {
+        const imageFile = e.target.files[0];
+        setProjectData((prevData) => ({
+            ...prevData,
+            image: imageFile,
+        }));
+        };
+
+        const handleCancel = () => {
+            setProjectData({
+                title: '',
+                tags: [],
+                link: '',
+                description: '',
+                image: null,
+            });
+            onClose();
+        };
+
+        const handleSave = () => {
+            console.log(projectData);
+        }
+
     return (
     <ThemeProvider theme={theme}>
-        <Modal open={true} onClose={() => {}}>
+        <Modal open={true} onClose={onClose}>
         <Box
             sx={{
             display: 'flex',
@@ -86,6 +109,7 @@ const AddProjectModal = () => {
                 justifyContent: 'center',
                 backgroundColor: primaryColor,
                 marginTop: '32px',
+                backgroundImage: projectData.image ? `url(${URL.createObjectURL(projectData.image)})` : 'none',
                 }}
                 >
                 <Box
@@ -93,13 +117,26 @@ const AddProjectModal = () => {
                     width: '56px',
                     height: '56px',
                     margin: 'auto',
-                    display: 'flex',
+                    display:  projectData.image ? 'none' : 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                     }}
                 >
-                    <img src={collections} alt='Collections' />
+                    <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleImageChange}
+                    id='imageInput'
+                />
+                <label htmlFor="imageInput">
+                <img
+                    src={collections}
+                    alt='Collections'
+                    style={{ cursor: 'pointer' }}
+                />
+            </label>
                     <Typography variant='body2' marginTop='14px' sx={{ whiteSpace: 'nowrap', color:'neutral.secondaryDark', opacity: '60%' }}>
                     Compartilhe seu talento com milhares de<wbr /> pessoas
                     </Typography>
@@ -130,6 +167,7 @@ const AddProjectModal = () => {
                 <Button
                 variant='contained'
                 color='secondary'
+                onClick={handleSave}
                 sx={{
                     width: 'Hug (109px)',
                     height: 'Hug (42px)',
@@ -143,6 +181,7 @@ const AddProjectModal = () => {
                 </Button>
                 <Button
                 variant='outlined'
+                onClick={handleCancel}
                 sx={{
                     width: 'Hug (101px)',
                     height: 'Hug (42px)',
@@ -163,9 +202,9 @@ const AddProjectModal = () => {
     );
 };
 
-// AddProjectModal.propTypes = {
-    // open: PropTypes.bool.isRequired,
-    // onClose: PropTypes.func.isRequired,
-// };
+AddProjectModal.propTypes = {
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+};
 
 export default AddProjectModal;
