@@ -1,11 +1,7 @@
 package com.hackathon.backendorange.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -47,6 +46,9 @@ public class User implements UserDetails {
 	@Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres")
 	private String password;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private Set<Project> projects = new HashSet<>();
 
 @Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -76,4 +78,10 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
+
 }
+
+
+
+
