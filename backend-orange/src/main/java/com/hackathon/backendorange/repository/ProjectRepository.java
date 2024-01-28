@@ -15,6 +15,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "SELECT * FROM project WHERE user_id = :user_id ")
+    @Query(nativeQuery = true, value = "select * from project where user_id = :user_id ")
     List<Project> getUserProjects(@Param("user_id") Long user_id);
 }
+

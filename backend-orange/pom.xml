@@ -72,6 +72,12 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.34.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
