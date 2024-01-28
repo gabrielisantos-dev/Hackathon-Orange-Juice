@@ -1,4 +1,4 @@
-import { Box, ThemeProvider } from '@mui/material/';
+import { Box, ThemeProvider, Link } from '@mui/material/';
 import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
 import Header from '../components/main-header/Header';
@@ -7,6 +7,8 @@ import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
 import ListaProjetos from '../components/meu-portfolio/ListaProjetos';
 import { useState } from "react";
 import profilePicture from '../assets/profile-picture/picture.svg';
+import CardProjeto from '../components/meu-portfolio/CardProjeto';
+
 
 export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
@@ -15,12 +17,14 @@ export default function MeuPortfolio(){
     pais:'Brasil',
     avatar: profilePicture,
     nome:'John Doe',
-    email:'john@doeux.com'
+    email:'john@doeux.com',
+    tag:{ui:'UI', ux:'UX', web:'Web'}
   })
 
 
   return(
-    <ThemeProvider theme={theme}>
+  <ThemeProvider theme={theme}>
+    <Box sx={{marginBottom:'70px'}}>
       <Header
         avatar={cardPerfil.avatar} 
         email={cardPerfil.email} 
@@ -44,16 +48,32 @@ export default function MeuPortfolio(){
         <Box sx={{marginBottom:'40px'}}>
           <FormBuscarTags width={responsivo1 ? '513px' : '312px'}/>
         </Box>
-        <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
-          <ListaProjetos width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}/>
-          <ListaProjetos width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}/>
-          <ListaProjetos width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}/>
-         
-          
-        </Box>
 
+        <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
+          <Link 
+          onClick={()=>{console.log('clicando')}} 
+          underline='none'
+          width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
+          style={{cursor:'pointer'}}
+          >
+            <ListaProjetos />
+          </Link>
+          <CardProjeto 
+            width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
+            color='neutral.dark'
+            avatar={cardPerfil.avatar}
+            widthAvatar='24px'
+            heightAvatar='24px'
+            chipsWidth='92px'
+            chipsHeight='32px'
+            labelChip1={cardPerfil.tag.ui}
+            labelChip2={cardPerfil.tag.ux}
+            labelChip3={cardPerfil.tag.web}
+            >           
+          </CardProjeto>          
+        </Box>
       </Box>
-        
-    </ThemeProvider>
+    </Box>     
+  </ThemeProvider>
   )
 }

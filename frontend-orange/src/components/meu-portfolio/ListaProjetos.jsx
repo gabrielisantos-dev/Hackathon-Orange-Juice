@@ -8,7 +8,7 @@ export default function ListaProjetos(props){
     <Box  
       sx={{
         width:props.width,
-        height:'258px',
+        height:'298px',
         display:'flex',
         borderRadius:'5px',
         alignItems:'center',
