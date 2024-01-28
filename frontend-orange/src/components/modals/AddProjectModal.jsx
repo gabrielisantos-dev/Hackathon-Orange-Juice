@@ -1,3 +1,5 @@
+import { useState } from 'react';
+// import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link } from '@mui/material';
 import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
@@ -9,6 +11,24 @@ const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
 const AddProjectModal = () => {
+    const [projectData, setProjectData] = useState({
+        title: '',
+        tags: [],
+        link: '',
+        description: '',
+    });
+    // const [image, setImage] = useState(null);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setProjectData({ ...projectData, [name]: value });
+    };
+
+    const handleTagsChange = (event) => {
+        const tagsArray = event.target.value.split(',').map((tag) => tag.trim());
+        setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
+    };
+
     return (
     <ThemeProvider theme={theme}>
         <Modal open={true} onClose={() => {}}>
@@ -94,10 +114,10 @@ const AddProjectModal = () => {
                     gap: '16px',
                 }}
                 >
-                <TextField label='Título' variant='outlined' />
-                <TextField label='Tags' variant='outlined' />
-                <TextField label='Link' variant='outlined' />
-                <TextField label='Descrição' multiline rows={4} variant='outlined' />
+                <TextField label='Título' variant='outlined' name='title' value={projectData.title} onChange={handleInputChange} />
+                <TextField label='Tags' variant='outlined' name='tags' value={projectData.tags.join(',')} onChange={handleTagsChange} />
+                <TextField label='Link' variant='outlined' name='link' value={projectData.link} onChange={handleInputChange} />
+                <TextField label='Descrição' multiline rows={4} variant='outlined' name='description' value={projectData.description} onChange={handleInputChange} />
                 </Box>
             </Box>
 
@@ -142,5 +162,10 @@ const AddProjectModal = () => {
     </ThemeProvider>
     );
 };
+
+// AddProjectModal.propTypes = {
+    // open: PropTypes.bool.isRequired,
+    // onClose: PropTypes.func.isRequired,
+// };
 
 export default AddProjectModal;

@@ -8,10 +8,7 @@
 // import TelaLogin from "./pages/TelaLogin"
 import AddProjectModal from "./components/modals/AddProjectModal"
 
-
-
 function App() {
-
 
   return (
     <>
