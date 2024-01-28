@@ -3,8 +3,8 @@ import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
 
 // Constantes para tamanhos e cores repetidas
-const modalWidth = '890px';
-const modalHeight = '522px';
+const modalWidth = '850px';
+const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
@@ -25,12 +25,12 @@ const AddProjectModal = () => {
                 width: modalWidth,
                 height: modalHeight,
                 backgroundColor: backgroundColor,
-                padding: '24px',
+                padding: '24px 30px',
                 display: 'flex',
                 flexDirection: 'column',
             }}
             >
-            <Typography variant='h4' sx={{ marginBottom: '10px' }}>
+            <Typography variant='h4' font='Roboto' fontSize='26px' color='neutral.dark' sx={{ marginBottom: '8px' }}>
                 Adicionar Projeto
             </Typography>
 
@@ -38,10 +38,10 @@ const AddProjectModal = () => {
                 sx={{
                 width: '140%',
                 height: '30px',
-                marginTop: '16px',
+                marginTop: '7px',
                 }}
             >
-                <Typography color='#515255' letterSpacing='0.15px' font='Roboto' fontSize='1.1rem'>
+                <Typography marginTop='10px' color='neutral.dark' letterSpacing='0.20px' font='Roboto' fontSize='1.0rem'>
                 Selecione o conteúdo que você deseja fazer upload
                 </Typography>
             </Box>
@@ -52,13 +52,13 @@ const AddProjectModal = () => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                gap: '16px',
+                gap: '26px',
+                marginTop: '-15px',
                 }}
             >
                 <Box
                 sx={{
                 flex: '1',
-                height: '92%',
                 display: 'flex',
                 flexDirection: 'column',
                 borderRadius: '5px',
@@ -70,8 +70,8 @@ const AddProjectModal = () => {
                 >
                 <Box
                     sx={{
-                    width: '46px',
-                    height: '46px',
+                    width: '56px',
+                    height: '56px',
                     margin: 'auto',
                     display: 'flex',
                     flexDirection: 'column',
@@ -80,7 +80,7 @@ const AddProjectModal = () => {
                     }}
                 >
                     <img src={collections} alt='Collections' />
-                    <Typography variant='body2' marginTop='14px' sx={{ whiteSpace: 'nowrap' }}>
+                    <Typography variant='body2' marginTop='14px' sx={{ whiteSpace: 'nowrap', color:'neutral.secondaryDark', opacity: '60%' }}>
                     Compartilhe seu talento com milhares de<wbr /> pessoas
                     </Typography>
                 </Box>
@@ -88,8 +88,7 @@ const AddProjectModal = () => {
 
                 <Box
                 sx={{
-                    width: '413px',
-                    height: '336px',
+                    width: '433px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '16px',
@@ -102,17 +101,17 @@ const AddProjectModal = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ marginTop: '20px' }}>
-                <Link href='' sx={{ display: 'block', marginTop: '16px', color: '#515255', textDecoration: 'none' }}>
+            <Box>
+                <Link href='' sx={{ display: 'block', marginTop: '16px', color: 'neutral.dark', textDecoration: 'none', fontSize: '18px' }}>
                 Visualizar publicação
                 </Link>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: '16px' }}>
                 <Button
                 variant='contained'
                 color='secondary'
                 sx={{
-                    width: 'Hug (101px)',
+                    width: 'Hug (109px)',
                     height: 'Hug (42px)',
                     padding: '8px 22px',
                     borderRadius: '4px',
@@ -120,7 +119,7 @@ const AddProjectModal = () => {
                     color: '#FCFDFF',
                 }}
                 >
-                Salvar
+                <b>Salvar</b>
                 </Button>
                 <Button
                 variant='outlined'
@@ -129,10 +128,12 @@ const AddProjectModal = () => {
                     height: 'Hug (42px)',
                     padding: '8px 22px',
                     borderRadius: '4px',
-                    color: '#00000061 38%',
+                    backgroundColor: 'neutral.secondaryMain',
+                    opacity: '37%',
+                    color: 'black',
                 }}
                 >
-                Cancelar
+                <b>Cancelar</b>
                 </Button>
             </Box>
             </Box>
