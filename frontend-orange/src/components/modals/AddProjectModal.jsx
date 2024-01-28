@@ -1,120 +1,145 @@
-// import { useState } from 'react';
-// import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link } from '@mui/material';
 import { theme } from '../../utils/Theme';
+import collections from '../../assets/collections/collections.svg';
+
+// Constantes para tamanhos e cores repetidas
+const modalWidth = '890px';
+const modalHeight = '522px';
+const backgroundColor = '#FEFEFE';
+const primaryColor = theme.palette.neutral.secondaryLight;
 
 const AddProjectModal = () => {
-    // const [projectData, setProjectData] = useState({
-        // title: '',
-        // tags: [],
-        // link: '',
-        // description: '',
-        // });
+    return (
+    <ThemeProvider theme={theme}>
+        <Modal open={true} onClose={() => {}}>
+        <Box
+            sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+            }}
+        >
+            <Box
+            sx={{
+                width: modalWidth,
+                height: modalHeight,
+                backgroundColor: backgroundColor,
+                padding: '24px',
+                display: 'flex',
+                flexDirection: 'column',
+            }}
+            >
+            <Typography variant='h4' sx={{ marginBottom: '10px' }}>
+                Adicionar Projeto
+            </Typography>
 
-        return (
-            <ThemeProvider theme={theme}>
-            <Modal open={open} onClose={onclose}>
-                <Box sx={{
-                    width:'890px',
-                    height: '522px',
-                    top: '143px',
-                    left: '207px',
-                    backgroundColor: '#FEFEFE',
-                    }}>
-                    <Box>
-                        <Typography variant='h3'>Adicionar Projeto</Typography>
-                        </Box>
-                        <Box
-                        sx={{
-                            width: 'Fixed (413px)',
-                            height: 'Fixed (336px)',
-                            left: '413px',
-                            gap: '16px',
-                            display: 'flex',
-                            flexDirection: 'column',
+            <Box
+                sx={{
+                width: '140%',
+                height: '30px',
+                marginTop: '16px',
+                }}
+            >
+                <Typography color='#515255' letterSpacing='0.15px' font='Roboto' fontSize='1.1rem'>
+                Selecione o conteúdo que você deseja fazer upload
+                </Typography>
+            </Box>
 
-                        }}
-                        >
-                            <TextField
-                            sx={{
-                                width: 'Fill (413px)',
-                                height: 'Hug (56px)',
-                                padding: '0px, 12px, 0px, 12px',
-                                borderRadius: '4px',
-                                border: '1px',
-                                color: '#0000003B'
-
-                                }}
-                            label='Título'
-                            variant='outlined'
-                            />
-                            <TextField
-                            sx={{
-                                width: 'Fill (413px)',
-                                height: 'Hug (56px)',
-                                padding: '0px, 12px, 0px, 12px',
-                                borderRadius: '4px',
-                                border: '1px',
-                                color: '#0000003B'
-                                }}
-                            label='Tags'
-                            variant='outlined'
-                            />
-                            <TextField
-                            sx={{
-                                width: 'Fill (413px)',
-                                height: 'Hug (56px)',
-                                padding: '0px, 12px, 0px, 12px',
-                                borderRadius: '4px',
-                                border: '1px',
-                                color: '#0000003B'
-                                }}
-                            label='Link'
-                            variant='outlined'
-                            />
-                            <TextField
-                            sx={{
-                                width: 'Fill (413px)',
-                                height: 'Fixed (120px)',
-                                padding: '0px, 12px, 0px, 12px',
-                                borderRadius: '4px',
-                                border: '1px',
-                                color: '#0000003B'
-
-                                }}
-                            label='Descrição'
-                            variant='outlined'
-                            />
-                        </Box>
-                        <Box>
-                            <Link width='838px' underline='none' height='16px' href=''>Visualizar publicação do projeto</Link>
-                        </Box>
-                            <Box
-                            sx={{
-                                width: 'Hug (101px)',
-                                height: 'Hug (42px)',
-                                padding: '8px, 22px, 8px, 22px',
-                                borderRadius: '4px',
-
-                            }}                            
-                            >
-                                <Button>Salvar</Button>
-                            </Box>
-                            <Box
-                            sx={{
-                                width: 'Hug (101px)',
-                                height: 'Hug (42px)',
-                                padding: '8px, 22px, 8px, 22px',
-                                borderRadius: '4px',
-
-                            }}
-                            >
-                                <Button>Cancelar</Button>
-                            </Box>
+            <Box
+                sx={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                gap: '16px',
+                }}
+            >
+                <Box
+                sx={{
+                flex: '1',
+                height: '92%',
+                display: 'flex',
+                flexDirection: 'column',
+                borderRadius: '5px',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: primaryColor,
+                marginTop: '32px',
+                }}
+                >
+                <Box
+                    sx={{
+                    width: '46px',
+                    height: '46px',
+                    margin: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    }}
+                >
+                    <img src={collections} alt='Collections' />
+                    <Typography variant='body2' marginTop='14px' sx={{ whiteSpace: 'nowrap' }}>
+                    Compartilhe seu talento com milhares de<wbr /> pessoas
+                    </Typography>
                 </Box>
-    </Modal>
+                </Box>
+
+                <Box
+                sx={{
+                    width: '413px',
+                    height: '336px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '16px',
+                }}
+                >
+                <TextField label='Título' variant='outlined' />
+                <TextField label='Tags' variant='outlined' />
+                <TextField label='Link' variant='outlined' />
+                <TextField label='Descrição' multiline rows={4} variant='outlined' />
+                </Box>
+            </Box>
+
+            <Box sx={{ marginTop: '20px' }}>
+                <Link href='' sx={{ display: 'block', marginTop: '16px', color: '#515255', textDecoration: 'none' }}>
+                Visualizar publicação
+                </Link>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <Button
+                variant='contained'
+                color='secondary'
+                sx={{
+                    width: 'Hug (101px)',
+                    height: 'Hug (42px)',
+                    padding: '8px 22px',
+                    borderRadius: '4px',
+                    marginRight: '16px',
+                    color: '#FCFDFF',
+                }}
+                >
+                Salvar
+                </Button>
+                <Button
+                variant='outlined'
+                sx={{
+                    width: 'Hug (101px)',
+                    height: 'Hug (42px)',
+                    padding: '8px 22px',
+                    borderRadius: '4px',
+                    color: '#00000061 38%',
+                }}
+                >
+                Cancelar
+                </Button>
+            </Box>
+            </Box>
+        </Box>
+        </Modal>
     </ThemeProvider>
-        )
-}
+    );
+};
 
 export default AddProjectModal;
