@@ -1,9 +1,9 @@
+import { createTheme,ThemeProvider } from "@mui/material";
 import ContainerImagemTelaLogin from "../components/tela-login/ContainerImagemTelaLogin";
 import BotaoGoogleLogin from "../components/tela-login/BotaoGoogleLogin";
 import FormularioLogin from "../components/tela-login/FormularioLogin";
 import TituloTelaLogin from "../components/tela-login/TituloTelaLogin";
 import { Box, useMediaQuery } from "@mui/material";
-import { createTheme,ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   palette:{

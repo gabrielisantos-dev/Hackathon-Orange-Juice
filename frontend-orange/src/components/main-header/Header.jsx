@@ -1,13 +1,13 @@
-import { Box, ThemeProvider, Typography, useMediaQuery } from "@mui/material";
-import * as React from 'react'
-import { Box, ThemeProvider, Typography,
-         Button, Menu, MenuItem, Divider } from "@mui/material";
 
+import { Box, ThemeProvider, Typography,
+         Button, Menu, MenuItem, Divider, useMediaQuery} from "@mui/material";
 import {theme} from '../../utils/Theme';
+import * as React from 'react'
+
 import logoOrange from '../../assets/logo-orange/logo-orange.svg';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
-import {useMediaQuery} from "@mui/material";
+
 import LogoutIcon from '@mui/icons-material/Logout';
 
 

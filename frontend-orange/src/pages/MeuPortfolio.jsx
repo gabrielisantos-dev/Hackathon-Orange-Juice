@@ -1,4 +1,5 @@
-import { Box, ThemeProvider, useMediaQuery } from '@mui/material';
+import { Box, ThemeProvider } from '@mui/material/';
+import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
 import Header from '../components/main-header/Header';
 import CardPerfil from '../components/meu-portfolio/CardPerfil';
