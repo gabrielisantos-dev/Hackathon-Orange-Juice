@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import picture from '../../assets/profile-picture/picture.svg';
 import projectImage from '../../assets/projects/project1.svg';
 
-const ViewPostModal = ({ onClose }) => {
+const ViewPostModal = ({ onClose, projectData }) => {
   return (
     <Modal
       open={true}
@@ -49,14 +49,16 @@ const ViewPostModal = ({ onClose }) => {
                 <Typography variant='subtitle1'>12/12</Typography>
               </Box>
             </Box>
-            <Typography variant='h5'>Alguma coisa aqui</Typography>
+            <Typography variant='h5'>{projectData.title}</Typography>
             <Box sx={{ display: 'flex', gap: '8px' }}>
-                <Chip />
+              {projectData.tags.map((tag, index) => (
+                <Chip label={tag} key={index} />
+              ))}
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
             <img
-              src={projectImage}
+              src={projectData.image ? projectData.image : projectImage}
               alt='Imagem do projeto'
               width='100%'
               height='100%'
@@ -66,10 +68,10 @@ const ViewPostModal = ({ onClose }) => {
           <Box
             sx={{ height: '150px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', margin: '30px 25px' }}
           >
-            <Typography variant='body1'>descrição</Typography>
+            <Typography variant='body1'>{projectData.description}</Typography>
             <Box>
               <Typography variant='subtitle1'>Download</Typography>
-              <Link href=''>Link</Link>
+              <Link href={projectData.link}>{projectData.link}</Link>
             </Box>
           </Box>
         </Box>
@@ -80,6 +82,7 @@ const ViewPostModal = ({ onClose }) => {
 
 ViewPostModal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  projectData: PropTypes.object.isRequired,
 };
 
 export default ViewPostModal;
