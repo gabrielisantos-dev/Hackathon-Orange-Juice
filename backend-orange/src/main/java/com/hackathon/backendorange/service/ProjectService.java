@@ -3,6 +3,7 @@ package com.hackathon.backendorange.service;
 import com.cloudinary.Cloudinary;
 import com.hackathon.backendorange.controller.assembler.ProjectAssembler;
 import com.hackathon.backendorange.dto.ProjectDTO;
+import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
 import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -58,6 +61,8 @@ public class ProjectService {
             String imageId = imageInfo.get("public_id").toString();
 
             Project projectEntity = projectAssembler.toEntity(projectDTO);
+
+            projectEntity.setDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             projectEntity.setImage(imageUrl);
             projectEntity.setImage_id(imageId);
             projectEntity.setImage_originalName(file.getOriginalFilename());
@@ -82,7 +87,6 @@ public class ProjectService {
             projectExists.setDescricao(projectDTO.getDescricao());
             projectExists.setTags(projectDTO.getTags());
             projectExists.setLinks(projectDTO.getLinks());
-            projectExists.setUser(projectDTO.getUser());
 
             if (!Objects.equals(projectExists.getImage_originalName(), file.getOriginalFilename())){
                 //delete -> imagem antiga
@@ -96,6 +100,7 @@ public class ProjectService {
 
                 projectExists.setImage(imageUrl);
                 projectExists.setImage_id(image_id);
+                projectExists.setImage_originalName(file.getOriginalFilename());
             }
 
 
@@ -132,5 +137,15 @@ public class ProjectService {
 
     public void deleteImage(String image_id) throws IOException {
         cloudinary.uploader().destroy(image_id, Map.of());
+    }
+
+    //Buscar por Tags
+    public List<Project> searchByTags(TagsEnum tags){
+        List<Project> projects = repository.findAll();
+
+        projects.stream()
+                .filter(project -> project.getTags() != null && project.getTags() == tags);
+
+        return projects;
     }
 }

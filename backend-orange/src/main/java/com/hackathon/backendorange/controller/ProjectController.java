@@ -45,7 +45,7 @@ public class ProjectController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestPart("projectDTO") ProjectDTO newProjectDTO,
-                                                    @RequestPart("image") MultipartFile file) throws IOException {
+                                       @RequestPart("image") MultipartFile file) throws IOException {
         try {
             service.saveProject(newProjectDTO, file);
             return ResponseEntity.ok("Projeto registrado com sucesso!");
