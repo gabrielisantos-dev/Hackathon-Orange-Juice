@@ -8,19 +8,23 @@ import ListaProjetos from '../components/meu-portfolio/ListaProjetos';
 import { useState } from "react";
 import profilePicture from '../assets/profile-picture/picture.svg';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
-
+// import figuraProjeto from '../assets/projects/project1.svg'
+import figuraProjeto from '../assets/projects/project1.svg'
 
 export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const [cardPerfil] = useState({
+  const [cardPerfil, setCardPerfil] = useState({
     pais:'Brasil',
     avatar: profilePicture,
     nome:'John Doe',
     email:'john@doeux.com',
     tag:{ui:'UI', ux:'UX', web:'Web'},
-    data:'12/23'
-  })
+    data:'12/23',
+    urlImagem:figuraProjeto,
+    tituloProj:'Ecommerce One Page'
+  });
+
 
 
   return(
@@ -73,6 +77,7 @@ export default function MeuPortfolio(){
             labelChip2={cardPerfil.tag.ux}
             labelChip3={cardPerfil.tag.web}
             data={cardPerfil.data}
+            // imagem={cardPerfil.urlImagem}
             >           
           </CardProjeto>          
         </Box>

@@ -1,18 +1,18 @@
 import { Box, Typography, Chip, ListItem, List } from "@mui/material";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { useState } from "react";
-import figuraProjeto from '../../assets/projects/project1.svg'
-import pencilIcon from '../../assets/icon/pencil-icon.svg'
+// import figuraProjeto from '../../assets/projects/project1.svg'
+// import pencilIcon from '../../assets/icon/pencil-icon.svg'
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
+// import ListItemIcon from '@mui/material/ListItemIcon';
+// import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+// import PersonAdd from '@mui/icons-material/PersonAdd';
+// import Settings from '@mui/icons-material/Settings';
+// import Logout from '@mui/icons-material/Logout';
 import CreateIcon from '@mui/icons-material/Create';
 
 export default function CardProjeto(props){
@@ -39,7 +39,7 @@ export default function CardProjeto(props){
       >
       <Box 
         sx={{
-          backgroundImage:`url(${figuraProjeto})`,
+          backgroundImage: `url(${props.imagem})`,
           backgroundRepeat:'no-repeat',
           backgroundSize:'cover',          
           width:'100%',
@@ -49,7 +49,14 @@ export default function CardProjeto(props){
           >
             {/* ======inicio menu===== */}
        <Box>
-          <Box sx={{ display: 'flex', justifyContent:'right', alignItems: 'center', textAlign: 'center' }}>
+          <Box 
+            sx={{ 
+              display: 'flex',
+              justifyContent:'right',
+              alignItems: 'center',
+              textAlign: 'center'
+              }}
+              >
             
             <Tooltip              
               title="Menu"
@@ -134,12 +141,13 @@ export default function CardProjeto(props){
         </Box>           
       </Box>
 
-      <Box sx={{
-        display:'flex',
-        marginTop:'4px',
-        justifyContent:'space-between'
-        
-      }}>
+      <Box 
+        sx={{
+          display:'flex',
+          marginTop:'4px',
+          justifyContent:'space-between',         
+        }}
+        >
 
         <Box 
           color={props.color}
@@ -151,7 +159,13 @@ export default function CardProjeto(props){
             width={props.widthAvatar}
             height={props.heightAvatar}
           />
-          <Box sx={{display:'flex', alignItems:'center', gap:'5px'}}>
+          <Box 
+            sx={{
+              display:'flex',
+              alignItems:'center',
+              gap:'5px'
+              }}
+              >
 
             <Typography variant="subtitle1">{props.nome}</Typography>
             <FiberManualRecordIcon sx={{fontSize:'7px'}}/>         

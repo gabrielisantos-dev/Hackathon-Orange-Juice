@@ -1,4 +1,4 @@
-import { Box, Typography, ThemeProvider } from "@mui/material";
+import { Box, Typography} from "@mui/material";
 import collections from '../../assets/collections/collections.svg';
 
 export default function ListaProjetos(props){

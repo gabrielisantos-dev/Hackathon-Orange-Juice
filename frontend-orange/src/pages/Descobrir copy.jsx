@@ -1,10 +1,12 @@
-import { Box, ThemeProvider, Link, Typography} from '@mui/material/';
+import { Box, ThemeProvider, Link, Typography,
+         Button, Modal } from '@mui/material/';
 import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
 import Header from '../components/main-header/Header';
+
 import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
+
 import { useState } from "react";
-import figuraProjeto from '../assets/projects/project1.svg'
 import profilePicture from '../assets/profile-picture/picture.svg';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import ModalProjeto from '../components/meu-portfolio/ModalProjeto';
@@ -13,23 +15,14 @@ import ModalProjeto from '../components/meu-portfolio/ModalProjeto';
 
 export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
-  
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);  
-  const handleClose = () => setOpen(false);
 
-
-
-  const [cardPerfil, setCardPerfil] = useState({
+  const [cardPerfil] = useState({
     pais:'Brasil',
     avatar: profilePicture,
     nome:'John Doe',
     email:'john@doeux.com',
     tag:{ui:'UI', ux:'UX', web:'Web'},
-    data:'12/23',
-    urlImagem:figuraProjeto,
-    tituloProj:'Ecommerce One Page',
-    descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
+    data:'12/23'
   })
 
 
@@ -60,14 +53,13 @@ export default function MeuPortfolio(){
         </Box>
 
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
-          <Link
-          onClick={handleOpen}
-          underline='none'
-          style={{cursor:'pointer'}}
-          width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
-          > 
+           <Link
+            onClick={()=>{console.log('clicando')}}
+            underline='none'
+            style={{cursor:'pointer'}}
+           > 
             <CardProjeto 
-              // width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
+              width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
               color='neutral.dark'
               colorIconMenu='secondary.secondaryLight'
               avatar={cardPerfil.avatar}
@@ -80,31 +72,13 @@ export default function MeuPortfolio(){
               labelChip2={cardPerfil.tag.ux}
               labelChip3={cardPerfil.tag.web}
               data={cardPerfil.data}
-              iconMenu='none'
-              imagem={cardPerfil.urlImagem}             
+              iconMenu='none'              
               >           
             </CardProjeto>
-          </Link> 
-                   
+          </Link>          
         </Box>
       </Box>
-    </Box>  
-    {open ?  
-    
-    <ModalProjeto
-      open={open}
-      onClose={handleClose}
-      avatar={cardPerfil.avatar}
-      nome={cardPerfil.nome}
-      data={cardPerfil.data}
-      labelChip1={cardPerfil.tag.ui}
-      labelChip2={cardPerfil.tag.ux}
-      tituloProj={cardPerfil.tituloProj}
-      imagem={cardPerfil.urlImagem}
-      descricao={cardPerfil.descricao}
-
-    />
-    : null}   
+    </Box>     
   </ThemeProvider>
   )
 }
