@@ -9,6 +9,7 @@ import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.service.ProjectService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,9 +45,9 @@ public class ProjectController {
         }
     }
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> save(@RequestPart("projectDTO") ProjectDTO newProjectDTO,
-                                       @RequestPart("image") MultipartFile file) throws IOException {
+                                       @RequestPart("image")  MultipartFile file) throws IOException {
         try {
             service.saveProject(newProjectDTO, file);
             return ResponseEntity.ok("Projeto registrado com sucesso!");
@@ -59,9 +60,9 @@ public class ProjectController {
     }
 
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> update(@PathVariable Long id, @RequestPart ProjectDTO updateProjectDTO,
-                                                       @RequestPart("image") MultipartFile file) throws IOException {
+                                         @RequestPart("image") MultipartFile file) throws IOException {
         try {
             service.updateProject(id, updateProjectDTO, file);
             return ResponseEntity.ok("Projeto atualizado com sucesso!");
