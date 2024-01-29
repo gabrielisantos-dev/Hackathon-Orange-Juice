@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link } from '@mui/material';
+import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery } from '@mui/material';
 import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
 
@@ -11,6 +11,9 @@ const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
 const AddProjectModal = ({ onClose }) => {
+
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     const [projectData, setProjectData] = useState({
         title: '',
         tags: [],
@@ -93,7 +96,7 @@ const AddProjectModal = ({ onClose }) => {
                 sx={{
                 width: '100%',
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: isSmallScreen ? 'column-reverse' : 'row',
                 justifyContent: 'space-between',
                 gap: '26px',
                 marginTop: '-15px',
@@ -203,7 +206,7 @@ const AddProjectModal = ({ onClose }) => {
 };
 
 AddProjectModal.propTypes = {
-    open: PropTypes.bool.isRequired,
+    // open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
 };
 
