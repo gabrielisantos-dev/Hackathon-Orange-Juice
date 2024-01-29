@@ -6,7 +6,8 @@
 // import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
 // import Header from "./components/meu-portifólio/Header"
 // import TelaLogin from "./pages/TelaLogin"
-import AddProjectModal from "./components/modals/AddProjectModal"
+// import AddProjectModal from "./components/modals/AddProjectModal"
+import ViewPostModal from "./components/modals/ViewPostModal"
 
 function App() {
 
@@ -20,7 +21,8 @@ function App() {
       {/* <TelaLogin/> */}
       {/* <Header/> */}
       {/* <ContainerImagemTelaLogin/> */}
-      <AddProjectModal />
+      {/* <AddProjectModal /> */}
+      <ViewPostModal />
 
     </>
   )
