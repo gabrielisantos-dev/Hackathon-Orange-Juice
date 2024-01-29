@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -143,9 +144,10 @@ public class ProjectService {
     public List<Project> searchByTags(TagsEnum tags){
         List<Project> projects = repository.findAll();
 
-        projects.stream()
-                .filter(project -> project.getTags() != null && project.getTags() == tags);
+        return projects.stream()
+                .filter(Objects::nonNull)
+                .filter(project -> project.getTags().equals(tags))
+                .collect(Collectors.toList());
 
-        return projects;
     }
 }

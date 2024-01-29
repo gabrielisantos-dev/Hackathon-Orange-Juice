@@ -2,6 +2,7 @@ package com.hackathon.backendorange.controller;
 
 
 import com.hackathon.backendorange.dto.ProjectDTO;
+import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
 import com.hackathon.backendorange.exception.ProjectsNotFoundException;
 import com.hackathon.backendorange.exception.UserNotFoundException;
@@ -82,6 +83,16 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (ProjectIdNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/search-projects")
+    public ResponseEntity<List<Project>> searchProjects(@RequestParam TagsEnum tags){
+        if(service.searchByTags(tags).isEmpty()){
+            throw new ProjectsNotFoundException();
+        }else{
+            List<Project> projectsByTag = service.searchByTags(tags);
+            return ResponseEntity.ok(projectsByTag);
         }
     }
 }
