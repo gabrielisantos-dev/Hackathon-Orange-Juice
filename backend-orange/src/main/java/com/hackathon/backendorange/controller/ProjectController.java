@@ -2,18 +2,18 @@ package com.hackathon.backendorange.controller;
 
 
 import com.hackathon.backendorange.dto.ProjectDTO;
+import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
 import com.hackathon.backendorange.exception.ProjectsNotFoundException;
+import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.service.ProjectService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -51,7 +51,7 @@ public class ProjectController {
             return ResponseEntity.ok("Projeto registrado com sucesso!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e){
+        } catch (UserNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
@@ -66,7 +66,9 @@ public class ProjectController {
             return ResponseEntity.ok("Projeto atualizado com sucesso!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e){
+        } catch (UserNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (ProjectIdNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -78,7 +80,7 @@ public class ProjectController {
             return ResponseEntity.ok("Projeto deletado com sucesso!");
         }  catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e){
+        } catch (ProjectIdNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
