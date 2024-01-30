@@ -1,10 +1,15 @@
 package com.hackathon.backendorange.model;
 
+import com.hackathon.backendorange.enums.TagsEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table
@@ -25,14 +30,23 @@ public class Project {
     @Column
     private String descricao;
 
-    private String tags;
+    private TagsEnum tags;
 
     @NotBlank(message = "Adicione o link do repositório ou outros links para acessar seu projeto!")
     @Column
     private String links;
 
+    @Column
+    private String date;
+
+    @Column
     private String image;
+
+    @Column
     private String image_id;
+
+    @Column
+    private String image_originalName;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
