@@ -56,6 +56,7 @@ public class ProjectService {
 
     public ProjectDTO saveProject(ProjectDTO projectDTO, MultipartFile file) throws IOException {
 
+
         if (projectDTO != null && projectDTO.getUser().getId() != null) {
             User user =
                     userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() ->
@@ -83,9 +84,9 @@ public class ProjectService {
     }
 
     public Optional<ProjectDTO> updateProject(Long id, ProjectDTO projectDTO, MultipartFile file) throws IOException {
+
         if (projectDTO != null && id != null) {
             Project projectExists = repository.findById(id).orElseThrow(() -> new ProjectIdNotFoundException());
-
             projectExists.setTitulo(projectDTO.getTitulo());
             projectExists.setDescricao(projectDTO.getDescricao());
             projectExists.setTags(projectDTO.getTags());

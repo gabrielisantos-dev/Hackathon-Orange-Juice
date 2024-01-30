@@ -2,9 +2,15 @@ package com.hackathon.backendorange.dto;
 
 import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.model.User;
+import lombok.AllArgsConstructor;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectDTO {
 
     private String titulo;
@@ -14,6 +20,11 @@ public class ProjectDTO {
     private String date;
     private String image;
     private String image_id;
+
+    private Long idUser;
+
+
     private String image_originalName;
     private User user;
+
 }
