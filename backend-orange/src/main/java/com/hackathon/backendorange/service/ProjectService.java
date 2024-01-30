@@ -5,6 +5,7 @@ import com.hackathon.backendorange.controller.assembler.ProjectAssembler;
 import com.hackathon.backendorange.dto.ProjectDTO;
 import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
+import com.hackathon.backendorange.exception.ProjectsNotFoundException;
 import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.model.User;
@@ -18,7 +19,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -35,18 +35,22 @@ public class ProjectService {
     @Autowired
     private Cloudinary cloudinary;
 
-    public Optional<List<Project>> getAllProjects() {
-        return Optional.ofNullable(repository.findAll());
+    public List<Project> getAllProjects() {
+        List<Project> allProjects = repository.findAll();
+        if (allProjects.isEmpty()) {
+            throw new ProjectsNotFoundException();
+        } else {
+            return allProjects;
+        }
     }
 
     public List<Project> getUserProjects(Long user_id) {
-        Optional<User> user = userRepository.findById(user_id);
-
-        if (user.isPresent()) {
-            User userExists = user.get();
-            return repository.getUserProjects(userExists.getId());
+        User user = userRepository.findById(user_id).orElseThrow(() -> new UserNotFoundException());
+        List<Project> userProjects = repository.getUserProjects(user_id);
+        if (userProjects.isEmpty()) {
+            throw new ProjectsNotFoundException();
         } else {
-            throw new UserNotFoundException();
+            return userProjects;
         }
     }
 
@@ -74,14 +78,12 @@ public class ProjectService {
             return savedProjectDTO;
 
         } else {
-            throw new IllegalArgumentException("Projeto ou usuário não fornecidos corretamente!");
+            throw new IllegalArgumentException("Dados fornecidos incorretamente ou não fornecido dados obrigatórios!");
         }
     }
 
     public Optional<ProjectDTO> updateProject(Long id, ProjectDTO projectDTO, MultipartFile file) throws IOException {
-        if (projectDTO != null && projectDTO.getUser().getId() != null && id != null) {
-            User user = userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() ->
-                    new UserNotFoundException());
+        if (projectDTO != null && id != null) {
             Project projectExists = repository.findById(id).orElseThrow(() -> new ProjectIdNotFoundException());
 
             projectExists.setTitulo(projectDTO.getTitulo());
@@ -89,7 +91,7 @@ public class ProjectService {
             projectExists.setTags(projectDTO.getTags());
             projectExists.setLinks(projectDTO.getLinks());
 
-            if (!Objects.equals(projectExists.getImage_originalName(), file.getOriginalFilename())){
+            if (!Objects.equals(projectExists.getImage_originalName(), file.getOriginalFilename())) {
                 //delete -> imagem antiga
                 String imageIdExists = projectDTO.getImage_id();
                 deleteImage(imageIdExists);
@@ -110,23 +112,17 @@ public class ProjectService {
 
             return Optional.ofNullable(savedProjectDTO);
         } else {
-            throw new IllegalArgumentException("Projeto ou usuário não fornecidos corretamente!");
+            throw new IllegalArgumentException("Dados fornecidos incorretamente não fornecido dados obrigatórios!");
         }
     }
 
-    public Project deleteProject(Long id) throws IOException {
-        if (id != null) {
-            Project projectExists = repository.findById(id).orElseThrow(() -> new ProjectIdNotFoundException());
+    public void deleteProject(Long id) throws IOException {
+        Project projectExists = repository.findById(id).orElseThrow(() -> new ProjectIdNotFoundException());
 
-            String image_id = projectExists.getImage_id();
-            deleteImage(image_id);
+        String image_id = projectExists.getImage_id();
+        deleteImage(image_id);
 
-            repository.deleteById(projectExists.getId());
-
-            return projectExists;
-        }else {
-            throw new IllegalArgumentException("Projeto fornecido corretamente!");
-        }
+        repository.deleteById(projectExists.getId());
     }
 
     //Armazenamento de Imagem -> Cloudinary
@@ -141,13 +137,17 @@ public class ProjectService {
     }
 
     //Buscar por Tags
-    public List<Project> searchByTags(TagsEnum tags){
+    public List<Project> searchByTags(TagsEnum tags) {
         List<Project> projects = repository.findAll();
 
-        return projects.stream()
+        List<Project> projectsByTag = projects.stream()
                 .filter(Objects::nonNull)
-                .filter(project -> project.getTags().equals(tags))
-                .collect(Collectors.toList());
+                .filter(project -> project.getTags().equals(tags)).toList();
 
+        if (projectsByTag.isEmpty()) {
+            throw new ProjectsNotFoundException();
+        } else {
+            return projectsByTag;
+        }
     }
 }
