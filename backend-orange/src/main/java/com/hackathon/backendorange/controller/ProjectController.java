@@ -26,7 +26,7 @@ public class ProjectController {
         this.service = service;
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public ResponseEntity<Optional<List<Project>>> list() {
         Optional<List<Project>> allProjects = service.getAllProjects();
         return ResponseEntity.ok(allProjects);

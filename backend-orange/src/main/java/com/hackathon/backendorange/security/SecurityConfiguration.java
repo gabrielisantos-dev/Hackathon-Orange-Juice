@@ -31,16 +31,14 @@ public class SecurityConfiguration {
               .csrf(AbstractHttpConfigurer::disable)
               .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
               .authorizeHttpRequests(autorize -> autorize
-                          .requestMatchers(HttpMethod.POST, "/api/auth/login")
-                          .permitAll()
-                          .requestMatchers(HttpMethod.POST, "/api/auth/register")
-                          .permitAll()
-                          .requestMatchers(Arrays.toString(new HttpMethod[]{
-                                    		HttpMethod.GET,
-                                            HttpMethod.POST,
-                                            HttpMethod.PUT,
-                                            HttpMethod.DELETE}), "/project")
-                                    .authenticated()
+
+                              .requestMatchers(HttpMethod.POST, "/api/auth/login")
+                              .permitAll()
+
+                              .requestMatchers(HttpMethod.POST, "/api/auth/register")
+                              .permitAll()
+                              .anyRequest().authenticated()
+
                             )
                     .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                     .build();

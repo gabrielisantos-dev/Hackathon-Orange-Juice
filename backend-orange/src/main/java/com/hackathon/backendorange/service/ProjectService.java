@@ -49,8 +49,8 @@ public class ProjectService {
 
     public ProjectDTO saveProject(ProjectDTO projectDTO, MultipartFile file) throws IOException {
 
-        if (projectDTO != null && projectDTO.getUser().getId() != null) {
-            User user = userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() -> new RuntimeException(
+        if (projectDTO != null && projectDTO.getIdUser() != null) {
+            User user = userRepository.findById(projectDTO.getIdUser()).orElseThrow(() -> new RuntimeException(
                     "Usuário não encontrado!"));
 
             Map imageInfo = uploadImage(file);
@@ -72,8 +72,8 @@ public class ProjectService {
     }
 
     public Optional<ProjectDTO> updateProject(Long id, ProjectDTO projectDTO, MultipartFile file) throws IOException {
-        if (projectDTO != null && projectDTO.getUser().getId() != null && id != null) {
-            User user = userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() -> new RuntimeException(
+        if (projectDTO != null && projectDTO.getIdUser() != null && id != null) {
+            User user = userRepository.findById(projectDTO.getIdUser()).orElseThrow(() -> new RuntimeException(
                     "Usuário não encontrado!"));
             Project projectExists = repository.findById(id).orElseThrow(() -> new RuntimeException(
                     "Projeto não encontrado!"));
@@ -82,7 +82,7 @@ public class ProjectService {
             projectExists.setDescricao(projectDTO.getDescricao());
             projectExists.setTags(projectDTO.getTags());
             projectExists.setLinks(projectDTO.getLinks());
-            projectExists.setUser(projectDTO.getUser());
+            projectExists.setUser(user);
 
             //delete -> imagem antiga
             String imageIdExists = projectDTO.getImage_id();
