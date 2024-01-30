@@ -55,8 +55,10 @@ export default function TelaLogin(){
               display:'flex',
               flexDirection:'column',
               gap:'10px',
-              marginTop:responsivo1 ? '210px' : '109px',              
-              alignItems:'center',              
+              marginTop:responsivo1 ? '210px' : '109px',
+              marginLeft: '32px',              
+              alignItems:'center',
+              // margin: responsivo1 ? 'auto' : null             
             }}>
             <TituloTelaLogin variant={responsivo1 ? 'h3' : 'h5'} sx={{marginTop:responsivo1 ? '210px' : '109px'}}/>
             <BotaoGoogleLogin sx={{marginTop:responsivo1 ? '282px' : '165px'}}/>

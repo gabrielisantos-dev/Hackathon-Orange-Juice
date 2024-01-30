@@ -1,16 +1,16 @@
 import {useForm} from 'react-hook-form';
-// import { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import { useState } from 'react';
+import {Box, TextField, Typography, Button, Link,
+        InputAdornment, IconButton} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+
 
 
 export default function FormularioLogin(props){
 
   // const [email, setEmail] = useState()
   // const [password, setPassword] = useState()
+  const [showPassword, setShowPassword] = useState(false);
   const emailAdress = 'Email adress'
   const password = 'Password'
 
@@ -21,6 +21,9 @@ export default function FormularioLogin(props){
     
     console.log(data)
 }
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+};
 
   return(
     <Box sx={{width: props.boxWidth, height: '271px'}}>
@@ -44,7 +47,6 @@ export default function FormularioLogin(props){
           variant='outlined'
           fullWidth
           label={emailAdress}
-          // label="Email_adress"
           id="fullWidth"
           {...register(emailAdress, {
             required: 'Campo Obrigatório',
@@ -57,10 +59,22 @@ export default function FormularioLogin(props){
           helperText={errors?.Email_adress ? errors.Email_adress.message : null}
         />     
         <TextField
-          type='password'
+          // type='password'
+          type={showPassword ? 'text' : 'password'}
           variant='outlined'
           fullWidth label="Password"
           id="fullWidth"
+
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleTogglePassword} edge="end">
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+
           {...register(password, {
             required: 'Campo Obrigatório',
             pattern:{
