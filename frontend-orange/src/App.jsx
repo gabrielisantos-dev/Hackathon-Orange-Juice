@@ -13,9 +13,10 @@ import "./main.css"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
 // import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
 // import ListaProjetos from './components/meu-portfolio/ListaProjetos';
-import MeuPortfolio from "./pages/MeuPortfolio";
+// import MeuPortfolio from "./pages/MeuPortfolio";
 import Descobrir from "./pages/Descobrir";
-import ModalProjeto from './components/meu-portfolio/ModalProjeto'
+// import ModalProjeto from './components/meu-portfolio/ModalProjeto';
+// import DescobrirMobile from './pages/DescobrirMobile'
 
 
 
@@ -38,7 +39,9 @@ function App() {
       {/* <ListaProjetos/> */}
       {/* <MeuPortfolio/> */}
       <Descobrir/>
+      {/* <DescobrirMobile/> */}
       {/* <ModalProjeto/>     */}
+      {/* <DescobrirMobile/> */}
     </>
    
   )

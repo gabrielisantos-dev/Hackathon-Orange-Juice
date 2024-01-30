@@ -19,18 +19,18 @@ export default function ModalProjeto(props) {
         aria-describedby="modal-modal-description"
         sx={{overflow:'scroll'}}
       >  
-      <div>      
+      <div style={{backgroundColor: '#FFF'}}>      
         <Box 
         
           sx={{
             position: 'absolute',
-            top: '75%',
+            top: '589px',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '1042px',
-            height: '981px',
+            width: '100%',
+            height: '100%',
             bgcolor: 'background.paper',
-            boxShadow: 24,
+            // boxShadow: 24,
             p: 3,                 
           }}      
           >
@@ -55,7 +55,7 @@ export default function ModalProjeto(props) {
           <Box          
             sx={{display:'flex', justifyContent:'center', mt:2}}
             >
-                <img src={props.imagem} alt="" width='100%' height='650px' />      
+                <img src={props.imagem} alt="" width='90%' />      
           </Box>
           <Box sx={{height:'150px', display:'flex', flexDirection:'column', justifyContent:'space-between', margin:'30px 25px'}}>
             <Typography variant='body1'>{props.descricao}</Typography>
