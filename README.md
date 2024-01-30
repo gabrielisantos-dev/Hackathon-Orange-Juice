@@ -1,27 +1,30 @@
 # Orange Portfólio 🍊
+Bem-vindo ao Portfólio Orange! Este projeto foi desenvolvido como parte do hackathon do Programa de Formação realizado pela Orange Juice e de iniciativa da FCamara. O objetivo é que a plataforma seja e eficaz para apresentar projetos de diferentes indivíduos.
 
-Bem-vindo(a) ao Orange Portfólio! Esta é uma aplicação navegável e responsiva que permite aos usuários cadastrar e exibir projetos desenvolvidos. Este projeto foi desenvolvido como parte de um hackathon para criar uma plataforma simples e eficaz para destacar os trabalhos realizados por diferentes indivíduos.
+## Visão Geral da Plataforma 
+É uma aplicação web responsiva que permite aos usuários cadastrar seus projetos e visualizar os de outros usuários. A simplicidade e eficácia da plataforma são alcançadas ao fornecer aos usuários uma interface intuitiva. O Orange Portfólio incentiva os usuários a explorar, compartilhar e celebrar suas conquistas.
 
-<br>
+## Funcionalidades Principais 🚀
 
-<i><b>Tecnologias Utilizadas</b><i> 💻
+1. Cadastro de Projetos:
+   - Os usuários podem inserir informações sobre seus projetos, incluindo título, descrição, tags, link e imagem.
+2. Exibição de Projetos:
+   - Interface intuitiva para visualizar seus projetos cadastrados e os projetos de outros usuários.
+3. Acesso aos Projetos:
+   - Os projetos cadastrados podem ser acessados pelos links presentes nas descrições.
+4. Edição e Exclusão de Projetos:
+   - Os usuários têm a capacidade de editar e excluir seus próprios projetos conforme necessário.
 
-Backend: Java Spring Boot
+## Tecnologias Utilizadas 💻
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
-Frontend: React.js com Material-UI
 
-<br>
+## Links 
 
-<i><b>Funcionalidades Principais</b><i> 🚀
+Deploy:
 
-Cadastro de Projetos: Os usuários podem inserir informações sobre seus projetos, incluindo título, descrição, tags, link e imagem.
+**Esperamos que o Orange Portfólio simplifique a promoção de conquistas individuais e ao mesmo tempo fomente a colaboração e o reconhecimento dentro da comunidade. Explore, compartilhe e celebre as histórias por trás de cada projeto!** 🌟
 
-Exibição de Projetos: Interface intuitiva para visualizar os projetos cadastrados.
-
-Acesso aos Projetos: Os projetos cadastrados podem ser acessados pelos links presentes nas descrições.
-
-Edição e Exclusão de Projetos: Os usuários têm a capacidade de editar e excluir projetos conforme necessário.
-
-<br>
-
-Concluímos este projeto com a esperança de que o Orange Portfólio não apenas simplifique a divulgação de conquistas individuais, mas também inspire colaboração e reconhecimento na comunidade. Explore, compartilhe e celebre as histórias por trás de cada projeto! 🌟
