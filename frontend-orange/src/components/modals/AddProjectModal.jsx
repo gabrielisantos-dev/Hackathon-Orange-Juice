@@ -4,6 +4,7 @@ import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMedi
 import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
 import ViewPostModal from './ViewPostModal';
+import SavePostModal from './SavePostModal';
 
 // Constantes para tamanhos e cores repetidas
 const modalWidth = '850px';
@@ -14,6 +15,7 @@ const primaryColor = theme.palette.neutral.secondaryLight;
 const AddProjectModal = ({ onClose }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
+    const [savePostModalOpen, setSavePostModalOpen] = useState(false);
 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -58,11 +60,13 @@ const AddProjectModal = ({ onClose }) => {
     };
 
     const handleSave = () => {
-    console.log(projectData);
+    setSavePostModalOpen(true);
+    onClose();
     };
 
     return (
     <ThemeProvider theme={theme}>
+        {!savePostModalOpen && (
         <Modal open={true} onClose={onClose}>
         <Box
             sx={{
@@ -274,6 +278,7 @@ const AddProjectModal = ({ onClose }) => {
             </Box>
         </Box>
         </Modal>
+        )}
         {viewPostModalOpen && (
         <ViewPostModal
             onClose={() => {
@@ -281,6 +286,13 @@ const AddProjectModal = ({ onClose }) => {
             setSelectedProject(null);
             }}
             projectData={selectedProject}
+        />
+        )}
+        {savePostModalOpen && (
+        <SavePostModal
+            onClose={() => {
+            setSavePostModalOpen(false);
+            }}
         />
         )}
     </ThemeProvider>
