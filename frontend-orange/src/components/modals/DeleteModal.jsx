@@ -2,6 +2,11 @@ import PropTypes from 'prop-types';
 import { Box, Typography, Modal, Button } from '@mui/material';
 
 const DeleteModal = ({ onClose }) => {
+
+const handleCancel = () => {
+    onClose();
+};
+
     return (
         <Modal open={true} onClose={onClose}>
             <Box
@@ -39,6 +44,7 @@ const DeleteModal = ({ onClose }) => {
                 </Button>
                 <Button
                     variant='outlined'
+                    onClick={handleCancel}
                     sx={{
                     width: 'Hug (101px)',
                     height: 'Hug (42px)',
