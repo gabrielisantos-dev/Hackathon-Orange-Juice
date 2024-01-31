@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -37,7 +36,7 @@ export default function ModalProjeto(props) {
         <Box sx={{display:'flex', justifyContent:'right'}}>
           <CloseIcon onClick={props.onClose} style={{cursor:'pointer'}}/>
         </Box> 
-           
+        
         <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center', margin:'0px 25px'}}>
           <Box sx={{display:'flex', gap: '12px', alignItems:'center'}}>
             <img src={props.avatar} alt="Imagem usuário" width='40px' height='40px' />
