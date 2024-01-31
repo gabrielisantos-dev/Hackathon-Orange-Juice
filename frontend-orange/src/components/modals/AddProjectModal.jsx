@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery } from '@mui/material';
 import { theme } from '../../utils/Theme';
@@ -63,6 +63,14 @@ const AddProjectModal = ({ onClose }) => {
     setSavePostModalOpen(true);
     onClose();
     };
+
+    const backgroundImage = useMemo(() => {
+    if (projectData.image) {
+        return `url(${URL.createObjectURL(projectData.image)})`;
+    }
+    return 'none';
+    }
+    , [projectData.image]);
 
     return (
     <ThemeProvider theme={theme}>
@@ -134,9 +142,7 @@ const AddProjectModal = ({ onClose }) => {
                     justifyContent: 'center',
                     backgroundColor: primaryColor,
                     marginTop: '32px',
-                    backgroundImage: projectData.image
-                    ? `url(${URL.createObjectURL(projectData.image)})`
-                    : 'none',
+                    backgroundImage: backgroundImage,
                 }}
                 >
                 <Box
