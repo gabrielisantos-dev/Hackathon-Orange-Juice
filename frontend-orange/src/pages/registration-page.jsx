@@ -1,6 +1,6 @@
 import { Box, useMediaQuery } from '@mui/material';
 import ImagemCadastro from '../components/tela-cadastro/ImagemCadastro';
-import CadastroForms from '../components/tela-cadastro/CadastroForms';
+import CadastroFormulario from '../components/tela-cadastro/CadastroFormulario.jsx'
 import TextCadastro from '../components/tela-cadastro/TextCadastro';
 import styles from '../styles';
 
@@ -21,7 +21,7 @@ const RegistrationPage = () => {
       </Box>
       <Box sx={styles.formularioContainer}>
         <TextCadastro />
-        <CadastroForms />
+        <CadastroFormulario />
       </Box>
     </Box>
   );

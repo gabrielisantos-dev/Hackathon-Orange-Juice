@@ -1,17 +1,17 @@
 import {useForm} from 'react-hook-form';
-// import { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import { useState } from 'react';
+import {Box, TextField, Typography, Button, Link,
+        InputAdornment, IconButton} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {validarEmail} from '../../utils/validate'
+
 
 
 export default function FormularioLogin(props){
 
-  // const [email, setEmail] = useState()
-  // const [password, setPassword] = useState()
-  const emailAdress = 'Email adress'
+
+  const [showPassword, setShowPassword] = useState(false);
+  const emailAdress = 'Email'
   const password = 'Password'
 
   const {register, handleSubmit, formState: {errors}} = useForm()
@@ -21,6 +21,9 @@ export default function FormularioLogin(props){
     
     console.log(data)
 }
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+};
 
   return(
     <Box sx={{width: props.boxWidth, height: '271px'}}>
@@ -30,7 +33,7 @@ export default function FormularioLogin(props){
       <Box
         component='form'
         sx={{
-          // width: '517px',
+          
           width: props.formWidth,
           height: props.formHeight,
           marginTop: '20px',
@@ -39,37 +42,48 @@ export default function FormularioLogin(props){
           gap: '10px'
           }}
           onSubmit={handleSubmit(onSubmit)}
-          >
-        <TextField  
+          >        
+   
+        <TextField                   
           variant='outlined'
           fullWidth
-          label={emailAdress}
-          // label="Email_adress"
-          id="fullWidth"
+          label="Email adress"
+          error={!!errors?.Email}
+          helperText={errors?.Email ? errors.Email.message : null}
           {...register(emailAdress, {
             required: 'Campo Obrigatório',
-            pattern: {
-              value:'',
+           
+            pattern:{
+              value:validarEmail,
               message: 'Email inválido'
             }
           })}
-          error={!!errors?.Email_adress}
-          helperText={errors?.Email_adress ? errors.Email_adress.message : null}
-        />     
-        <TextField
-          type='password'
+          />
+          <TextField          
+          type={showPassword ? 'text' : 'password'}          
           variant='outlined'
-          fullWidth label="Password"
-          id="fullWidth"
+          fullWidth
+          label="Password"
+          error={!!errors?.Password}
+          helperText={errors?.Password ? errors.Password.message : null}
           {...register(password, {
             required: 'Campo Obrigatório',
+            minLength: 6,
             pattern:{
               value:'',
               message: 'Password inválido'
             }
           })}
-          error={!!errors?.Password}
-          helperText={errors?.Password ? errors.Password.message : null}
+
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleTogglePassword} edge="end">
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           />
         <Button
           variant='contained'
@@ -100,3 +114,4 @@ export default function FormularioLogin(props){
     
   )
 }
+

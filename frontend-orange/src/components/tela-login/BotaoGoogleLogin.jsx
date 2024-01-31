@@ -13,4 +13,3 @@ export default function BotaoGoogleLogin(props){
 }
 
 
-// width='181px' height='46px'

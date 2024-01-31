@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button, TextField, Grid, Alert, Box, IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import styles from '../../styles.jsx';
 
 const CadastroFormulario = ({ onCadastro }) => {
