@@ -18,7 +18,8 @@ import "./main.css"
 // import ModalProjeto from './components/meu-portfolio/ModalProjeto';
 // import DescobrirMobile from './pages/DescobrirMobile'
 // import RegistrationPage from './pages/registration-page.jsx'
-import AddProjectModal from "./components/modals/AddProjectModal";
+// import AddProjectModal from "./components/modals/AddProjectModal";
+import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 
 
 
@@ -35,7 +36,7 @@ function App() {
       {/* <TelaLogin/> */}
       {/* <MainHeader/> */}
       {/* <ContainerImagemTelaLogin/> */}
-      <AddProjectModal/>
+      {/* <AddProjectModal/> */}
       {/* <CardPerfil/> */}
       {/* <FormBuscarTags/> */}
       {/* <ListaProjetos/> */}
@@ -47,6 +48,7 @@ function App() {
       {/* <DescobrirMobile/> */}
       {/* <ModalProjeto/>     */}
       {/* <DescobrirMobile/> */}
+      <ProjectDeletedModal/>
     </>
    
   )
