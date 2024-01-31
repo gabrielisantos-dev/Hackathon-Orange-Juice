@@ -29,9 +29,16 @@ const ViewPostModal = ({ onClose, projectData }) => {
             bgcolor: 'background.paper',
             boxShadow: 24,
             p: 3,
+            '@media (max-width: 768px)': {
+              width: '90vw',
+              height: '90vh',
+            },
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'right' }}>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'right',
+            }}>
             <CloseIcon onClick={onClose} style={{ cursor: 'pointer' }} />
           </Box>
           <Box
@@ -42,7 +49,12 @@ const ViewPostModal = ({ onClose, projectData }) => {
               margin: '0px 25px',
             }}
           >
-            <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <Box sx={{
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'center',
+              
+              }}>
               <img src={picture} alt='Imagem usuário' width='40px' height='40px' />
               <Box>
                 <Typography variant='subtitle1'>Camila Soares</Typography>
