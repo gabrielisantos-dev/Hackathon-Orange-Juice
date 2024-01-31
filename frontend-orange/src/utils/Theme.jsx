@@ -23,6 +23,7 @@ export const theme = createTheme({
     neutral:{
       main:'#818388',
       secondaryMain:'#A1A3AA',
+      lightest: '#FCFDFF',
       light:'#C2C4CC',
       secondaryLight:'#E6E9F2',
       dark:'#515255',
