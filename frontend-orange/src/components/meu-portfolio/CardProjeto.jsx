@@ -181,8 +181,8 @@ export default function CardProjeto(props){
 
           }}
         >
-          <Chip label={props.labelChip1}/>
-          <Chip label={props.labelChip3}/>
+          {/* <Chip label={props.labelChip}/> */}
+          <Chip label={props.labelChip}/>
         </Box>
 
       </Box>

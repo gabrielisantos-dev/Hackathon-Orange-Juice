@@ -16,39 +16,54 @@ export const mock =
     avatar:profilePicture,
     nome:'John Doe',
     email:'john@doeux.com',
-    tag:{ui:'UI', ux:'UX', web:'Web'},
+    tag:'UI',
     data:'08/23',
     urlImagem:figuraProjeto1,
-    tituloProj:'Ecommerce One Page'
+    tituloProj:'Ecommerce One Page',
+    descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
   },
   {
     pais:'Alemanha',
     avatar: profilePicture,
     nome:'Joana Doe',
     email:'joana@doeux.com',
-    tag:{ui:'UI', ux:'UX', web:'Web'},
+    tag:'Web',
     data:'09/23',
     urlImagem:figuraProjeto2,
-    tituloProj:'REsponsive Website'
+    tituloProj:'Responsive Website',
+    descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
   },
   {
     pais:'Brasil',
     avatar: profilePicture,
     nome:'Gil',
     email:'gil@rudge.com',
-    tag:{ui:'UI', ux:'UX', web:'Web'},
+    tag:'UX',
     data:'10/23',
     urlImagem:figuraProjeto3,
-    tituloProj:'Ecommerce One Page'
+    tituloProj:'Ecommerce One Page',
+    descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
+  },
+  {
+    pais:'Brasil',
+    avatar: profilePicture,
+    nome:'Abreu',
+    email:'abreu@gmail.com',
+    tag:'Back',
+    data:'11/23',
+    urlImagem:figuraProjeto4,
+    tituloProj:'Ecommerce One Page',
+    descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
   },
   {
     pais:'Brasil',
     avatar: profilePicture,
     nome:'Romualdo',
     email:'ro@gmail.com',
-    tag:{ui:'UI', ux:'UX', web:'Web'},
+    tag:'Back',
     data:'11/23',
     urlImagem:figuraProjeto4,
-    tituloProj:'Ecommerce One Page'
+    tituloProj:'Ecommerce One Page',
+    descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
   },
 ]

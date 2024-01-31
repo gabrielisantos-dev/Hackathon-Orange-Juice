@@ -1,9 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
  
 
-export default function CardPerfil(props){
-
-    
+export default function CardPerfil(props){    
 
  return(
   
@@ -20,7 +18,11 @@ export default function CardPerfil(props){
         }}
         >
       <Box>
-        <img src={props.avatar} alt="Imagem de perfil do usuário" />
+        <img 
+          src={props.avatar}
+        
+          alt="Imagem de perfil do usuário" />
+          
       </Box>
       <Box 
         sx={{
@@ -43,6 +45,7 @@ export default function CardPerfil(props){
             variant="h5"
             >
               {props.nome}
+              
           </Typography>
           <Typography
             variant="subtitle1"

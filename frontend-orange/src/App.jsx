@@ -11,7 +11,7 @@ import "./main.css"
 import TelaLogin from "./pages/TelaLogin"
 // import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
-// import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
+import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
 // import ListaProjetos from './components/meu-portfolio/ListaProjetos';
 import MeuPortfolio from "./pages/MeuPortfolio";
 import Descobrir from "./pages/Descobrir";
@@ -38,8 +38,8 @@ function App() {
       {/* <CardPerfil/> */}
       {/* <FormBuscarTags/> */}
       {/* <ListaProjetos/> */}
-      <TelaLogin />
-      <Descobrir/>
+      {/* <TelaLogin /> */}
+      {/* <Descobrir/> */}
       <MeuPortfolio/>
       {/* <RegistrationPage/> */}
       {/* <Descobrir/> */}
