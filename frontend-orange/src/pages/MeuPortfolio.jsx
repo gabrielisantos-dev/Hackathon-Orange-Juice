@@ -6,24 +6,35 @@ import CardPerfil from '../components/meu-portfolio/CardPerfil';
 import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
 import ListaProjetos from '../components/meu-portfolio/ListaProjetos';
 import { useState } from "react";
-import profilePicture from '../assets/profile-picture/picture.svg';
+// import profilePicture from '../assets/profile-picture/picture.svg';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 // import figuraProjeto from '../assets/projects/project1.svg'
-import figuraProjeto from '../assets/projects/project1.svg'
+// import figuraProjeto1 from '../assets/projects/project1.svg'
+import {mock} from '../utils/mock'
 
 export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const [cardPerfil, setCardPerfil] = useState({
-    pais:'Brasil',
-    avatar: profilePicture,
-    nome:'John Doe',
-    email:'john@doeux.com',
-    tag:{ui:'UI', ux:'UX', web:'Web'},
-    data:'12/23',
-    urlImagem:figuraProjeto,
-    tituloProj:'Ecommerce One Page'
-  });
+  
+  
+  // const [cardPerfil, setCardPerfil] = useState({
+  //   pais:'Brasil',
+  //   avatar: profilePicture,
+  //   nome:'John Doe',
+  //   email:'john@doeux.com',
+  //   tag:{ui:'UI', ux:'UX', web:'Web'},
+  //   data:'12/23',
+  //   urlImagem:figuraProjeto1,
+  //   tituloProj:'Ecommerce One Page'
+  // });
+  // const teste = mock.map(item => item)
+
+  const [cardPerfil, setCardPerfil] = useState(mock)
+  // console.log(batata)
+
+  // console.log(teste[1].nome)
+
+  // const [cardPerfil, setCardPerfil] = useState(mock)
 
 
 
@@ -48,6 +59,7 @@ export default function MeuPortfolio(){
         gapCard={responsivo1 ? '42px' : '5px'}
         alignItens={!responsivo1 ? 'center' : null}
         marginBottomTyp={!responsivo1 ? '10px' : null}
+        buttonOnOff={cardPerfil}
       />
       <Box sx={{margin:'0px 32px', marginTop:'56px'}}>
         <Box sx={{marginBottom:'40px'}}>
@@ -55,15 +67,16 @@ export default function MeuPortfolio(){
         </Box>
 
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
-          <Link 
+          {cardPerfil.length === 0 ? <Link 
           onClick={()=>{console.log('clicando')}} 
           underline='none'
           width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
           style={{cursor:'pointer'}}
           >
             <ListaProjetos />
-          </Link>
-          <CardProjeto 
+          </Link> : null}
+
+          {/* <CardProjeto 
             width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
             color='neutral.dark'
             colorIconMenu='secondary.secondaryLight'
@@ -77,9 +90,33 @@ export default function MeuPortfolio(){
             labelChip2={cardPerfil.tag.ux}
             labelChip3={cardPerfil.tag.web}
             data={cardPerfil.data}
-            // imagem={cardPerfil.urlImagem}
+            imagem={cardPerfil.urlImagem}
             >           
-          </CardProjeto>          
+          </CardProjeto>           */}
+          {cardPerfil.map((item, index) => {
+            return(
+              <CardProjeto 
+            key={index}
+            width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
+            color='neutral.dark'
+            colorIconMenu='secondary.secondaryLight'
+            avatar={item.avatar}
+            widthAvatar='24px'
+            heightAvatar='24px'
+            chipsWidth='92px'
+            chipsHeight='32px'
+            nome={item.nome}
+            labelChip1={item.tag.ui}
+            labelChip2={item.tag.ux}
+            labelChip3={item.tag.web}
+            data={item.data}
+            imagem={item.urlImagem}
+            >           
+          </CardProjeto>
+            )
+          })}
+          
+          
         </Box>
       </Box>
     </Box>     

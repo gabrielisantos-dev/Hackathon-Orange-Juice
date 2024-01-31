@@ -56,12 +56,14 @@ export default function CardPerfil(props){
           <Button 
             variant="contained"
             size='' 
-            disabled            
+            disabled= {props.buttonOnOff.length === 0 ? true : false}          
             sx={{
               width:'200px',
               padding:'8px 22px 8px 22px',
               fontWeight:'500',
-              lineHeight:'26px'
+              lineHeight:'26px',
+              backgroundColor:'secondary.main'
+              
             }}
             >
               adicionar projeto            
