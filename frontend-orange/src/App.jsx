@@ -19,7 +19,8 @@ import "./main.css"
 // import DescobrirMobile from './pages/DescobrirMobile'
 // import RegistrationPage from './pages/registration-page.jsx'
 // import AddProjectModal from "./components/modals/AddProjectModal";
-import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
+// import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
+import DeleteModal from "./components/modals/DeleteModal";
 
 
 
@@ -48,7 +49,8 @@ function App() {
       {/* <DescobrirMobile/> */}
       {/* <ModalProjeto/>     */}
       {/* <DescobrirMobile/> */}
-      <ProjectDeletedModal/>
+      {/* <ProjectDeletedModal/> */}
+      <DeleteModal/>
     </>
    
   )

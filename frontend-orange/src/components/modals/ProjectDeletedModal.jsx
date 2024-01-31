@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Box, Typography, Modal, Button } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const SavePostModal = ({ onClose }) => {
+const ProjectDeleteModal = ({ onClose }) => {
     return (
         <Modal open={true} onClose={onClose}>
             <Box
@@ -47,8 +47,8 @@ const SavePostModal = ({ onClose }) => {
     );
 };
 
-SavePostModal.propTypes = {
+ProjectDeleteModal.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default SavePostModal;
+export default ProjectDeleteModal;
