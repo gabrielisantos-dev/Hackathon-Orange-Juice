@@ -1,6 +1,8 @@
 package com.hackathon.backendorange.controller;
 
 import com.hackathon.backendorange.exception.UserNotFoundException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +40,44 @@ public class UserController {
 	 this.userService = userService;
 	}
 
+	@Operation(
+			description = "Permite que um usuário se cadastre no sistema.",
+			summary = "Cadastro de Usuário",
+			responses = {
+					@ApiResponse(
+							description = "Sucesso - O usuário foi cadastrado com êxito.",
+							responseCode = "200"
+					),
+					@ApiResponse(
+							description = "Usuário não encontrado - O usuário não pôde ser localizado.",
+							responseCode = "404"
+					)
+			}
+	)
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserDTO register(@RequestBody @Valid UserDTO userDTO) {
 		return userService.register(userDTO);
 	}
+	@Operation(
+			description = "Permite que um usuário faça login no sistema.",
+			summary = "Operação de Login",
+			responses = {
+					@ApiResponse(
+							description = "Sucesso - O usuário foi autenticado com êxito.",
+							responseCode = "200"
+					),
+					@ApiResponse(
+							description = "Credenciais Inválidas - As informações de login fornecidas são incorretas.",
+							responseCode = "401"
+					),
+					@ApiResponse(
+							description = "Usuário não encontrado - O usuário não está cadastrado no sistema.",
+							responseCode = "404"
+					)
+			}
+	)
+
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AutenticationDTO autenticationDTO) {
 
