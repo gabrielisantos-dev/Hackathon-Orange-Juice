@@ -47,8 +47,8 @@ export default function ModalProjeto(props) {
           </Box>            
           <Typography variant='h5'>{props.tituloProj}</Typography>            
           <Box sx={{display:'flex', gap:'5px'}}>
-            <Chip label={props.labelChip1}/>
-            <Chip label={props.labelChip2}/>
+            <Chip label={props.labelChip}/>
+            {/* <Chip label={props.labelChip2}/> */}
           </Box>         
           </Box>          
           <Box          

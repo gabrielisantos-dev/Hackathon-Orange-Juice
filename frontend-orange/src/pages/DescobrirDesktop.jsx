@@ -1,4 +1,4 @@
-import { Box, ThemeProvider, Link, Typography, Autocomplete, TextField} from '@mui/material/';
+import { Box, ThemeProvider, Link, Typography, Autocomplete, TextField, Button} from '@mui/material/';
 import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
 import Header from '../components/main-header/Header';
@@ -22,26 +22,17 @@ export default function DescobrirDesktop(){
   const [tagProjeto, setTagProjeto] = useState(cardPerfil)
   const [tagsSelecionadas, setTagsSelecionadas] = useState([])
   const arrayTags = []
-
-
-  tagProjeto.map(item => arrayTags.push(item.tag))
   
- 
+  tagProjeto.map(item => arrayTags.push(item.tag)) 
   const tagUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
   });
 
-  // const [cardPerfil, setCardPerfil] = useState({
-  //   pais:'Brasil',
-  //   avatar: profilePicture,
-  //   nome:'John Doe',
-  //   email:'john@doeux.com',
-  //   tag:{ui:'UI', ux:'UX', web:'Web'},
-  //   data:'12/23',
-  //   urlImagem:figuraProjeto,
-  //   tituloProj:'Ecommerce One Page',
-  //   descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
-  // })
+  const [openModalProjeto, setOpenModalProjeto] = useState(false)
+
+  
+
+  
 
   return(
   <ThemeProvider theme={theme}>
@@ -87,7 +78,6 @@ export default function DescobrirDesktop(){
             options={tagUnicas.map((option,index) => option)}
             multiple= {true}
             onChange={(event, value)=>{setTagsSelecionadas(value)}}
-            
             renderInput={(params) => (
               <TextField
               sx={{
@@ -106,7 +96,11 @@ export default function DescobrirDesktop(){
           />
       </Box>
 
-      <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
+      <Box sx={{
+        display:'flex',
+        gap:'26px',
+        flexWrap:'wrap'
+        }}>
           
     
 
@@ -119,11 +113,19 @@ export default function DescobrirDesktop(){
             
             if(tag.length > 0){
                 
-                return(            
+                return( 
+              <Link              
+              key={index}
+              sx={{
+                width:responsivo1 ? 'calc(33.33% - 17.33px)' :'100%',
+                textDecoration:'none',
+                cursor:'pointer'
+              }}
+              onClick={()=>{handleOpen()}}
+                >           
            
-              <CardProjeto 
-                key={index}
-                width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
+              <CardProjeto                 
+                width='100%'
                 color='neutral.dark'
                 colorIconMenu='secondary.secondaryLight'
                 avatar={itemCard.avatar}
@@ -134,19 +136,29 @@ export default function DescobrirDesktop(){
                 labelChip={itemCard.tag}               
                 data={itemCard.data}
                 imagem={itemCard.urlImagem}
-                iconMenu={'none'}                
-                >           
-              </CardProjeto>           
+                iconMenu={'none'}                       
+                /> 
+                </Link>       
+                     
                 )
               }
           })
           : cardPerfil.map((itemCard, index) => {
 
               return(                
-
-                <CardProjeto 
-                  key={index}
-                  width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
+                
+                <Link
+                  key={index} 
+                  sx={{
+                    width:responsivo1 ? 'calc(33.33% - 17.33px)' :'100%',
+                    textDecoration:'none',
+                    cursor:'pointer'
+                  }}
+                  onClick={()=>{handleOpen()}}                  
+                    >
+                
+                <CardProjeto                   
+                  width='100%'
                   color='neutral.dark'
                   colorIconMenu='secondary.secondaryLight'
                   avatar={itemCard.avatar}
@@ -157,9 +169,10 @@ export default function DescobrirDesktop(){
                   labelChip={itemCard.tag}             
                   data={itemCard.data}
                   imagem={itemCard.urlImagem}
-                  iconMenu={'none'}                
-                  >           
-                </CardProjeto>              
+                  iconMenu={'none'}                                   
+                  />
+                </Link>           
+                
                   )
                 })          
           }
@@ -173,14 +186,13 @@ export default function DescobrirDesktop(){
       <ModalProjeto
       open={open}
       onClose={handleClose}
-      avatar={cardPerfil.avatar}
-      nome={cardPerfil.nome}
-      data={cardPerfil.data}
-      labelChip1={cardPerfil.tag.ui}
-      labelChip2={cardPerfil.tag.ux}
-      tituloProj={cardPerfil.tituloProj}
-      imagem={cardPerfil.urlImagem}
-      descricao={cardPerfil.descricao}
+      avatar={cardPerfil[0].avatar}
+      nome={cardPerfil[0].nome}
+      data={cardPerfil[0].data}
+      labelChip={cardPerfil[0].tag}      
+      tituloProj={cardPerfil[0].tituloProj}
+      imagem={cardPerfil[0].urlImagem}
+      descricao={cardPerfil[0].descricao}
       
       />
     : null} 

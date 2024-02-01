@@ -1,4 +1,5 @@
-import { Box, Typography, Chip, ListItem, List } from "@mui/material";
+import {theme} from '../../utils/Theme'
+import { Box, Typography, Chip, Link, Button } from "@mui/material";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { useState } from "react";
 // import figuraProjeto from '../../assets/projects/project1.svg'
@@ -15,9 +16,12 @@ import Tooltip from '@mui/material/Tooltip';
 // import Logout from '@mui/icons-material/Logout';
 import CreateIcon from '@mui/icons-material/Create';
 import EditProjectModal from "../modals/EditProjectModal";
+import {useMediaQuery} from '@mui/material/';
+import ModalProjeto from './ModalProjeto';
+
 
 export default function CardProjeto(props){
-
+  const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -27,17 +31,17 @@ export default function CardProjeto(props){
     setAnchorEl(null);
   }
   return(
-  
     <Box 
     
-      sx={{
-        height:'298px',
-        display:'flex',
-        flexDirection:'column',        
-        justifyContent:'center',
-        width:props.width,        
-      }}
-      >
+    sx={{
+      
+      height:'298px',
+      display:'flex',
+      flexDirection:'column',        
+      justifyContent:'center',
+      width:props.width,        
+    }}
+    >
       <Box 
         sx={{
           backgroundImage: `url(${props.imagem})`,
@@ -46,8 +50,10 @@ export default function CardProjeto(props){
           width:'100%',
           height:'100%',
           borderRadius:'5px',
-          }}
+        }}
           >
+         
+        
             {/* ======inicio menu===== */}
        <Box>
           <Box 
@@ -139,7 +145,8 @@ export default function CardProjeto(props){
             </MenuItem>
            
           </Menu>
-        </Box>           
+        </Box>
+        
       </Box>
 
       <Box 
@@ -173,6 +180,7 @@ export default function CardProjeto(props){
             <Typography variant="subtitle1">{props.data}</Typography>
           </Box>
 
+
         </Box>
         <Box
           sx={{
@@ -182,7 +190,7 @@ export default function CardProjeto(props){
 
           }}
         >
-          {/* <Chip label={props.labelChip}/> */}
+          
           <Chip label={props.labelChip}/>
         </Box>
       </Box>
@@ -195,7 +203,9 @@ export default function CardProjeto(props){
           handleEditProjectModal={props.handleEditProjectModal}
 
         /> : null}
+
+        {/* {props.openModalProjeto ? <ModalProjeto/> : null} */}
+    
     </Box> 
-   
   )
 }
