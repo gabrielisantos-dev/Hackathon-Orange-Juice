@@ -12,7 +12,7 @@ import { Outlet } from "react-router-dom";
 import TelaLogin from "./pages/TelaLogin"
 // import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
-import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
+// import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
 // import ListaProjetos from './components/meu-portfolio/ListaProjetos';
 import MeuPortfolio from "./pages/MeuPortfolio";
 // import Descobrir from "./pages/Descobrir";
@@ -22,8 +22,7 @@ import MeuPortfolio from "./pages/MeuPortfolio";
 import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 import DeleteModal from "./components/modals/DeleteModal";
-import RegistrationPage from './pages/registration-page'
-import DescobrirDesktop from "./pages/DescobrirDesktop";
+
 
 
 
@@ -44,7 +43,7 @@ function App() {
       {/* <CardPerfil/> */}
       {/* <FormBuscarTags/> */}
       {/* <ListaProjetos/> */}
-      {/* <TelaLogin /> */}
+      <TelaLogin />
       {/* <Descobrir/> */}
       {/* <MeuPortfolio/> */}
       {/* <RegistrationPage/> */}
