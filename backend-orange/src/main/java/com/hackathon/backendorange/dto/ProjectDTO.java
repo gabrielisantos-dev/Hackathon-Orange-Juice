@@ -21,7 +21,7 @@ public class ProjectDTO {
     private String image;
     private String image_id;
     private String image_originalName;
-    private Long user_id;
+    private Long idUser;
 
 
 }

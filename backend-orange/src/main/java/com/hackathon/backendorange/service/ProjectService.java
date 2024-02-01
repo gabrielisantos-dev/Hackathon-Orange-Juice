@@ -57,8 +57,8 @@ public class ProjectService {
     public ProjectDTO saveProject(ProjectDTO projectDTO, MultipartFile file) throws IOException {
 
 
-        if (projectDTO != null && projectDTO.getUser_id() != null) {
-            User user = userRepository.findById(projectDTO.getUser_id()).orElseThrow(() -> new UserNotFoundException());
+        if (projectDTO != null && projectDTO.getIdUser() != null) {
+            User user = userRepository.findById(projectDTO.getIdUser()).orElseThrow(() -> new UserNotFoundException());
 
             Map imageInfo = uploadImage(file);
             String imageUrl = imageInfo.get("url").toString();
