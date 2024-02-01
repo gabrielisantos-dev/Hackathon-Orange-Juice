@@ -19,7 +19,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table
+@Table(name = "usuario")
 @NoArgsConstructor
 public class User implements UserDetails {
 
