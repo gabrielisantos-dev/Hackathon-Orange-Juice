@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 // import Settings from '@mui/icons-material/Settings';
 // import Logout from '@mui/icons-material/Logout';
 import CreateIcon from '@mui/icons-material/Create';
+import EditProjectModal from "../modals/EditProjectModal";
 
 export default function CardProjeto(props){
 
@@ -117,7 +118,7 @@ export default function CardProjeto(props){
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem 
-              onClick={handleClose}
+              onClick={() => {props.handleEditProjectModal()}}
               sx={{
                 '&:hover':{
                   bgcolor:props.colorIconMenu
@@ -127,7 +128,7 @@ export default function CardProjeto(props){
               Editar
             </MenuItem>
             <MenuItem
-              onClick={handleClose}
+              onClick={handleClose} // INCLUIR ROTA AXIOS AQUI
               sx={{
                 '&:hover':{
                   bgcolor:props.colorIconMenu
@@ -184,8 +185,16 @@ export default function CardProjeto(props){
           {/* <Chip label={props.labelChip}/> */}
           <Chip label={props.labelChip}/>
         </Box>
-
       </Box>
+
+      {props.openEditProjectModal ?
+      
+        <EditProjectModal
+          openEditProjectModal={props.openEditProjectModal}
+          setOpenEditProjectModal={props.setOpenEditProjectModal}
+          handleEditProjectModal={props.handleEditProjectModal}
+
+        /> : null}
     </Box> 
    
   )

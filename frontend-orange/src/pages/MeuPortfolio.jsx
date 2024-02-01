@@ -10,44 +10,39 @@ import profilePicture from '../assets/profile-picture/picture.svg';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import figuraProjeto from '../assets/projects/project1.svg'
 import figuraProjeto1 from '../assets/projects/project1.svg'
+import EditProjectModal from '../components/modals/EditProjectModal'
 import {mock} from '../utils/mock'
 
 export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))  
   
-//   const [cardPerfil, setCardPerfil] = useState([{
-//     pais:'Brasil',
-//     avatar: profilePicture,
-//     nome:'John Doe',
-//     email:'john@doeux.com',
-//     tag:'UI',
-//     data:'12/23',
-//     urlImagem:figuraProjeto1,
-//     tituloProj:'Ecommerce One Page'
-//   },{
-//     pais:'Brasil',
-//     avatar: profilePicture,
-//     nome:'John Doe',
-//     email:'john@doeux.com',
-//     tag:'UI',
-//     data:'12/23',
-//     urlImagem:figuraProjeto1,
-//     tituloProj:'Ecommerce One Page'
-//   }  
-// ]);
   const [cardPerfil, setCardPerfil] = useState(mock)
 
   const [tagProjeto, setTagProjeto] = useState(cardPerfil)
   const [tagsSelecionadas, setTagsSelecionadas] = useState([])
   const arrayTags = []
-
-
   tagProjeto.map(item => arrayTags.push(item.tag))
   
  
   const tagUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
   });
+
+  const [openEditProjectModal, setOpenEditProjectModal] = useState(false)
+
+  const [openModalProjeto, setOpenModalProjeto] = useState(false)
+
+  const handleOpenModalProjeto = () =>{
+
+    openModalProjeto ? setOpenModalProjeto(false) : setOpenModalProjeto(true)
+          
+  }
+
+  const handleEditProjectModal = () =>{
+
+    openEditProjectModal ? setOpenEditProjectModal(false) : setOpenEditProjectModal(true)
+          
+  }
 
 
   return(
@@ -73,6 +68,9 @@ export default function MeuPortfolio(){
         alignItens={!responsivo1 ? 'center' : null}
         marginBottomTyp={!responsivo1 ? '10px' : null}
         buttonOnOff={cardPerfil}
+        openModalProjeto={openModalProjeto}
+        setOpenModalProjeto={setOpenModalProjeto}
+        handleOpenModalProjeto={handleOpenModalProjeto}
       />
       <Box sx={{margin:'0px 32px', marginTop:'56px'}}>
         
@@ -118,14 +116,19 @@ export default function MeuPortfolio(){
 
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
           
-          {cardPerfil.length === 0 ? <Link 
-          onClick={()=>{console.log('clicando')}} 
+          {/* {cardPerfil.length === 0 ? */}
+          {cardPerfil[0].length < 1 || cardPerfil[0] === null || cardPerfil[0] === undefined ?
+
+          <Link 
+          onClick={()=>{handleOpenModalProjeto()}} 
           underline='none'
           width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
           style={{cursor:'pointer'}}
           >
             <ListaProjetos />
-          </Link> : null}
+          </Link>
+          
+          : null}
 
           { tagsSelecionadas.length > 0 
             
@@ -152,6 +155,14 @@ export default function MeuPortfolio(){
                 labelChip={itemCard.tag}               
                 data={itemCard.data}
                 imagem={itemCard.urlImagem}
+                openModalProjeto={openModalProjeto}
+                setOpenModalProjeto={setOpenModalProjeto}
+                handleOpenModalProjeto={handleOpenModalProjeto}
+
+                openEditProjectModal={openEditProjectModal}
+                setOpenEditProjectModal={setOpenEditProjectModal}
+                handleEditProjectModal={handleEditProjectModal}
+
                 >           
               </CardProjeto>
                 )
@@ -173,6 +184,13 @@ export default function MeuPortfolio(){
                 labelChip={itemCard.tag}             
                 data={itemCard.data}
                 imagem={itemCard.urlImagem}
+                openModalProjeto={openModalProjeto}
+                setOpenModalProjeto={setOpenModalProjeto}
+                handleOpenModalProjeto={handleOpenModalProjeto}
+
+                openEditProjectModal={openEditProjectModal}
+                setOpenEditProjectModal={setOpenEditProjectModal}
+                handleEditProjectModal={handleEditProjectModal}
                 >           
               </CardProjeto>
                 )

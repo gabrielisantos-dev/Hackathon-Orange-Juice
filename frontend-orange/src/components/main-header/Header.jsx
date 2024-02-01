@@ -87,8 +87,8 @@ export default function MainHeader(props){
                   <Typography>{props.email}</Typography> 
                 </Box>
                   <Divider/>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/'>Descobrir</Link></Typography></MenuItem>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/meu-portfolio'>Meus projetos</Link></Typography></MenuItem>
+                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
+                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/meu-portfolio' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
                   <Divider/>
                   <MenuItem onClick={handleClose} sx={{gap:'10px'}}>
                     <LogoutIcon/>

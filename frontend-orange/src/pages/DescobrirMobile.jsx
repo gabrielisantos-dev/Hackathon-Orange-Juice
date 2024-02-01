@@ -57,7 +57,7 @@ export default function DescobrirDesktop(){
       />
       
       {openDescobrir ?
-     <>
+     <Box>
       <Typography 
         sx={{
           margin:responsivo1 ? '112px 268px' : '55px 24px',
@@ -169,11 +169,11 @@ export default function DescobrirDesktop(){
           
         </Box>
       </Box>      
-    // </Box> 
+     </Box> 
       
-      </>
-      // : null 
-      }
+      
+      
+        : null}
       
 
     {open ?  
