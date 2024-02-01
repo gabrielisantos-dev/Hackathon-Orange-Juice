@@ -12,7 +12,7 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const AddProjectModal = ({ onClose }) => {
+const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [savePostModalOpen, setSavePostModalOpen] = useState(false);
@@ -57,6 +57,7 @@ const AddProjectModal = ({ onClose }) => {
         image: null,
     });
     onClose();
+    handleOpenModalProjeto()
     };
 
     const handleSave = () => {
@@ -262,12 +263,13 @@ const AddProjectModal = ({ onClose }) => {
                     marginRight: '16px',
                     color: '#FCFDFF',
                 }}
+                //INCLUIR ROTA AXIOS AQUI ==================================
                 >
                 <b>Salvar</b>
                 </Button>
                 <Button
                 variant='outlined'
-                onClick={handleCancel}
+                onClick={()=>{handleOpenModalProjeto()}}
                 sx={{
                     width: 'Hug (101px)',
                     height: 'Hug (42px)',

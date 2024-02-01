@@ -1,7 +1,18 @@
 import { Box, Typography, Button } from "@mui/material";
+import { useState } from "react";
+import ModalProjeto from './ModalProjeto'
+import AddProjectModal from '../modals/AddProjectModal'
  
 
-export default function CardPerfil(props){    
+export default function CardPerfil(props){ 
+  
+  // const [openModalProjeto, setOpenModalProjeto] = useState(false)
+
+  // const handleOpenModalProjeto = () =>{
+
+  //   openModalProjeto ? setOpenModalProjeto(false) : setOpenModalProjeto(true)
+          
+  // }
 
  return(
   
@@ -68,10 +79,18 @@ export default function CardPerfil(props){
               backgroundColor:'secondary.main'
               
             }}
+            onClick={()=>{props.handleOpenModalProjeto()}}
             >
               adicionar projeto            
           </Button>
       </Box>
+      {props.openModalProjeto ? 
+      
+        <AddProjectModal
+          handleOpenModalProjeto={props.handleOpenModalProjeto}
+        />
+        
+        : null}
     </Box>
   
  )

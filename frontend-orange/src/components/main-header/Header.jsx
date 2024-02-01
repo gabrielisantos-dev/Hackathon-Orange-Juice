@@ -3,6 +3,7 @@ import { Box, ThemeProvider, Typography,
          Button, Menu, MenuItem, Divider, useMediaQuery} from "@mui/material";
 import {theme} from '../../utils/Theme';
 import * as React from 'react'
+import { Link } from "react-router-dom";
 
 import logoOrange from '../../assets/logo-orange/logo-orange.svg';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -86,8 +87,8 @@ export default function MainHeader(props){
                   <Typography>{props.email}</Typography> 
                 </Box>
                   <Divider/>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' >Meus projetos</Typography></MenuItem>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' >Descobrir</Typography></MenuItem>
+                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
+                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/meu-portfolio' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
                   <Divider/>
                   <MenuItem onClick={handleClose} sx={{gap:'10px'}}>
                     <LogoutIcon/>
@@ -122,7 +123,12 @@ export default function MainHeader(props){
                 
                 }}
             >
+              <Link 
+              to='/meu-portfolio'
+              style={{textDecoration:'none', color:'#FCFDFF'}}>
+              
               Meus projetos
+              </Link>
             </Typography>
             <Typography 
               color='neutral.lightest'
@@ -133,7 +139,12 @@ export default function MainHeader(props){
                 fontWeight:'500'               
                 }}
             >
+              <Link 
+                to='/'
+                style={{textDecoration:'none', color:'#FCFDFF'}}
+                >
               Descobrir
+              </Link>
             </Typography>
           </Box> : null}      
         </Box>

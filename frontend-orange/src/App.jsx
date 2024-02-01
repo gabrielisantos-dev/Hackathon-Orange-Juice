@@ -1,4 +1,5 @@
 import "./main.css"
+import { Outlet } from "react-router-dom";
 // import ThemeProvider from "@mui/material/";
 // import { ThemeProvider } from "@mui/material/styles";
 // import {theme} from './utils/Theme'
@@ -13,14 +14,14 @@ import TelaLogin from "./pages/TelaLogin"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
 // import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
 // import ListaProjetos from './components/meu-portfolio/ListaProjetos';
-// import MeuPortfolio from "./pages/MeuPortfolio";
+import MeuPortfolio from "./pages/MeuPortfolio";
 // import Descobrir from "./pages/Descobrir";
 // import ModalProjeto from './components/meu-portfolio/ModalProjeto';
 // import DescobrirMobile from './pages/DescobrirMobile'
 // import RegistrationPage from './pages/registration-page.jsx'
-// import AddProjectModal from "./components/modals/AddProjectModal";
+import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
-// import DeleteModal from "./components/modals/DeleteModal";
+import DeleteModal from "./components/modals/DeleteModal";
 
 
 
@@ -29,8 +30,9 @@ function App() {
 
   return (
     <>
-      {/* <ImagemTelaLogin/> */}
-  
+      {/* <RegistrationPage/> */}
+      <Outlet/>
+      {/* <ImagemTelaLogin/> */}  
       {/* <FormularioLogin /> */}
       {/* <BotaoEntrarComGoogle/> */}
       {/* <BotaoGoogleLogin/> */}
@@ -47,6 +49,7 @@ function App() {
       {/* <RegistrationPage/> */}
       {/* <Descobrir/> */}
       {/* <DescobrirMobile/> */}
+      {/* <DescobrirDesktop/> */}
       {/* <ModalProjeto/>     */}
       {/* <DescobrirMobile/> */}
       {/* <ProjectDeletedModal/> */}
