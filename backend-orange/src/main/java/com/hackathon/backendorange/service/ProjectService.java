@@ -58,9 +58,7 @@ public class ProjectService {
 
 
         if (projectDTO != null && projectDTO.getUser().getId() != null) {
-            User user =
-                    userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() ->
-                            new UserNotFoundException());
+            User user = userRepository.findById(projectDTO.getUser().getId()).orElseThrow(() -> new UserNotFoundException());
 
             Map imageInfo = uploadImage(file);
             String imageUrl = imageInfo.get("url").toString();
