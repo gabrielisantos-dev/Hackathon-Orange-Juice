@@ -32,6 +32,7 @@ public class ProjectController {
     public ProjectController(ProjectService service) {
         this.service = service;
     }
+
     @Operation(
             description = "Retorna uma lista de todos os projetos registrados no sistema.",
             summary = "Listar todos os projetos",

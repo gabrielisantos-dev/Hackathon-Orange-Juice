@@ -111,7 +111,7 @@ public class ProjectService {
 
             return Optional.ofNullable(savedProjectDTO);
         } else {
-            throw new IllegalArgumentException("Dados fornecidos incorretamente não fornecido dados obrigatórios!");
+            throw new IllegalArgumentException("Dados fornecidos incorretamente ou não fornecido dados obrigatórios!");
         }
     }
 
