@@ -1,80 +1,83 @@
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import {Box, TextField, Typography, Button, Link,
-        InputAdornment, IconButton} from '@mui/material';
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  Link,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import {validarEmail} from '../../utils/validate'
 
-
-
-export default function FormularioLogin(props){
-
-
+export default function FormularioLogin(props) {
   const [showPassword, setShowPassword] = useState(false);
-  const emailAdress = 'Email'
-  const password = 'Password'
+  const emailAdress = 'email';
+  const password = 'password';
 
-  const {register, handleSubmit, formState: {errors}} = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = async (data) => {
-    
-    
-    console.log(data)
-}
+    console.log(data);
+  };
+
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
-};
+  };
 
-  return(
-    <Box sx={{width: props.boxWidth, height: '271px'}}>
-      <Box sx={{width: props.widthTitle, height: props.heightTitle}}>
-        <Typography variant={props.titulo}>Faça login com email</Typography>
+  return (
+    <Box sx={{ width: props.boxWidth, height: '271px' }}>
+      <Box sx={{ width: props.widthTitle, height: props.heightTitle }}>
+        <Typography variant={props.titulo}>
+          Faça login com email
+        </Typography>
       </Box>
       <Box
-        component='form'
+        component="form"
         sx={{
-          
           width: props.formWidth,
           height: props.formHeight,
           marginTop: '20px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px'
-          }}
-          onSubmit={handleSubmit(onSubmit)}
-          >        
-   
-        <TextField                   
-          variant='outlined'
+          gap: '10px',
+        }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <TextField
+          variant="outlined"
           fullWidth
-          label="Email adress"
-          error={!!errors?.Email}
-          helperText={errors?.Email ? errors.Email.message : null}
+          label="Email address"
+          error={!!errors?.email}
+          helperText={errors?.email ? errors.email.message : null}
           {...register(emailAdress, {
             required: 'Campo Obrigatório',
-           
-            pattern:{
-              value:validarEmail,
-              message: 'Email inválido'
-            }
+            pattern: {
+              value: /^(?!.*\s).{1,20}@.{1,15}$/,
+              message: 'Email inválido',
+            },
           })}
-          />
-          <TextField          
-          type={showPassword ? 'text' : 'password'}          
-          variant='outlined'
+        />
+        <TextField
+          type={showPassword ? 'text' : 'password'}
+          variant="outlined"
           fullWidth
           label="Password"
-          error={!!errors?.Password}
-          helperText={errors?.Password ? errors.Password.message : null}
+          error={!!errors?.password}
+          helperText={errors?.password ? errors.password.message : null}
           {...register(password, {
             required: 'Campo Obrigatório',
-            minLength: 6,
-            pattern:{
-              value:'',
-              message: 'Password inválido'
+            pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,20}$/,
+              message:
+                'Senha incorreta',
             }
           })}
-
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -84,34 +87,34 @@ export default function FormularioLogin(props){
               </InputAdornment>
             ),
           }}
-          />
+        />
         <Button
-          variant='contained'
-          color='secondary'
+          variant="contained"
+          color="secondary"
           sx={{
-            width:props.buttonWidth,
-            height:props.buttonHeight,
-            padding:props.paddingButton
-            }}
-            type='submit'            
-            >
-              Entrar
+            width: props.buttonWidth,
+            height: props.buttonHeight,
+            padding: props.paddingButton,
+          }}
+          type="submit"
+        >
+          Entrar
         </Button>
         <Box>
           <Link
-            color='neutral.main'
-            marginTop='18px'
-            fontWeight='400'
-            fontSize='16px'
-            lineHeight='16px'
-            letterSpacing='0.15px'
-            underline='none'
-            href='#'
-            > Cadastre-se</Link>
+            color="neutral.main"
+            marginTop="18px"
+            fontWeight="400"
+            fontSize="16px"
+            lineHeight="16px"
+            letterSpacing="0.15px"
+            underline="none"
+            href="#"
+          >
+            Cadastre-se
+          </Link>
         </Box>
       </Box>
     </Box>
-    
-  )
+  );
 }
-
