@@ -30,6 +30,7 @@ public class Project {
     @Column
     private String descricao;
 
+    @Enumerated
     private TagsEnum tags;
 
     @NotBlank(message = "Adicione o link do repositório ou outros links para acessar seu projeto!")
