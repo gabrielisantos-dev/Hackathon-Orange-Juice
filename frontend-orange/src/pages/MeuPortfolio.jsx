@@ -76,7 +76,7 @@ export default function MeuPortfolio(){
       />
       <Box sx={{margin:'0px 32px', marginTop:'56px'}}>
         
-         <Box 
+      <Box 
         color='neutral.darkest'
         sx={{
           display:'flex',
@@ -117,6 +117,7 @@ export default function MeuPortfolio(){
   </Box>
 
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
+          
           {cardPerfil.length === 0 ? <Link 
           onClick={()=>{console.log('clicando')}} 
           underline='none'
@@ -132,7 +133,7 @@ export default function MeuPortfolio(){
           cardPerfil.map((itemCard, index) => {
 
               const tag = tagsSelecionadas.filter(itemTag => itemCard.tag === itemTag)
-              console.log(tag)
+              
             
             if(tag.length > 0){
                 
