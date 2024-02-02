@@ -186,7 +186,8 @@ export default function CardProjeto(props){
           sx={{
             width:props.chipsWidth,
             gap:'8px',
-            display:'flex'
+            display:'flex',
+            justifyContent:props.chipDirection
 
           }}
         >
