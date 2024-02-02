@@ -10,7 +10,7 @@ const CadastroFormulario = ({ onCadastro }) => {
     nome: '',
     sobrenome: '',
     email: '',
-    senha: '',
+    password: '',
   });
   const [mensagem, setMensagem] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +24,7 @@ const CadastroFormulario = ({ onCadastro }) => {
       isOnlyLetters(form.sobrenome) &&
       form.sobrenome.length >= 3 &&
       form.sobrenome.length <= 40 &&
-      isValidPassword(form.senha)
+      isValidPassword(form.password)
     );
   };
   
@@ -39,7 +39,7 @@ const CadastroFormulario = ({ onCadastro }) => {
         nome: form.nome,
         sobrenome: form.sobrenome,
         email: form.email,
-        senha: form.senha,
+        password: form.password,
       });
   
       if (response.data.token) {
@@ -145,11 +145,11 @@ const CadastroFormulario = ({ onCadastro }) => {
                 type={showPassword ? 'text' : 'password'}
                 variant="outlined"
                 fullWidth
-                value={form.senha}
-                onChange={(e) => setForm({ ...form, senha: e.target.value })}
-                error={form.senha.length > 0 && !isValidPassword(form.senha)}
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                error={form.password.length > 0 && !isValidPassword(form.password)}
                 helperText={
-                  form.senha.length > 0 &&
+                  form.password.length > 0 &&
                   'Mínimo de 6 caracteres, pelo menos uma letra maiúscula, uma letra minúscula e um número'
                 }
                 InputProps={{
