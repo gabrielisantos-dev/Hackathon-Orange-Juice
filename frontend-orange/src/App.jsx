@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
+
       {/* <RegistrationPage/> */}
       <Outlet/>
       {/* <ImagemTelaLogin/> */}  
@@ -56,12 +56,11 @@ function App() {
       {/* <DescobrirMobile/> */}
       {/* <ProjectDeletedModal/> */}
       {/* <DeleteModal/> */}
-=======
+
       {/* <Outlet/> */}
       <RegistrationPage/>
       {/* <TelaLogin/> */}
       {/* <CadastroFormulario/> */}
->>>>>>> ffd89e10913693eea04d764887deed19acdfc368
     </>
    
   )
