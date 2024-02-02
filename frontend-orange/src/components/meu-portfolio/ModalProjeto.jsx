@@ -4,8 +4,6 @@ import Modal from '@mui/material/Modal';
 import { Chip, Link } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-
-
 export default function ModalProjeto(props) {
  
   return (

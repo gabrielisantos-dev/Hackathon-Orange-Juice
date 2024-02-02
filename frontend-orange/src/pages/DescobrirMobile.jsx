@@ -16,23 +16,22 @@ export default function DescobrirDesktop(){
   const [cardPerfil, setCardPerfil] = useState(mock)
     
   const [openDescobrir, setOpenDescobrir] = useState(true);
+  const [cardSelecionado, setCardSelecionado] = useState({})
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true)
     setOpenDescobrir(false)
   };  
   const handleClose = () => setOpen(false);
+  
   const [tagProjeto, setTagProjeto] = useState(cardPerfil)
   const [tagsSelecionadas, setTagsSelecionadas] = useState([])
   const arrayTags = []
-
-
-  tagProjeto.map(item => arrayTags.push(item.tag))
-  
- 
+  tagProjeto.map(item => arrayTags.push(item.tag)) 
   const tagUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
   });
+
 
   // const [cardPerfil, setCardPerfil] = useState({
   //   pais:'Brasil',
@@ -111,8 +110,7 @@ export default function DescobrirDesktop(){
 
       <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>          
     
-             
-          { tagsSelecionadas.length > 0 
+      { tagsSelecionadas.length > 0 
             
             ?
           cardPerfil.map((itemCard, index) => {
@@ -123,23 +121,68 @@ export default function DescobrirDesktop(){
                 
                 return(            
            
-              <CardProjeto 
-                key={index}
-                width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
-                color='neutral.dark'
-                colorIconMenu='secondary.secondaryLight'
-                avatar={itemCard.avatar}
-                widthAvatar='24px'
-                heightAvatar='24px'               
-                chipsHeight='32px'
-                nome={itemCard.nome}
-                labelChip={itemCard.tag}               
-                data={itemCard.data}
-                imagem={itemCard.urlImagem}
-                iconMenu={'none'}
+                  <>
+                  <Link              
+                    key={index}
+                    sx={{
+                      width:responsivo1 ? 'calc(33.33% - 17.33px)' :'100%',
+                      textDecoration:'none',
+                      cursor:'pointer'
+                    }}
+                    onClick={()=>{
+                      handleOpen()
+                      setCardSelecionado(itemCard)
+                    }}
+                  >
+                    <CardProjeto                 
+                      width='100%'
+                      color='neutral.dark'
+                      colorIconMenu='secondary.secondaryLight'
+                      avatar={itemCard.avatar}
+                      widthAvatar='24px'
+                      heightAvatar='24px'               
+                      chipsHeight='32px'
+                      nome={itemCard.nome}
+                      labelChip={itemCard.tag}               
+                      data={itemCard.data}
+                      imagem={itemCard.urlImagem}
+                      iconMenu={'none'}                       
+                    /> 
+                  </Link>
+
+                  {open ?  
+    
+                  <VisualizacaoMobile
+                    open={open}
+                    cardSelecionado={cardSelecionado}
+                    // onClose={handleClose}
+                    // avatar={cardSelecionado.avatar}
+                    // nome={cardSelecionado.nome}
+                    // data={cardSelecionado.data}
+                    // labelChip={cardSelecionado.tag}      
+                    // tituloProj={cardSelecionado.tituloProj}
+                    // imagem={cardSelecionado.urlImagem}
+                    // descricao={cardSelecionado.descricao}      
+                  />
+                  : null} 
                 
-                >           
-              </CardProjeto>            
+
+                  {/* {open ?  
+    
+                    <ModalProjeto
+                      open={open}
+                      onClose={handleClose}
+                      avatar={cardSelecionado.avatar}
+                      nome={cardSelecionado.nome}
+                      data={cardSelecionado.data}
+                      labelChip={cardSelecionado.tag}      
+                      tituloProj={cardSelecionado.tituloProj}
+                      imagem={cardSelecionado.urlImagem}
+                      descricao={cardSelecionado.descricao}                    
+                    />
+                  : null} */}
+
+                </>          
                 )
               }
           })
@@ -147,22 +190,66 @@ export default function DescobrirDesktop(){
 
             return(              
 
-              <CardProjeto 
-                key={index}
-                width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
-                color='neutral.dark'
-                colorIconMenu='secondary.secondaryLight'
-                avatar={itemCard.avatar}
-                widthAvatar='24px'
-                heightAvatar='24px'                
-                chipsHeight='32px'
-                nome={itemCard.nome}
-                labelChip={itemCard.tag}             
-                data={itemCard.data}
-                imagem={itemCard.urlImagem}
-                iconMenu={'none'}              
-                >           
-              </CardProjeto>            
+              <>
+                <Link
+                  key={index} 
+                  sx={{
+                    width:responsivo1 ? 'calc(33.33% - 17.33px)' :'100%',
+                    textDecoration:'none',
+                    cursor:'pointer'
+                  }}
+                  onClick={()=>{
+                    handleOpen()
+                    setCardSelecionado(itemCard)
+                  }}                                 
+                  >             
+                <CardProjeto                   
+                  width='100%'
+                  color='neutral.dark'
+                  colorIconMenu='secondary.secondaryLight'
+                  avatar={itemCard.avatar}
+                  widthAvatar='24px'
+                  heightAvatar='24px'                
+                  chipsHeight='32px'
+                  nome={itemCard.nome}
+                  labelChip={itemCard.tag}             
+                  data={itemCard.data}
+                  imagem={itemCard.urlImagem}
+                  iconMenu={'none'}                                   
+                  />
+                </Link>                  
+                
+                {open ?  
+    
+                  <VisualizacaoMobile
+                    open={open}
+                    // onClose={handleClose}
+                    avatar={cardSelecionado.avatar}
+                    nome={cardSelecionado.nome}
+                    data={cardSelecionado.data}
+                    labelChip={cardSelecionado.tag}      
+                    tituloProj={cardSelecionado.tituloProj}
+                    imagem={cardSelecionado.urlImagem}
+                    descricao={cardSelecionado.descricao}      
+                  />
+                : null} 
+                
+                {/* {open ?  
+    
+                  <ModalProjeto
+                    open={open}
+                    onClose={handleClose}
+                    avatar={cardSelecionado.avatar}
+                    nome={cardSelecionado.nome}
+                    data={cardSelecionado.data}
+                    labelChip={cardSelecionado.tag}      
+                    tituloProj={cardSelecionado.tituloProj}
+                    imagem={cardSelecionado.urlImagem}
+                    descricao={cardSelecionado.descricao}  
+                  />
+                : null}  */}
+              </>
+
                 )
               })          
           }
@@ -181,14 +268,13 @@ export default function DescobrirDesktop(){
     <VisualizacaoMobile
       open={open}
       // onClose={handleClose}
-      avatar={cardPerfil.avatar}
-      nome={cardPerfil.nome}
-      data={cardPerfil.data}
-      labelChip1={cardPerfil.tag.ui}
-      labelChip2={cardPerfil.tag.ux}
-      tituloProj={cardPerfil.tituloProj}
-      imagem={cardPerfil.urlImagem}
-      descricao={cardPerfil.descricao}      
+      avatar={cardSelecionado.avatar}
+      nome={cardSelecionado.nome}
+      data={cardSelecionado.data}
+      labelChip={cardSelecionado.tag}      
+      tituloProj={cardSelecionado.tituloProj}
+      imagem={cardSelecionado.urlImagem}
+      descricao={cardSelecionado.descricao}      
       />
       : null} 
    
