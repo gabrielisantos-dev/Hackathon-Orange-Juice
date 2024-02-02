@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
+@ComponentScan
 public class BackendOrangeApplication {
 
 	public static void main(String[] args) {

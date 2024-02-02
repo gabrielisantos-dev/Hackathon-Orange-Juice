@@ -10,20 +10,11 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/*")
-                .allowedOrigins("")
+        registry.addMapping("/**")
+                .allowedOrigins("*")
                 .allowedOrigins("http://localhost:5173/")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*");
 
-        registry.addMapping("/swagger-ui.html")
-                .allowedOrigins("http://seu-front-end-url.com")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*");
-
-        registry.addMapping("/v2/api-docs")
-                .allowedOrigins("http://seu-front-end-url.com")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*");
     }
 }
