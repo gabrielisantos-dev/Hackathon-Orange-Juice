@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import {
@@ -118,3 +119,15 @@ export default function FormularioLogin(props) {
     </Box>
   );
 }
+
+FormularioLogin.propTypes = {
+  boxWidth: PropTypes.string.isRequired,
+  widthTitle: PropTypes.string.isRequired,
+  heightTitle: PropTypes.string.isRequired,
+  titulo: PropTypes.string.isRequired,
+  formWidth: PropTypes.string.isRequired,
+  formHeight: PropTypes.string.isRequired,
+  buttonWidth: PropTypes.string.isRequired,
+  buttonHeight: PropTypes.string.isRequired,
+  paddingButton: PropTypes.string.isRequired,
+};
