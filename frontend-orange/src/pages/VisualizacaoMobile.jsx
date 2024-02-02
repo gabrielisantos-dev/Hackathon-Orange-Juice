@@ -31,19 +31,19 @@ export default function VisualizacaoMobile(props){
   // })
 
 
-  {console.log(cardSelecionado)}
+  // console.log(props.cardSelecionado)
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
       <Typography 
         sx={{
-          margin:responsivo1 ? '112px 268px' : '55px 24px',
+          margin:props.respBk1 ? '112px 268px' : '55px 24px',
           textAlign: 'center'
           }}
-          variant={responsivo1 ? "h4" : "h5"}
+          variant={props.respBk1 ? "h4" : "h5"}
           color='primary.main'
           >
-            {props.cardSelecionado.tituloProj}</Typography>
+            {props.tituloProj}</Typography>
       <Box sx={{margin:'0px 25px', marginTop:'56px'}}>
  
 
@@ -53,21 +53,21 @@ export default function VisualizacaoMobile(props){
               
               color='neutral.dark'
               colorIconMenu='secondary.secondaryLight'
-              avatar={props.cardSelecionado.avatar}
+              avatar={props.avatar}
               widthAvatar='24px'
               heightAvatar='24px'
               chipsWidth='92px'
               chipsHeight='32px'
-              nome={props.cardSelecionado.nome}
-              labelChip={props.cardSelecionado.tag}
-              data={props.cardSelecionado.data}
+              nome={props.nome}
+              labelChip={props.labelChip}
+              data={props.data}
               iconMenu='none'
-              imagem={props.cardSelecionado.urlImagem}             
+              imagem={props.imagem}             
               >           
             </CardProjeto>
         
           <Box sx={{ display:'flex', flexDirection:'column', justifyContent:'space-between', margin:'30px 25px', width:'308px', gap:'30px'}}>
-            <Typography variant='body1'>{props.cardSelecionado.descricao}</Typography>
+            <Typography variant='body1'>{props.descricao}</Typography>
             <Box >
               <Typography variant='subtitle1'>Download</Typography>
               <Link href='#'>https://gumroad.com/products/wxCSL</Link>
@@ -93,7 +93,7 @@ export default function VisualizacaoMobile(props){
 
     />
     : null}  */}
-    {/* {responsivo1 ? 
+    {/* {props.respBk1 ? 
     
       <VisualizarMobile
       avatar={cardPerfil.avatar}
