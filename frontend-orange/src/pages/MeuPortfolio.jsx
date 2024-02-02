@@ -11,20 +11,24 @@ import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import figuraProjeto from '../assets/projects/project1.svg'
 import figuraProjeto1 from '../assets/projects/project1.svg'
 import EditProjectModal from '../components/modals/EditProjectModal'
-import {mock} from '../utils/mock'
+import {mock, mockBdResponseAllProjects} from '../utils/mock'
+import axios from 'axios';
 
 export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))  
   
-  const [cardPerfil, setCardPerfil] = useState(mock)
+  // const [cardPerfil, setCardPerfil] = useState(mock)
+  const [cardPerfil, setCardPerfil] = useState(mockBdResponseAllProjects)
+
+  const [cardSelecionado, setCardSelecionado] = useState({})
 
   const [tagProjeto, setTagProjeto] = useState(cardPerfil)
   const [tagsSelecionadas, setTagsSelecionadas] = useState([])
   const arrayTags = []
-  tagProjeto.map(item => arrayTags.push(item.tag))
+  tagProjeto.map(item => arrayTags.push(item.tags))
   
  
-  const tagUnicas = arrayTags.filter((item, index, self) => {
+  const tagsUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
   });
 
@@ -50,15 +54,15 @@ export default function MeuPortfolio(){
     <Box sx={{marginBottom:'70px'}}>
       <Header
          
-        avatar={cardPerfil[0].avatar} 
-        email={cardPerfil[0].email} 
-        nome={cardPerfil[0].nome}
-        pais={cardPerfil[0].pais}
+        avatar={cardPerfil[0].user.avatar} 
+        email={cardPerfil[0].user.email} 
+        nome={cardPerfil[0].user.nome}
+        pais='Brasil'
       />
       <CardPerfil
-        pais={cardPerfil[0].pais}
-        avatar={cardPerfil[0].avatar}
-        nome={cardPerfil[0].nome}
+        pais='Brasil'
+        avatar={cardPerfil[0].user.avatar}
+        nome={cardPerfil[0].user.nome}
         marginAuto='auto'
         marginTop={responsivo1 ? '185px' : '49px'}
         flexDirection= {responsivo1 ? 'row' : 'column'}
@@ -92,7 +96,7 @@ export default function MeuPortfolio(){
         freeSolo
         id="free-solo-2-demo"
         disableClearable
-        options={tagUnicas.map((option,index) => option)}
+        options={tagsUnicas.map((option,index) => option)}
         multiple= {true}
         onChange={(event, value)=>{setTagsSelecionadas(value)}}
         
@@ -135,7 +139,7 @@ export default function MeuPortfolio(){
             ?
           cardPerfil.map((itemCard, index) => {
 
-              const tag = tagsSelecionadas.filter(itemTag => itemCard.tag === itemTag)
+              const tag = tagsSelecionadas.filter(itemTag => itemCard.tags === itemTag)
               
             
             if(tag.length > 0){
@@ -147,21 +151,24 @@ export default function MeuPortfolio(){
                 width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
                 color='neutral.dark'
                 colorIconMenu='secondary.secondaryLight'
-                avatar={itemCard.avatar}
+                avatar={itemCard.user.avatar}
                 widthAvatar='24px'
                 heightAvatar='24px'               
                 chipsHeight='32px'
-                nome={itemCard.nome}
-                labelChip={itemCard.tag}               
-                data={itemCard.data}
-                imagem={itemCard.urlImagem}
+                nome={itemCard.user.nome}
+                labelChip={itemCard.tags}               
+                data={itemCard.date}
+                imagem={itemCard.image}
                 openModalProjeto={openModalProjeto}
                 setOpenModalProjeto={setOpenModalProjeto}
                 handleOpenModalProjeto={handleOpenModalProjeto}
-
+                
                 openEditProjectModal={openEditProjectModal}
                 setOpenEditProjectModal={setOpenEditProjectModal}
                 handleEditProjectModal={handleEditProjectModal}
+
+                // cardSelecionado={cardSelecionado}
+                // setCardSelecionado={setCardSelecionado(itemCard)}
 
                 >           
               </CardProjeto>
@@ -176,14 +183,14 @@ export default function MeuPortfolio(){
                 width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
                 color='neutral.dark'
                 colorIconMenu='secondary.secondaryLight'
-                avatar={itemCard.avatar}
+                avatar={itemCard.user.avatar}
                 widthAvatar='24px'
                 heightAvatar='24px'                
                 chipsHeight='32px'
-                nome={itemCard.nome}
-                labelChip={itemCard.tag}             
-                data={itemCard.data}
-                imagem={itemCard.urlImagem}
+                nome={itemCard.user.nome}
+                labelChip={itemCard.tags}             
+                data={itemCard.date}
+                imagem={itemCard.image}
                 openModalProjeto={openModalProjeto}
                 setOpenModalProjeto={setOpenModalProjeto}
                 handleOpenModalProjeto={handleOpenModalProjeto}

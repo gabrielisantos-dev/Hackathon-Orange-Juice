@@ -36,14 +36,14 @@ export default function DescobrirDesktop(props){
   // const tagUnicas = props.arrayTags.filter((item, index, self) => {
   //   return self.indexOf(item) === index
   // });
-
+  
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
       <Header
-        avatar={props.cardPerfil[0].avatar} 
-        email={props.cardPerfil[0].email} 
-        nome={props.cardPerfil[0].nome}
+        avatar={props.cardPerfil[0].user.avatar} 
+        email={props.cardPerfil[0].user.email} 
+        nome={props.cardPerfil[0].user.nome}
         // pais={props.cardPerfil[0].pais}
       />
       <Typography 
@@ -113,7 +113,7 @@ export default function DescobrirDesktop(props){
             ?
           props.cardPerfil.map((itemCard, index) => {
 
-              const tag = props.tagsSelecionadas.filter(itemTag => itemCard.tag === itemTag)              
+              const tag = props.tagsSelecionadas.filter(itemTag => itemCard.tags === itemTag)              
             
             if(tag.length > 0){
                 
@@ -131,20 +131,20 @@ export default function DescobrirDesktop(props){
                       props.setCardSelecionado(itemCard)
                     }}
                   >
-                    <CardProjeto                 
-                      width='100%'
-                      color='neutral.dark'
-                      colorIconMenu='secondary.secondaryLight'
-                      avatar={itemCard.avatar}
-                      widthAvatar='24px'
-                      heightAvatar='24px'               
-                      chipsHeight='32px'
-                      nome={itemCard.nome}
-                      labelChip={itemCard.tag}               
-                      data={itemCard.data}
-                      imagem={itemCard.urlImagem}
-                      iconMenu={'none'}                       
-                    /> 
+                    <CardProjeto                   
+                  width='100%'
+                  color='neutral.dark'
+                  colorIconMenu='secondary.secondaryLight'
+                  avatar={itemCard.user.avatar}
+                  widthAvatar='24px'
+                  heightAvatar='24px'                
+                  chipsHeight='32px'
+                  nome={itemCard.user.nome}
+                  labelChip={itemCard.tags}             
+                  data={itemCard.date}
+                  imagem={itemCard.image}
+                  iconMenu={'none'}                                   
+                  />
                   </Link>
 
                   {props.open ?  
@@ -152,12 +152,12 @@ export default function DescobrirDesktop(props){
                     <ModalProjeto
                       open={props.open}
                       onClose={props.handleCloseDesk}
-                      avatar={props.cardSelecionado.avatar}
-                      nome={props.cardSelecionado.nome}
-                      data={props.cardSelecionado.data}
-                      labelChip={props.cardSelecionado.tag}      
-                      tituloProj={props.cardSelecionado.tituloProj}
-                      imagem={props.cardSelecionado.urlImagem}
+                      avatar={props.cardSelecionado.user.avatar}
+                      nome={props.cardSelecionado.user.nome}
+                      data={props.cardSelecionado.date}
+                      labelChip={props.cardSelecionado.tags}      
+                      tituloProj={props.cardSelecionado.titulo}
+                      imagem={props.cardSelecionado.image}
                       descricao={props.cardSelecionado.descricao}                    
                     />
                   : null}
@@ -185,31 +185,31 @@ export default function DescobrirDesktop(props){
                   width='100%'
                   color='neutral.dark'
                   colorIconMenu='secondary.secondaryLight'
-                  avatar={itemCard.avatar}
+                  avatar={itemCard.user.avatar}
                   widthAvatar='24px'
                   heightAvatar='24px'                
                   chipsHeight='32px'
-                  nome={itemCard.nome}
-                  labelChip={itemCard.tag}             
-                  data={itemCard.data}
-                  imagem={itemCard.urlImagem}
+                  nome={itemCard.user.nome}
+                  labelChip={itemCard.tags}             
+                  data={itemCard.date}
+                  imagem={itemCard.image}
                   iconMenu={'none'}                                   
                   />
                 </Link>                  
                 
                 {props.open ?  
     
-                  <ModalProjeto
-                    open={props.open}
-                    onClose={props.handleCloseDesk}
-                    avatar={props.cardSelecionado.avatar}
-                    nome={props.cardSelecionado.nome}
-                    data={props.cardSelecionado.data}
-                    labelChip={props.cardSelecionado.tag}      
-                    tituloProj={props.cardSelecionado.tituloProj}
-                    imagem={props.cardSelecionado.urlImagem}
-                    descricao={props.cardSelecionado.descricao}  
-                  />
+                      <ModalProjeto
+                      open={props.open}
+                      onClose={props.handleCloseDesk}
+                      avatar={props.cardSelecionado.user.avatar}
+                      nome={props.cardSelecionado.user.nome}
+                      data={props.cardSelecionado.date}
+                      labelChip={props.cardSelecionado.tags}      
+                      tituloProj={props.cardSelecionado.titulo}
+                      imagem={props.cardSelecionado.image}
+                      descricao={props.cardSelecionado.descricao}                    
+                    />
                 : null} 
               </>
             )
