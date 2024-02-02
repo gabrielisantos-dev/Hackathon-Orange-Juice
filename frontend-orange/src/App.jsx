@@ -43,7 +43,7 @@ function App() {
       {/* <CardPerfil/> */}
       {/* <FormBuscarTags/> */}
       {/* <ListaProjetos/> */}
-      <TelaLogin />
+      {/* <TelaLogin /> */}
       {/* <Descobrir/> */}
       {/* <MeuPortfolio/> */}
       {/* <RegistrationPage/> */}

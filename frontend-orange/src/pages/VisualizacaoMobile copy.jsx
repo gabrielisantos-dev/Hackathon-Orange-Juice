@@ -7,31 +7,29 @@ import figuraProjeto from '../assets/projects/project1.svg'
 import profilePicture from '../assets/profile-picture/picture.svg';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import ModalProjeto from '../components/meu-portfolio/ModalProjeto';
-import { mock } from '../utils/mock'
 
-export default function VisualizacaoMobile(props){
+export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
   
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);  
   const handleClose = () => setOpen(false);
 
-  const [cardPerfil, setCardPerfil] = useState(mock)
-
-  // const [cardPerfil, setCardPerfil] = useState({
-  //   pais:'Brasil',
-  //   avatar: profilePicture,
-  //   nome:'John Doe',
-  //   email:'john@doeux.com',
-  //   tag:{ui:'UI', ux:'UX', web:'Web'},
-  //   data:'12/23',
-  //   urlImagem:figuraProjeto,
-  //   tituloProj:'Ecommerce One Page',
-  //   descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
-  // })
 
 
-  {console.log(cardSelecionado)}
+  const [cardPerfil, setCardPerfil] = useState({
+    pais:'Brasil',
+    avatar: profilePicture,
+    nome:'John Doe',
+    email:'john@doeux.com',
+    tag:{ui:'UI', ux:'UX', web:'Web'},
+    data:'12/23',
+    urlImagem:figuraProjeto,
+    tituloProj:'Ecommerce One Page',
+    descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
+  })
+
+
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
@@ -43,7 +41,7 @@ export default function VisualizacaoMobile(props){
           variant={responsivo1 ? "h4" : "h5"}
           color='primary.main'
           >
-            {props.cardSelecionado.tituloProj}</Typography>
+            {cardPerfil.tituloProj}</Typography>
       <Box sx={{margin:'0px 25px', marginTop:'56px'}}>
  
 
@@ -53,21 +51,23 @@ export default function VisualizacaoMobile(props){
               
               color='neutral.dark'
               colorIconMenu='secondary.secondaryLight'
-              avatar={props.cardSelecionado.avatar}
+              avatar={cardPerfil.avatar}
               widthAvatar='24px'
               heightAvatar='24px'
               chipsWidth='92px'
               chipsHeight='32px'
-              nome={props.cardSelecionado.nome}
-              labelChip={props.cardSelecionado.tag}
-              data={props.cardSelecionado.data}
+              nome={cardPerfil.nome}
+              labelChip1={cardPerfil.tag.ui}
+              labelChip2={cardPerfil.tag.ux}
+              labelChip3={cardPerfil.tag.web}
+              data={cardPerfil.data}
               iconMenu='none'
-              imagem={props.cardSelecionado.urlImagem}             
+              imagem={cardPerfil.urlImagem}             
               >           
             </CardProjeto>
         
           <Box sx={{ display:'flex', flexDirection:'column', justifyContent:'space-between', margin:'30px 25px', width:'308px', gap:'30px'}}>
-            <Typography variant='body1'>{props.cardSelecionado.descricao}</Typography>
+            <Typography variant='body1'>{cardPerfil.descricao}</Typography>
             <Box >
               <Typography variant='subtitle1'>Download</Typography>
               <Link href='#'>https://gumroad.com/products/wxCSL</Link>
@@ -77,7 +77,7 @@ export default function VisualizacaoMobile(props){
         </Box>
       </Box>
     </Box>  
-    {/* {open ?  
+    {open ?  
     
     <ModalProjeto
       open={open}
@@ -92,7 +92,7 @@ export default function VisualizacaoMobile(props){
       descricao={cardPerfil.descricao}
 
     />
-    : null}  */}
+    : null} 
     {/* {responsivo1 ? 
     
       <VisualizarMobile

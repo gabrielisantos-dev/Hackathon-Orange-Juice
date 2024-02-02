@@ -16,23 +16,17 @@ export default function DescobrirDesktop(){
   
   const [cardPerfil, setCardPerfil] = useState(mock)
   const [open, setOpen] = useState(false);
+  const [cardSelecionado, setCardSelecionado] = useState({})
   const handleOpen = () => setOpen(true);  
   const handleClose = () => setOpen(false);
 
   const [tagProjeto, setTagProjeto] = useState(cardPerfil)
   const [tagsSelecionadas, setTagsSelecionadas] = useState([])
   const arrayTags = []
-  
   tagProjeto.map(item => arrayTags.push(item.tag)) 
   const tagUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
   });
-
-  const [openModalProjeto, setOpenModalProjeto] = useState(false)
-
-  
-
-  
 
   return(
   <ThemeProvider theme={theme}>
@@ -113,40 +107,58 @@ export default function DescobrirDesktop(){
             
             if(tag.length > 0){
                 
-                return( 
-              <Link              
-              key={index}
-              sx={{
-                width:responsivo1 ? 'calc(33.33% - 17.33px)' :'100%',
-                textDecoration:'none',
-                cursor:'pointer'
-              }}
-              onClick={()=>{handleOpen()}}
-                >           
-           
-              <CardProjeto                 
-                width='100%'
-                color='neutral.dark'
-                colorIconMenu='secondary.secondaryLight'
-                avatar={itemCard.avatar}
-                widthAvatar='24px'
-                heightAvatar='24px'               
-                chipsHeight='32px'
-                nome={itemCard.nome}
-                labelChip={itemCard.tag}               
-                data={itemCard.data}
-                imagem={itemCard.urlImagem}
-                iconMenu={'none'}                       
-                /> 
-                </Link>       
-                     
+              return(
+                <>
+                  <Link              
+                    key={index}
+                    sx={{
+                      width:responsivo1 ? 'calc(33.33% - 17.33px)' :'100%',
+                      textDecoration:'none',
+                      cursor:'pointer'
+                    }}
+                    onClick={()=>{
+                      handleOpen()
+                      setCardSelecionado(itemCard)
+                    }}
+                  >
+                    <CardProjeto                 
+                      width='100%'
+                      color='neutral.dark'
+                      colorIconMenu='secondary.secondaryLight'
+                      avatar={itemCard.avatar}
+                      widthAvatar='24px'
+                      heightAvatar='24px'               
+                      chipsHeight='32px'
+                      nome={itemCard.nome}
+                      labelChip={itemCard.tag}               
+                      data={itemCard.data}
+                      imagem={itemCard.urlImagem}
+                      iconMenu={'none'}                       
+                    /> 
+                  </Link>
+
+                  {open ?  
+    
+                    <ModalProjeto
+                      open={open}
+                      onClose={handleClose}
+                      avatar={cardSelecionado.avatar}
+                      nome={cardSelecionado.nome}
+                      data={cardSelecionado.data}
+                      labelChip={cardSelecionado.tag}      
+                      tituloProj={cardSelecionado.tituloProj}
+                      imagem={cardSelecionado.urlImagem}
+                      descricao={cardSelecionado.descricao}                    
+                    />
+                  : null}
+
+                </>           
                 )
               }
           })
           : cardPerfil.map((itemCard, index) => {
-
-              return(                
-                
+            return(                
+              <>
                 <Link
                   key={index} 
                   sx={{
@@ -154,9 +166,11 @@ export default function DescobrirDesktop(){
                     textDecoration:'none',
                     cursor:'pointer'
                   }}
-                  onClick={()=>{handleOpen()}}                  
-                    >
-                
+                  onClick={()=>{
+                    handleOpen()
+                    setCardSelecionado(itemCard)
+                  }}                                 
+                  >             
                 <CardProjeto                   
                   width='100%'
                   color='neutral.dark'
@@ -171,32 +185,30 @@ export default function DescobrirDesktop(){
                   imagem={itemCard.urlImagem}
                   iconMenu={'none'}                                   
                   />
-                </Link>           
+                </Link>                  
                 
-                  )
-                })          
-          }
+                {open ?  
+    
+                  <ModalProjeto
+                    open={open}
+                    onClose={handleClose}
+                    avatar={cardSelecionado.avatar}
+                    nome={cardSelecionado.nome}
+                    data={cardSelecionado.data}
+                    labelChip={cardSelecionado.tag}      
+                    tituloProj={cardSelecionado.tituloProj}
+                    imagem={cardSelecionado.urlImagem}
+                    descricao={cardSelecionado.descricao}  
+                  />
+                : null} 
+              </>
+            )
+          })          
+        }
           
         </Box>
       </Box>
-    </Box>     
-
-    {open ?  
-    
-      <ModalProjeto
-      open={open}
-      onClose={handleClose}
-      avatar={cardPerfil[0].avatar}
-      nome={cardPerfil[0].nome}
-      data={cardPerfil[0].data}
-      labelChip={cardPerfil[0].tag}      
-      tituloProj={cardPerfil[0].tituloProj}
-      imagem={cardPerfil[0].urlImagem}
-      descricao={cardPerfil[0].descricao}
-      
-      />
-    : null} 
-   
+    </Box>  
   </ThemeProvider>
   )
 }
