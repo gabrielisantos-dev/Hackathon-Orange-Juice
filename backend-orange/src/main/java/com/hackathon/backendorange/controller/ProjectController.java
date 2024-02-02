@@ -33,11 +33,6 @@ public class ProjectController {
         this.service = service;
     }
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello, World";
-    }
-
     @Operation(
             description = "Retorna uma lista de todos os projetos registrados no sistema.",
             summary = "Listar todos os projetos",

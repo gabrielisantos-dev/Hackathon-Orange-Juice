@@ -38,9 +38,6 @@ public class SecurityConfiguration {
                               .requestMatchers(HttpMethod.POST, "/api/auth/register")
                               .permitAll()
 
-                              .requestMatchers(HttpMethod.GET, "/project/hello")
-                              .permitAll()
-
                               .requestMatchers(
                                       "/v2/api-docs",
                                       "/v3/api-docs",
