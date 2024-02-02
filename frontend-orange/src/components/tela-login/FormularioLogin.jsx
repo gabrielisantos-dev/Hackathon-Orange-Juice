@@ -111,6 +111,7 @@ export default function FormularioLogin(props) {
             letterSpacing="0.15px"
             underline="none"
             href="#"
+            onClick={()=>{console.log('clicando')}}
           >
             Cadastre-se
           </Link>

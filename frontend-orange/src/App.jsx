@@ -9,7 +9,7 @@ import "./main.css"
 // import BotaoEntrarComGoogle from "./components/tela-login/BotaoEntrarComGoogle"
 // import LogoGoogle from "./components/tela-login/BotaoGoogleLogin"
 // import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
-// import TelaLogin from "./pages/TelaLogin"
+import TelaLogin from "./pages/TelaLogin"
 // import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
 // import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
@@ -31,10 +31,37 @@ function App() {
 
   return (
     <>
+<<<<<<< HEAD
+      {/* <RegistrationPage/> */}
+      <Outlet/>
+      {/* <ImagemTelaLogin/> */}  
+      {/* <FormularioLogin /> */}
+      {/* <BotaoEntrarComGoogle/> */}
+      {/* <BotaoGoogleLogin/> */}
+      {/* <TelaLogin/> */}
+      {/* <MainHeader/> */}
+      {/* <ContainerImagemTelaLogin/> */}
+      {/* <AddProjectModal/> */}
+      {/* <CardPerfil/> */}
+      {/* <FormBuscarTags/> */}
+      {/* <ListaProjetos/> */}
+      {/* <TelaLogin /> */}
+      {/* <Descobrir/> */}
+      {/* <MeuPortfolio/> */}
+      {/* <RegistrationPage/> */}
+      {/* <Descobrir/> */}
+      {/* <DescobrirMobile/> */}
+      {/* <DescobrirDesktop/> */}
+      {/* <ModalProjeto/>     */}
+      {/* <DescobrirMobile/> */}
+      {/* <ProjectDeletedModal/> */}
+      {/* <DeleteModal/> */}
+=======
       {/* <Outlet/> */}
       <RegistrationPage/>
       {/* <TelaLogin/> */}
       {/* <CadastroFormulario/> */}
+>>>>>>> ffd89e10913693eea04d764887deed19acdfc368
     </>
    
   )

@@ -2,13 +2,14 @@ import {theme} from '../utils/Theme'
 import {useMediaQuery} from '@mui/material/';
 import DescobrirDesktop from './DescobrirDesktop';
 import DescobrirMobile from './DescobrirMobile';
-import { mock } from '../utils/mock';
+import { mock, mockBdResponseAllProjects } from '../utils/mock';
 import {useState} from "react"
 
 export default function Descobrir(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const [cardPerfil, setCardPerfil] = useState(mock);
+  // const [cardPerfil, setCardPerfil] = useState(mock);
+  const [cardPerfil, setCardPerfil] = useState(mockBdResponseAllProjects);
   const [openDescobrir, setOpenDescobrir] = useState(true);
   const [cardSelecionado, setCardSelecionado] = useState({});
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function Descobrir(){
   const [tagsSelecionadas, setTagsSelecionadas] = useState([]);
   const arrayTags = []
 
-  tagProjeto.map(item => arrayTags.push(item.tag))
+  tagProjeto.map(item => arrayTags.push(item.tags))
 
   const tagUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
