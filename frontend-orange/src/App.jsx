@@ -18,7 +18,7 @@ import "./main.css"
 // import Descobrir from "./pages/Descobrir";
 // import ModalProjeto from './components/meu-portfolio/ModalProjeto';
 // import DescobrirMobile from './pages/DescobrirMobile'
-import RegistrationPage from './pages/registration-page.jsx'
+// import RegistrationPage from './pages/registration-page.jsx'
 // import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 // import DeleteModal from "./components/modals/DeleteModal";
@@ -46,7 +46,7 @@ function App() {
       {/* <TelaLogin /> */}
       {/* <Descobrir/> */}
       {/* <MeuPortfolio/> */}
-      <RegistrationPage/>
+      {/* <RegistrationPage/> */}
       {/* <Descobrir/> */}
       {/* <DescobrirMobile/> */}
       {/* <DescobrirDesktop/> */}
