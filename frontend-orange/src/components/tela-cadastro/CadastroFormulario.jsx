@@ -14,22 +14,51 @@ const CadastroFormulario = ({ onCadastro }) => {
   const [mensagem, setMensagem] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  const isValidForm = () => {
+    return (
+      isValidEmail(form.email) &&
+      isOnlyLetters(form.nome) &&
+      form.nome.length >= 3 &&
+      form.nome.length <= 30 &&
+      isOnlyLetters(form.sobrenome) &&
+      form.sobrenome.length >= 3 &&
+      form.sobrenome.length <= 40 &&
+      isValidPassword(form.senha)
+    );
+  };
+  
+  const isOnlyLetters = (value) => {
+    const regex = /^[a-zA-Z]+$/;
+    return regex.test(value);
+  };
+  
   const handleCadastro = () => {
-    if (!isValidEmail(form.email)) {
+    if (!form.nome || !form.sobrenome || !form.email || !form.senha) {
+      setMensagem('Por favor, preencha todos os campos.');
+      onCadastro('error');
+    } else if (!isOnlyLetters(form.nome) || !isOnlyLetters(form.sobrenome)) {
+      setMensagem('Os campos de nome e sobrenome devem conter apenas letras.');
+      onCadastro('error');
+    } else if (!isValidEmail(form.email)) {
       setMensagem('Por favor, insira um email válido.');
       onCadastro('error');
-    } else if (form.nome && form.sobrenome && form.email && form.senha) {
+    } else if (isValidForm()) {
       setMensagem('Cadastro feito com sucesso');
       onCadastro('success');
     } else {
-      setMensagem('Por favor, preencha todos os campos.');
+      setMensagem('Por favor, preencha todos os campos corretamente.');
       onCadastro('error');
     }
   };
 
   const isValidEmail = (email) => {
-    const regex = /\S+@\S+\.\S+/;
+    const regex = /^(?!.*\s).{1,20}@.{1,15}\.[a-zA-Z]{1,10}$/;
     return regex.test(email);
+  };
+
+  const isValidPassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,20}$/;
+    return regex.test(password);
   };
 
   const handleTogglePassword = () => {
@@ -48,11 +77,7 @@ const CadastroFormulario = ({ onCadastro }) => {
       <Box>
         {mensagem && (
           <Alert
-            severity={
-              isValidEmail(form.email) && form.nome && form.sobrenome && form.email && form.senha
-                ? 'success'
-                : 'error'
-            }
+            severity={isValidForm() ? 'success' : 'error'}
             variant="filled"
             style={styles.alert}
           >
@@ -72,6 +97,11 @@ const CadastroFormulario = ({ onCadastro }) => {
                 autoFocus
                 value={form.nome}
                 onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                error={form.nome.length > 0 && (form.nome.length < 3 || form.nome.length > 30)}
+                helperText={
+                  form.nome.length > 0 &&
+                  (form.nome.length < 3 ? 'Mínimo de 3 caracteres' : 'Máximo de 30 caracteres')
+                }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -82,6 +112,11 @@ const CadastroFormulario = ({ onCadastro }) => {
                 fullWidth
                 value={form.sobrenome}
                 onChange={(e) => setForm({ ...form, sobrenome: e.target.value })}
+                error={form.sobrenome.length > 0 && (form.sobrenome.length < 3 || form.sobrenome.length > 40)}
+                helperText={
+                  form.sobrenome.length > 0 &&
+                  (form.sobrenome.length < 3 ? 'Mínimo de 3 caracteres' : 'Máximo de 40 caracteres')
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -92,6 +127,8 @@ const CadastroFormulario = ({ onCadastro }) => {
                 fullWidth
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
+                error={form.email.length > 0 && !isValidEmail(form.email)}
+                helperText={form.email.length > 0 && 'Insira um email válido'}
               />
             </Grid>
             <Grid item xs={12}>
@@ -102,6 +139,11 @@ const CadastroFormulario = ({ onCadastro }) => {
                 fullWidth
                 value={form.senha}
                 onChange={(e) => setForm({ ...form, senha: e.target.value })}
+                error={form.senha.length > 0 && !isValidPassword(form.senha)}
+                helperText={
+                  form.senha.length > 0 &&
+                  'Mínimo de 6 caracteres, pelo menos uma letra maiúscula, uma letra minúscula e um número'
+                }
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
