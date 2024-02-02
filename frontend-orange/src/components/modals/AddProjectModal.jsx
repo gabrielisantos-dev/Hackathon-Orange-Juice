@@ -69,19 +69,6 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         return prevData;
     });
     };
-    
-
-    // const handleCancel = () => {
-    // setProjectData({
-        // title: '',
-        // tags: [],
-        // link: '',
-        // description: '',
-        // image: null,
-    // });
-    // onClose();
-    // handleOpenModalProjeto()
-    // };
 
     const handleSave = () => {
     setSavePostModalOpen(true);

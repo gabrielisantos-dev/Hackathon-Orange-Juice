@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Button, TextField, Grid, Alert, Box, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import styles from '../../styles.jsx';
+import axios from 'axios';
 
 const CadastroFormulario = ({ onCadastro }) => {
   const [form, setForm] = useState({
@@ -32,24 +33,31 @@ const CadastroFormulario = ({ onCadastro }) => {
     return regex.test(value);
   };
   
-  const handleCadastro = () => {
-    if (!form.nome || !form.sobrenome || !form.email || !form.senha) {
-      setMensagem('Por favor, preencha todos os campos.');
-      onCadastro('error');
-    } else if (!isOnlyLetters(form.nome) || !isOnlyLetters(form.sobrenome)) {
-      setMensagem('Os campos de nome e sobrenome devem conter apenas letras.');
-      onCadastro('error');
-    } else if (!isValidEmail(form.email)) {
-      setMensagem('Por favor, insira um email válido.');
-      onCadastro('error');
-    } else if (isValidForm()) {
-      setMensagem('Cadastro feito com sucesso');
-      onCadastro('success');
-    } else {
-      setMensagem('Por favor, preencha todos os campos corretamente.');
+  const handleCadastro = async () => {
+    try {
+      const response = await axios.post('https://orange-9dj9.onrender.com/api/auth/register', {
+        nome: form.nome,
+        sobrenome: form.sobrenome,
+        email: form.email,
+        senha: form.senha,
+      });
+  
+      if (response.data.token) {
+        // Salva o token no localStorage
+        localStorage.setItem('token', response.data.token);
+  
+        setMensagem('Cadastro feito com sucesso');
+        onCadastro('success');
+      } else {
+        setMensagem('Erro no cadastro. Por favor, tente novamente.');
+        onCadastro('error');
+      }
+    } catch (error) {
+      setMensagem('Erro na solicitação. Por favor, tente novamente.');
       onCadastro('error');
     }
   };
+  
 
   const isValidEmail = (email) => {
     const regex = /^(?!.*\s).{1,20}@.{1,15}\.[a-zA-Z]{1,10}$/;

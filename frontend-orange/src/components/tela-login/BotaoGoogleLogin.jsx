@@ -1,40 +1,61 @@
-import { useState } from 'react'
-import { Box } from '@mui/material'
-import GoogleLogin from 'react-google-login';
+import { useState, useEffect } from 'react';
+import { GoogleLogin, GoogleLogout } from '@react-oauth/google';
+import axios from 'axios';
 
+const BotaoGoogleLogin = () => {
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
 
-export default function BotaoGoogleLogin(){
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [profilePic, setProfilePic] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleSuccess = (response) => {
+    setUser(response);
+  };
 
-  const responseGoogle = (response) => {
-    console.log(response);
-    const { profileObj: { name, email, imageUrl } } = response;
-    setName(name);
-    setEmail(email);
-    setProfilePic(imageUrl);
-    setIsLoggedIn(true);
-  }
+  const handleError = (error) => {
+    console.log('Falha no login:', error);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setProfile(null);
+  };
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+          headers: { Authorization: `Bearer ${user.access_token}`, Accept: 'application/json' },
+        })
+        .then((res) => {
+          setProfile(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [user]);
 
   return (
+    <div>
+      <h2>React Google Login</h2>
+      <br />
+      <br />
+      {profile ? (
+        <div>
+          <img src={profile.picture} alt="User Image" />
+          <h3>User Connected</h3>
+          <p>Name: {profile.name}</p>
+          <p>Email Address: {profile.email}</p>
+          <br />
+          <br />
+          <GoogleLogout onSuccess={handleLogout} clientId="755287664476-qvq0arrdis429fdk0e2b7366cc60rtmo.apps.googleusercontent.com">
+            <button>Logout</button>
+          </GoogleLogout>
+        </div>
+      ) : (
+        <GoogleLogin onSuccess={handleSuccess} onError={handleError} clientId="755287664476-qvq0arrdis429fdk0e2b7366cc60rtmo.apps.googleusercontent.com">
+          <button>Login with Google 🚀</button>
+        </GoogleLogin>
+      )}
+    </div>
+  );
+};
 
-    <Box>
-      <GoogleLogin
-      clientId='755287664476-qvq0arrdis429fdk0e2b7366cc60rtmo.apps.googleusercontent.com'
-      buttonText='Continuar com o Google'
-      onSuccess={responseGoogle}
-      onFailure={responseGoogle}
-        />
-        {isLoggedIn ? <div>
-        <h1>Informações do usuário</h1>
-        <img src={profilePic} alt='Profile' />
-        <p> Name: {name} </p>
-        <p> Email: {email} </p>
-       </div>
-        : null}
-    </Box>
-    
-  )
-}
+export default BotaoGoogleLogin;

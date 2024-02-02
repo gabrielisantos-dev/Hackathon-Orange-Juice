@@ -1,5 +1,5 @@
 import "./main.css"
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 // import ThemeProvider from "@mui/material/";
 // import { ThemeProvider } from "@mui/material/styles";
 // import {theme} from './utils/Theme'
@@ -18,10 +18,11 @@ import { Outlet } from "react-router-dom";
 // import Descobrir from "./pages/Descobrir";
 // import ModalProjeto from './components/meu-portfolio/ModalProjeto';
 // import DescobrirMobile from './pages/DescobrirMobile'
-// import RegistrationPage from './pages/registration-page.jsx'
+import RegistrationPage from './pages/registration-page.jsx'
 // import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 // import DeleteModal from "./components/modals/DeleteModal";
+// import CadastroFormulario from './components/tela-cadastro/CadastroFormulario';
 
 
 
@@ -30,30 +31,10 @@ function App() {
 
   return (
     <>
-      {/* <RegistrationPage/> */}
-      <Outlet/>
-      {/* <ImagemTelaLogin/> */}  
-      {/* <FormularioLogin /> */}
-      {/* <BotaoEntrarComGoogle/> */}
-      {/* <BotaoGoogleLogin/> */}
+      {/* <Outlet/> */}
+      <RegistrationPage/>
       {/* <TelaLogin/> */}
-      {/* <MainHeader/> */}
-      {/* <ContainerImagemTelaLogin/> */}
-      {/* <AddProjectModal/> */}
-      {/* <CardPerfil/> */}
-      {/* <FormBuscarTags/> */}
-      {/* <ListaProjetos/> */}
-      {/* <TelaLogin /> */}
-      {/* <Descobrir/> */}
-      {/* <MeuPortfolio/> */}
-      {/* <RegistrationPage/> */}
-      {/* <Descobrir/> */}
-      {/* <DescobrirMobile/> */}
-      {/* <DescobrirDesktop/> */}
-      {/* <ModalProjeto/>     */}
-      {/* <DescobrirMobile/> */}
-      {/* <ProjectDeletedModal/> */}
-      {/* <DeleteModal/> */}
+      {/* <CadastroFormulario/> */}
     </>
    
   )
