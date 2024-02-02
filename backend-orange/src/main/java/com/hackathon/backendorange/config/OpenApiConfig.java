@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 url = "https://github.com/gabrielisantos-dev/Hackathon-Orange-Juice"),
                 description = "Documentação de API para o hackathon do programa de formação Orange Juice e FCamara.",
                 title = "Orange Portfólio"), servers = {@Server(description = "Local", url = "http://localhost:8080"),
-                @Server(description = "Deploy", url = "LINK BACKEND")},
+                @Server(description = "Deploy", url = "http://orange-9dj9.onrender.com")},
 
                 security = {
                         @SecurityRequirement(

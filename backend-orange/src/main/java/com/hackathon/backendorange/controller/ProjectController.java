@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +32,6 @@ public class ProjectController {
 
     public ProjectController(ProjectService service) {
         this.service = service;
-    }
-
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello, World";
     }
 
     @Operation(
@@ -106,10 +102,10 @@ public class ProjectController {
             }
     )
     @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> save(@RequestPart("projectDTO") ProjectDTO newProjectDTO,
+    public ResponseEntity<String> save(@RequestPart @Valid ProjectDTO projectDTO,
                                        @RequestPart("image")  MultipartFile file) throws IOException {
         try {
-            service.saveProject(newProjectDTO, file);
+            service.saveProject(projectDTO, file);
             return ResponseEntity.ok("Projeto registrado com sucesso!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
@@ -139,7 +135,7 @@ public class ProjectController {
             }
     )
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestPart ProjectDTO updateProjectDTO,
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestPart @Valid ProjectDTO updateProjectDTO,
                                          @RequestPart("image") MultipartFile file) throws IOException {
         try {
             service.updateProject(id, updateProjectDTO, file);
