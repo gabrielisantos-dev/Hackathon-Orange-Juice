@@ -1,5 +1,5 @@
 import "./main.css"
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 // import ThemeProvider from "@mui/material/";
 // import { ThemeProvider } from "@mui/material/styles";
 // import {theme} from './utils/Theme'
@@ -22,6 +22,7 @@ import RegistrationPage from './pages/registration-page.jsx'
 // import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 // import DeleteModal from "./components/modals/DeleteModal";
+// import CadastroFormulario from './components/tela-cadastro/CadastroFormulario';
 
 
 
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <>
+<<<<<<< HEAD
       {/* <RegistrationPage/> */}
       <Outlet/>
       {/* <ImagemTelaLogin/> */}  
@@ -54,6 +56,12 @@ function App() {
       {/* <DescobrirMobile/> */}
       {/* <ProjectDeletedModal/> */}
       {/* <DeleteModal/> */}
+=======
+      {/* <Outlet/> */}
+      <RegistrationPage/>
+      {/* <TelaLogin/> */}
+      {/* <CadastroFormulario/> */}
+>>>>>>> ffd89e10913693eea04d764887deed19acdfc368
     </>
    
   )

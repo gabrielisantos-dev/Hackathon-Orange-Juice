@@ -16,6 +16,11 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [savePostModalOpen, setSavePostModalOpen] = useState(false);
+    const [titleError, setTitleError] = useState('');
+    const [descriptionError, setDescriptionError] = useState('');
+    const [linkError, setLinkError] = useState('');
+    const [hasErrors, setHasErrors] = useState(false);
+
 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -28,15 +33,33 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     });
 
     const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setProjectData({ ...projectData, [name]: value });
-    };
-
-    const handleTagsChange = (event) => {
-    const tagsArray = event.target.value.split(',').map((tag) => tag.trim());
-    setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
-    };  
-
+        const { name, value } = event.target;
+        setProjectData({ ...projectData, [name]: value });
+        validateField(name, value);
+        };
+        
+        const validateField = (name, value) => {
+        switch (name) {
+            case 'title':
+            setTitleError(value.length < 4 || value.length > 30 ? 'O título deve ter entre 4 e 30 caracteres.' : '');
+            break;
+            case 'description':
+            setDescriptionError(value.length < 10 || value.length > 255 ? 'A descrição deve ter entre 10 e 255 caracteres.' : '');
+            break;
+            case 'link':
+            setLinkError(value.length < 10 || value.length > 255 ? 'O link deve ter entre 10 e 255 caracteres.' : '');
+            break;
+            default:
+            break;
+        }
+        setHasErrors(!!(titleError || descriptionError || linkError));
+        };
+        
+        const handleTagsChange = (event) => {
+        const tagsArray = event.target.value.split(' ').filter(tag => tag.trim() !== ' ');
+        setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
+        };
+        
     const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
@@ -45,19 +68,6 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         }
         return prevData;
     });
-    };
-    
-
-    const handleCancel = () => {
-    setProjectData({
-        title: '',
-        tags: [],
-        link: '',
-        description: '',
-        image: null,
-    });
-    onClose();
-    handleOpenModalProjeto()
     };
 
     const handleSave = () => {
@@ -72,6 +82,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     return 'none';
     }
     , [projectData.image]);
+
 
     return (
     <ThemeProvider theme={theme}>
@@ -88,9 +99,9 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
             <Box
             sx={{
                 width: modalWidth,
-                height: modalHeight,
+                height: hasErrors ? 'auto' : modalHeight,
                 backgroundColor: backgroundColor,
-                padding: '24px 30px',
+                padding: '35px 41px',
                 display: 'flex',
                 flexDirection: 'column',
             }}
@@ -190,7 +201,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     width: '433px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '16px',
+                    gap: '20px',
                 }}
                 >
                 <TextField
@@ -199,12 +210,14 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     name='title'
                     value={projectData.title}
                     onChange={handleInputChange}
+                    error={Boolean(titleError)}
+                    helperText={titleError}
                 />
                 <TextField
                     label='Tags'
                     variant='outlined'
                     name='tags'
-                    value={projectData.tags.join(',')}
+                    value={projectData.tags.join(' ')}
                     onChange={handleTagsChange}
                 />
                 <TextField
@@ -213,6 +226,8 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     name='link'
                     value={projectData.link}
                     onChange={handleInputChange}
+                    error={Boolean(linkError)}
+                    helperText={linkError}
                 />
                 <TextField
                     label='Descrição'
@@ -222,6 +237,8 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     name='description'
                     value={projectData.description}
                     onChange={handleInputChange}
+                    error={Boolean(descriptionError)}
+                    helperText={descriptionError}
                 />
                 </Box>
             </Box>
@@ -308,7 +325,8 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
 };
 
 AddProjectModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-};
+    onClose: PropTypes.func,
+    handleOpenModalProjeto: PropTypes.func,
+}.isRequired;
 
 export default AddProjectModal;
