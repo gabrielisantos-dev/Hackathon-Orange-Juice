@@ -3,11 +3,14 @@ package com.hackathon.backendorange.controller;
 import com.hackathon.backendorange.exception.UserNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +43,31 @@ public class UserController {
 	 this.userService = userService;
 	}
 
+	@Operation(
+			description = "Permite que um usuário se deslogue do sistema.",
+			summary = "Operação de Logout",
+			responses = {
+					@ApiResponse(
+							description = "Sucesso - O usuário foi deslogado com êxito.",
+							responseCode = "200"
+					),
+					@ApiResponse(
+							description = "Usuário não autenticado - O usuário não está autenticado no sistema.",
+							responseCode = "401"
+					)
+			}
+	)
+
+	@PostMapping("/logout")
+	public ResponseEntity<String> logout(HttpServletRequest request) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			SecurityContextHolder.clearContext();
+			return ResponseEntity.ok("Usuário deslogado com sucesso.");
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autenticado.");
+		}
+	}
 	@Operation(
 			description = "Permite que um usuário se cadastre no sistema.",
 			summary = "Cadastro de Usuário",
