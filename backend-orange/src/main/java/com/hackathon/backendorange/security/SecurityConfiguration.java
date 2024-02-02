@@ -15,56 +15,48 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Arrays;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
 
         @Autowired
         private SecurityFilter securityFilter;
 
         @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-            return  httpSecurity
-              .csrf(AbstractHttpConfigurer::disable)
-              .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-              .authorizeHttpRequests(autorize -> autorize
-
-                              .requestMatchers(HttpMethod.POST, "/api/auth/login")
-                              .permitAll()
-
-                              .requestMatchers(HttpMethod.POST, "/api/auth/register")
-                              .permitAll()
-
-                              .requestMatchers(
-                                      "/v2/api-docs",
-                                      "/v3/api-docs",
-                                      "/swagger-resources",
-                                      "/swagger-resources/**",
-                                      "/configuration/ui",
-                                      "/configuration/security",
-                                      "/v3/api-docs/**",
-                                      "webjars/**",
-                                      "/swagger-ui/**",
-                                      "/swagger-ui.html")
-                              .permitAll()
-                              .anyRequest().authenticated()
-
-                            )
-                    .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                    .build();
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                return http
+                        .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
+                        .cors(cors -> cors.disable())
+                        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .authorizeRequests(authorize -> authorize
+                                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/project/hello").permitAll()
+                                .requestMatchers(
+                                        "/v2/api-docs",
+                                        "/v3/api-docs",
+                                        "/swagger-resources",
+                                        "/swagger-resources/**",
+                                        "/configuration/ui",
+                                        "/configuration/security",
+                                        "/v3/api-docs/**",
+                                        "/webjars/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html"
+                                ).permitAll()
+                                .anyRequest().authenticated()
+                        )
+                        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                        .build();
         }
 
         @Bean
         public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+                return authenticationConfiguration.getAuthenticationManager();
         }
 
         @Bean
-        public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
         }
-
 }
