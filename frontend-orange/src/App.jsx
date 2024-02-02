@@ -9,7 +9,7 @@ import "./main.css"
 // import BotaoEntrarComGoogle from "./components/tela-login/BotaoEntrarComGoogle"
 // import LogoGoogle from "./components/tela-login/BotaoGoogleLogin"
 // import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
-import TelaLogin from "./pages/TelaLogin"
+// import TelaLogin from "./pages/TelaLogin"
 // import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
 // import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
@@ -18,7 +18,7 @@ import TelaLogin from "./pages/TelaLogin"
 // import Descobrir from "./pages/Descobrir";
 // import ModalProjeto from './components/meu-portfolio/ModalProjeto';
 // import DescobrirMobile from './pages/DescobrirMobile'
-// import RegistrationPage from './pages/registration-page.jsx'
+import RegistrationPage from './pages/registration-page.jsx'
 // import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 // import DeleteModal from "./components/modals/DeleteModal";
@@ -43,10 +43,10 @@ function App() {
       {/* <CardPerfil/> */}
       {/* <FormBuscarTags/> */}
       {/* <ListaProjetos/> */}
-      <TelaLogin />
+      {/* <TelaLogin /> */}
       {/* <Descobrir/> */}
       {/* <MeuPortfolio/> */}
-      {/* <RegistrationPage/> */}
+      <RegistrationPage/>
       {/* <Descobrir/> */}
       {/* <DescobrirMobile/> */}
       {/* <DescobrirDesktop/> */}
