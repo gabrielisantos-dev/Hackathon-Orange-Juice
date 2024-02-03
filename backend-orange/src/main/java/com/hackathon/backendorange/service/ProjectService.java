@@ -22,18 +22,21 @@ import java.util.*;
 
 @Service
 public class ProjectService {
+    ProjectRepository repository;
+    UserRepository userRepository;
+    ProjectAssembler projectAssembler;
 
-    @Autowired
-    private ProjectRepository repository;
+    Cloudinary cloudinary;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ProjectAssembler projectAssembler;
-
-    @Autowired
-    private Cloudinary cloudinary;
+    public ProjectService(ProjectRepository repository,
+                          UserRepository userRepository,
+                          ProjectAssembler projectAssembler,
+                          Cloudinary cloudinary) {
+        this.repository = repository;
+        this.userRepository = userRepository;
+        this.projectAssembler = projectAssembler;
+        this.cloudinary = cloudinary;
+    }
 
     public List<Project> getAllProjects() {
         List<Project> allProjects = repository.findAll();

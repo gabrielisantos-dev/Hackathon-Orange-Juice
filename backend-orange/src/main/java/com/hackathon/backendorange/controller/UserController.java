@@ -26,23 +26,59 @@ import com.hackathon.backendorange.service.UserService;
 
 import jakarta.validation.Valid;
 
+import javax.security.auth.login.LoginException;
+
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {
 	
 	
-	private UserService userService;
+	UserService userService;
 
-	@Autowired
-	private TokenService tokenService;
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
-	
 	public UserController(UserService userService) {
 	 this.userService = userService;
 	}
 
+	@Operation(
+			description = "Permite que um usuário se cadastre no sistema.",
+			summary = "Cadastro de Usuário",
+			responses = {
+					@ApiResponse(
+							description = "Sucesso - O usuário foi cadastrado com êxito.",
+							responseCode = "201"
+					),
+					@ApiResponse(
+							description = "Usuário já cadastrado no sistema",
+							responseCode = "409"
+					)
+			}
+	)
+	@PostMapping("/register")
+	@ResponseStatus(HttpStatus.CREATED)
+	public UserDTO register(@RequestBody @Valid UserDTO userDTO) {
+		return userService.register(userDTO);
+	}
+
+
+	@Operation(
+			description = "Permite que um usuário faça login no sistema.",
+			summary = "Operação de Login",
+			responses = {
+					@ApiResponse(
+							description = "Sucesso - O usuário foi autenticado com êxito.",
+							responseCode = "200"
+					),
+					@ApiResponse(
+							description = "Credenciais Inválidas - As informações de login fornecidas são incorretas.",
+							responseCode = "401"
+					)
+			}
+	)
+
+	@PostMapping("/login")
+	public ResponseEntity login(@RequestBody @Valid AutenticationDTO autenticationDTO) throws LoginException {
+		return ResponseEntity.ok(userService.login(autenticationDTO));
+	}
 	@Operation(
 			description = "Permite que um usuário se deslogue do sistema.",
 			summary = "Operação de Logout",
@@ -68,58 +104,6 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autenticado.");
 		}
 	}
-	@Operation(
-			description = "Permite que um usuário se cadastre no sistema.",
-			summary = "Cadastro de Usuário",
-			responses = {
-					@ApiResponse(
-							description = "Sucesso - O usuário foi cadastrado com êxito.",
-							responseCode = "200"
-					),
-					@ApiResponse(
-							description = "Usuário não encontrado - O usuário não pôde ser localizado.",
-							responseCode = "404"
-					)
-			}
-	)
-	@PostMapping("/register")
-	@ResponseStatus(HttpStatus.CREATED)
-	public UserDTO register(@RequestBody @Valid UserDTO userDTO) {
-		return userService.register(userDTO);
-	}
-	@Operation(
-			description = "Permite que um usuário faça login no sistema.",
-			summary = "Operação de Login",
-			responses = {
-					@ApiResponse(
-							description = "Sucesso - O usuário foi autenticado com êxito.",
-							responseCode = "200"
-					),
-					@ApiResponse(
-							description = "Credenciais Inválidas - As informações de login fornecidas são incorretas.",
-							responseCode = "401"
-					),
-					@ApiResponse(
-							description = "Usuário não encontrado - O usuário não está cadastrado no sistema.",
-							responseCode = "404"
-					)
-			}
-	)
-
-	@PostMapping("/login")
-	public ResponseEntity login(@RequestBody @Valid AutenticationDTO autenticationDTO) {
-
-		var usernamePassword = new UsernamePasswordAuthenticationToken(autenticationDTO.getEmail(), autenticationDTO.getPassword());
-		if(!userService.existsByEmail(autenticationDTO.getEmail())){
-			throw new UserNotFoundException();
-		}
-		var auth = authenticationManager.authenticate(usernamePassword);
-		var token = tokenService.generateToken((User) auth.getPrincipal());
-
-		return ResponseEntity.ok(new LoginResponseDTO(token));
-	}
-
-
 
 }
 

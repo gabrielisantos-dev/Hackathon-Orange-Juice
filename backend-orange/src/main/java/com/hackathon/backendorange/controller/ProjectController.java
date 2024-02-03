@@ -28,7 +28,7 @@ import java.util.List;
 @Tag(name = "Projetos")
 public class ProjectController {
 
-    private ProjectService service;
+    ProjectService service;
 
     public ProjectController(ProjectService service) {
         this.service = service;

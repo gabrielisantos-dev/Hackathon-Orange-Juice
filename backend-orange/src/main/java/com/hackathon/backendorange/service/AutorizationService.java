@@ -10,8 +10,11 @@ import com.hackathon.backendorange.repository.UserRepository;
 @Service
 public class AutorizationService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+     UserRepository userRepository;
+
+    public AutorizationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
