@@ -1,5 +1,6 @@
-import {theme} from '../../utils/Theme'
-import { Box, Typography, Chip, Link, Button } from "@mui/material";
+import PropTypes from 'prop-types';
+// import {theme} from '../../utils/Theme'
+import { Box, Typography, Chip } from "@mui/material";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { useState } from "react";
 // import figuraProjeto from '../../assets/projects/project1.svg'
@@ -16,12 +17,13 @@ import Tooltip from '@mui/material/Tooltip';
 // import Logout from '@mui/icons-material/Logout';
 import CreateIcon from '@mui/icons-material/Create';
 import EditProjectModal from "../modals/EditProjectModal";
-import {useMediaQuery} from '@mui/material/';
+// import {useMediaQuery} from '@mui/material/';
 import ModalProjeto from './ModalProjeto';
 
 
 export default function CardProjeto(props){
-  const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
+
+  // const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -31,8 +33,7 @@ export default function CardProjeto(props){
     setAnchorEl(null);
   }
   return(
-    <Box 
-    
+    <Box     
     sx={{
       
       height:'298px',
@@ -52,10 +53,10 @@ export default function CardProjeto(props){
           borderRadius:'5px',
         }}
           >
-         
+          
         
             {/* ======inicio menu===== */}
-       <Box>
+        <Box>
           <Box 
             sx={{ 
               display: 'flex',
@@ -142,8 +143,7 @@ export default function CardProjeto(props){
               }}
               >
               Excluir
-            </MenuItem>
-           
+            </MenuItem>  
           </Menu>
         </Box>
         
@@ -205,8 +205,28 @@ export default function CardProjeto(props){
 
         /> : null}
 
-        {/* {props.openModalProjeto ? <ModalProjeto/> : null} */}
+        {props.openModalProjeto ? <ModalProjeto/> : null}
     
     </Box> 
   )
+}
+
+CardProjeto.propTypes = {
+  width: PropTypes.string,
+  color: PropTypes.string,
+  colorIconMenu: PropTypes.string,
+  avatar: PropTypes.string,
+  widthAvatar: PropTypes.string,
+  heightAvatar: PropTypes.string,
+  chipsWidth: PropTypes.string,
+  chipDirection: PropTypes.string,
+  nome: PropTypes.string,
+  labelChip: PropTypes.string,
+  data: PropTypes.string,
+  imagem: PropTypes.string,
+  iconMenu: PropTypes.string,
+  openEditProjectModal: PropTypes.bool,
+  setOpenEditProjectModal: PropTypes.func,
+  handleEditProjectModal: PropTypes.func,
+  openModalProjeto: PropTypes.bool,
 }
