@@ -1,11 +1,12 @@
+import TelaLogin from './components/TelaLogin';
+
 function App() {
-  
 
   return (
-    <>
-      Hello World
-    </>
-  )
+    <div className="App">
+      <TelaLogin />
+    </div>
+  );
 }
 
-export default App
+export default App;
