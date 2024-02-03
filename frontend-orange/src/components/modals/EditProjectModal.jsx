@@ -4,7 +4,7 @@ import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMedi
 import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
 import ViewPostModal from './ViewPostModal';
-import SavePostModal from './SavePostModal';
+import EditedPostModal from './EditedPostModal';
 
 // Constantes para tamanhos e cores repetidas
 const modalWidth = '850px';
@@ -12,10 +12,15 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
+const EditProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
-    const [savePostModalOpen, setSavePostModalOpen] = useState(false);
+    const [editedPostModalOpen, setEditedPostModalOpen] = useState(false);
+    const [titleError, setTitleError] = useState('');
+    const [descriptionError, setDescriptionError] = useState('');
+    const [linkError, setLinkError] = useState('');
+    const [hasErrors, setHasErrors] = useState(false);
+
 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -28,15 +33,33 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
     });
 
     const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setProjectData({ ...projectData, [name]: value });
-    };
-
-    const handleTagsChange = (event) => {
-    const tagsArray = event.target.value.split(',').map((tag) => tag.trim());
-    setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
-    };  
-
+        const { name, value } = event.target;
+        setProjectData({ ...projectData, [name]: value });
+        validateField(name, value);
+        };
+        
+        const validateField = (name, value) => {
+        switch (name) {
+            case 'title':
+            setTitleError(value.length < 4 || value.length > 30 ? 'O título deve ter entre 4 e 30 caracteres.' : '');
+            break;
+            case 'description':
+            setDescriptionError(value.length < 10 || value.length > 255 ? 'A descrição deve ter entre 10 e 255 caracteres.' : '');
+            break;
+            case 'link':
+            setLinkError(value.length < 10 || value.length > 255 ? 'O link deve ter entre 10 e 255 caracteres.' : '');
+            break;
+            default:
+            break;
+        }
+        setHasErrors(!!(titleError || descriptionError || linkError));
+        };
+        
+        const handleTagsChange = (event) => {
+        const tagsArray = event.target.value.split(' ').filter(tag => tag.trim() !== ' ');
+        setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
+        };
+        
     const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
@@ -46,34 +69,24 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
         return prevData;
     });
     };
-    
-
-    const handleCancel = () => {
-    setProjectData({
-        title: '',
-        tags: [],
-        link: '',
-        description: '',
-        image: null,
-    });
-    onClose();
-    };
 
     const handleSave = () => {
-    setSavePostModalOpen(true);
+    setEditedPostModalOpen(true);
     onClose();
     };
 
     const backgroundImage = useMemo(() => {
-        if (projectData.image) {
-            return `url(${URL.createObjectURL(projectData.image)})`;
-        }
-        return 'none';
-    }, [projectData.image]);
+    if (projectData.image) {
+        return `url(${URL.createObjectURL(projectData.image)})`;
+    }
+    return 'none';
+    }
+    , [projectData.image]);
+
 
     return (
     <ThemeProvider theme={theme}>
-        {!savePostModalOpen && (
+        {!editedPostModalOpen && (
         <Modal open={true} onClose={onClose}>
         <Box
             sx={{
@@ -86,9 +99,9 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
             <Box
             sx={{
                 width: modalWidth,
-                height: modalHeight,
+                height: hasErrors ? 'auto' : modalHeight,
                 backgroundColor: backgroundColor,
-                padding: '24px 30px',
+                padding: '35px 41px',
                 display: 'flex',
                 flexDirection: 'column',
             }}
@@ -188,7 +201,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     width: '433px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '16px',
+                    gap: '20px',
                 }}
                 >
                 <TextField
@@ -197,12 +210,14 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     name='title'
                     value={projectData.title}
                     onChange={handleInputChange}
+                    error={Boolean(titleError)}
+                    helperText={titleError}
                 />
                 <TextField
                     label='Tags'
                     variant='outlined'
                     name='tags'
-                    value={projectData.tags.join(',')}
+                    value={projectData.tags.join(' ')}
                     onChange={handleTagsChange}
                 />
                 <TextField
@@ -211,6 +226,8 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     name='link'
                     value={projectData.link}
                     onChange={handleInputChange}
+                    error={Boolean(linkError)}
+                    helperText={linkError}
                 />
                 <TextField
                     label='Descrição'
@@ -220,6 +237,8 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     name='description'
                     value={projectData.description}
                     onChange={handleInputChange}
+                    error={Boolean(descriptionError)}
+                    helperText={descriptionError}
                 />
                 </Box>
             </Box>
@@ -261,13 +280,13 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     marginRight: '16px',
                     color: '#FCFDFF',
                 }}
-                // INCLUIR ROTA AXIOS AQUI ============
+                //INCLUIR ROTA AXIOS AQUI ==================================
                 >
-                <b>Salvar</b> 
+                <b>Salvar</b>
                 </Button>
                 <Button
                 variant='outlined'
-                onClick={()=>{handleEditProjectModal()}}
+                onClick={()=>{handleOpenModalProjeto()}}
                 sx={{
                     width: 'Hug (101px)',
                     height: 'Hug (42px)',
@@ -294,10 +313,10 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
             projectData={selectedProject}
         />
         )}
-        {savePostModalOpen && (
-        <SavePostModal
+        {editedPostModalOpen && (
+        <EditedPostModal
             onClose={() => {
-            setSavePostModalOpen(false);
+            setEditedPostModalOpen(false);
             }}
         />
         )}
@@ -306,7 +325,8 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
 };
 
 EditProjectModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-};
+    onClose: PropTypes.func,
+    handleOpenModalProjeto: PropTypes.func,
+}.isRequired;
 
 export default EditProjectModal;
