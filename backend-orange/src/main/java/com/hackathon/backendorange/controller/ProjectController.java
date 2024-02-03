@@ -1,18 +1,14 @@
 package com.hackathon.backendorange.controller;
 
 
-import com.hackathon.backendorange.dto.ProjectDTO;
 import com.hackathon.backendorange.dto.ProjectSaveDTO;
 import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
 import com.hackathon.backendorange.exception.ProjectsNotFoundException;
-import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.service.ProjectService;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

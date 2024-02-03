@@ -2,6 +2,6 @@ package com.hackathon.backendorange.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException() {
-        super("Usuario nao encontrado");
+        super("Usuário não encontrado");
     }
 }

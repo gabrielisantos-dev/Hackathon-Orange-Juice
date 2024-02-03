@@ -125,20 +125,20 @@ public class UserController {
 							responseCode = "200"
 					),
 					@ApiResponse(
-							description = "Usuário não encontrado",
-							responseCode = "404"
+							description = "Usuário não autenticado",
+							responseCode = "401"
 					)
 			}
 	)
 	@GetMapping("/user")
-	public UserDTO details(){
+	public ResponseEntity details(){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			UserDTO userDTO = userService.details(userDetails.getUsername());
-			return userDTO;
+			return ResponseEntity.ok(userDTO);
 		} else {
-			throw new UserNotFoundException();
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autenticado.");
 		}
 	}
 

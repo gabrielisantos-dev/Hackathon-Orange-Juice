@@ -7,7 +7,6 @@ import com.hackathon.backendorange.dto.ProjectSaveDTO;
 import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
 import com.hackathon.backendorange.exception.ProjectsNotFoundException;
-import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.model.User;
 import com.hackathon.backendorange.repository.ProjectRepository;
