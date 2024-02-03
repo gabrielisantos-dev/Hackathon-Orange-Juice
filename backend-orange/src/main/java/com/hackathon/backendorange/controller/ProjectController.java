@@ -158,10 +158,10 @@ public class ProjectController {
             }
     )
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestPart @Valid ProjectDTO updateProjectDTO,
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestPart @Valid ProjectSaveDTO projectSaveDTO,
                                          @RequestPart("image") MultipartFile file) throws IOException {
         try {
-            service.updateProject(id, updateProjectDTO, file);
+            service.updateProject(id, projectSaveDTO, file);
             return ResponseEntity.ok("Projeto atualizado com sucesso!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());

@@ -88,18 +88,18 @@ public class ProjectService {
         }
     }
 
-    public Optional<ProjectDTO> updateProject(Long id, ProjectDTO projectDTO, MultipartFile file) throws IOException {
+    public Optional<ProjectDTO> updateProject(Long id, ProjectSaveDTO projectSaveDTO, MultipartFile file) throws IOException {
 
-        if (projectDTO != null && id != null) {
+        if (projectSaveDTO != null && id != null) {
             Project projectExists = repository.findById(id).orElseThrow(() -> new ProjectIdNotFoundException());
-            projectExists.setTitulo(projectDTO.getTitulo());
-            projectExists.setDescricao(projectDTO.getDescricao());
-            projectExists.setTags(projectDTO.getTags());
-            projectExists.setLinks(projectDTO.getLinks());
+            projectExists.setTitulo(projectSaveDTO.getTitulo());
+            projectExists.setDescricao(projectSaveDTO.getDescricao());
+            projectExists.setTags(projectSaveDTO.getTags());
+            projectExists.setLinks(projectSaveDTO.getLinks());
 
             if (!Objects.equals(projectExists.getImage_originalName(), file.getOriginalFilename())) {
                 //delete -> imagem antiga
-                String imageIdExists = projectDTO.getImage_id();
+                String imageIdExists = projectExists.getImage_id();
                 deleteImage(imageIdExists);
 
                 //upload -> imagem nova
