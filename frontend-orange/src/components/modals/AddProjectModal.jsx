@@ -5,6 +5,9 @@ import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
 import ViewPostModal from './ViewPostModal';
 import SavePostModal from './SavePostModal';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Axios from 'axios';
 
 // Constantes para tamanhos e cores repetidas
 const modalWidth = '850px';
@@ -20,6 +23,8 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const [descriptionError, setDescriptionError] = useState('');
     const [linkError, setLinkError] = useState('');
     const [hasErrors, setHasErrors] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
 
 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -70,10 +75,35 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     });
     };
 
-    const handleSave = () => {
-    setSavePostModalOpen(true);
-    onClose();
+    const handleSave = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('title', projectData.title);
+            formData.append('tags', projectData.tags.join(', '));
+            formData.append('link', projectData.link);
+            formData.append('description', projectData.description);
+            formData.append('image', projectData.image);
+    
+            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData);
+    
+            if (response.status === 200 || response.status === 201) {
+                setSavePostModalOpen(true);
+                onClose();
+            }
+
+        } catch (error) {
+            setSnackbarOpen(true);
+        }
     };
+    
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
+    };
+    
 
     const backgroundImage = useMemo(() => {
     if (projectData.image) {
@@ -280,7 +310,6 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     marginRight: '16px',
                     color: '#FCFDFF',
                 }}
-                //INCLUIR ROTA AXIOS AQUI ==================================
                 >
                 <b>Salvar</b>
                 </Button>
@@ -304,6 +333,12 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         </Box>
         </Modal>
         )}
+        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <MuiAlert onClose={handleCloseSnackbar} severity='error' elevation={6} variant='filled'>
+            Erro ao salvar o projeto. Por favor, tente novamente.
+            </MuiAlert>
+        </Snackbar>
+
         {viewPostModalOpen && (
         <ViewPostModal
             onClose={() => {

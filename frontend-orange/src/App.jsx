@@ -1,5 +1,5 @@
 import "./main.css"
-// import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 // import ThemeProvider from "@mui/material/";
 // import { ThemeProvider } from "@mui/material/styles";
 // import {theme} from './utils/Theme'
@@ -9,7 +9,7 @@ import "./main.css"
 // import BotaoEntrarComGoogle from "./components/tela-login/BotaoEntrarComGoogle"
 // import LogoGoogle from "./components/tela-login/BotaoGoogleLogin"
 // import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
-import TelaLogin from "./pages/TelaLogin"
+// import TelaLogin from "./pages/TelaLogin"
 // import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
 // import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
@@ -33,12 +33,12 @@ function App() {
     <>
 
       {/* <RegistrationPage/> */}
-      {/* <Outlet/> */}
+      <Outlet/>
       {/* <ImagemTelaLogin/> */}  
       {/* <FormularioLogin /> */}
       {/* <BotaoEntrarComGoogle/> */}
       {/* <BotaoGoogleLogin/> */}
-      <TelaLogin/>
+      {/* <TelaLogin/> */}
       {/* <MainHeader/> */}
       {/* <ContainerImagemTelaLogin/> */}
       {/* <AddProjectModal/> */}
