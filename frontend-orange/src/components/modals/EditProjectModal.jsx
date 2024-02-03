@@ -70,7 +70,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
         if (prevData.imagem !== imageFile) {
-        return { ...prevData, image: imageFile };
+        return { ...prevData, imagem: imageFile };
         }
         return prevData;
     });
@@ -122,7 +122,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
     return (
     <ThemeProvider theme={theme}>
         {!editedPostModalOpen && (
-        <Modal open={true} onClose={onClose} sx={{ overflow:'scroll', mt:5}} >
+        <Modal open={true} onClose={onClose} >
         <Box
             sx={{
             display: 'flex',
@@ -284,7 +284,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                 href='#'
                 onClick={() => {
                     setViewPostModalOpen(true);
-                    setSelectedProject({ ...projectData, image: URL.createObjectURL(projectData.imagem) });
+                    setSelectedProject({ ...projectData, imagem: URL.createObjectURL(projectData.imagem) });
                 }}
                 sx={{
                     display: 'block',
