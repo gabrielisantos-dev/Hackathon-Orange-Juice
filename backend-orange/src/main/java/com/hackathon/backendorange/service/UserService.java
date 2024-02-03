@@ -71,4 +71,11 @@ public class UserService {
 	}
 
 
+	public UserDTO details (String email){
+		User user = userRepository.findUserByEmail(email);
+		UserDTO userDTO = userAssembler.toDTO(user);
+
+		return userDTO;
+	}
+
 }

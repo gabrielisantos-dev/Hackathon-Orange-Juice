@@ -3,10 +3,10 @@ package com.hackathon.backendorange.service;
 import com.cloudinary.Cloudinary;
 import com.hackathon.backendorange.controller.assembler.ProjectAssembler;
 import com.hackathon.backendorange.dto.ProjectDTO;
+import com.hackathon.backendorange.dto.ProjectSaveDTO;
 import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
 import com.hackathon.backendorange.exception.ProjectsNotFoundException;
-import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.model.User;
 import com.hackathon.backendorange.repository.ProjectRepository;
@@ -47,9 +47,9 @@ public class ProjectService {
         }
     }
 
-    public List<Project> getUserProjects(Long user_id) {
-        User user = userRepository.findById(user_id).orElseThrow(() -> new UserNotFoundException());
-        List<Project> userProjects = repository.getUserProjects(user_id);
+    public List<Project> getUserProjects(String email) {
+        User user = userRepository.findUserByEmail(email);
+        List<Project> userProjects = repository.getUserProjects(user.getId());
         if (userProjects.isEmpty()) {
             throw new ProjectsNotFoundException();
         } else {
@@ -57,15 +57,20 @@ public class ProjectService {
         }
     }
 
-    public ProjectDTO saveProject(ProjectDTO projectDTO, MultipartFile file) throws IOException {
+    public ProjectDTO saveProject(String email, ProjectSaveDTO projectSaveDTO, MultipartFile file) throws IOException {
 
-
-        if (projectDTO != null && projectDTO.getIdUser() != null) {
-            User user = userRepository.findById(projectDTO.getIdUser()).orElseThrow(() -> new UserNotFoundException());
+        if (projectSaveDTO != null) {
+            User user = userRepository.findUserByEmail(email);
 
             Map imageInfo = uploadImage(file);
             String imageUrl = imageInfo.get("url").toString();
             String imageId = imageInfo.get("public_id").toString();
+
+            ProjectDTO projectDTO = new ProjectDTO();
+            projectDTO.setTitulo(projectSaveDTO.getTitulo());
+            projectDTO.setDescricao(projectSaveDTO.getDescricao());
+            projectDTO.setTags(projectSaveDTO.getTags());
+            projectDTO.setLinks(projectSaveDTO.getLinks());
 
             Project projectEntity = projectAssembler.toEntity(projectDTO);
 
@@ -73,6 +78,7 @@ public class ProjectService {
             projectEntity.setImage(imageUrl);
             projectEntity.setImage_id(imageId);
             projectEntity.setImage_originalName(file.getOriginalFilename());
+            projectEntity.setUser(user);
 
             Project savedProject = repository.save(projectEntity);
             ProjectDTO savedProjectDTO = projectAssembler.toDTO(savedProject);
@@ -84,18 +90,18 @@ public class ProjectService {
         }
     }
 
-    public Optional<ProjectDTO> updateProject(Long id, ProjectDTO projectDTO, MultipartFile file) throws IOException {
+    public Optional<ProjectDTO> updateProject(Long id, ProjectSaveDTO projectSaveDTO, MultipartFile file) throws IOException {
 
-        if (projectDTO != null && id != null) {
+        if (projectSaveDTO != null && id != null) {
             Project projectExists = repository.findById(id).orElseThrow(() -> new ProjectIdNotFoundException());
-            projectExists.setTitulo(projectDTO.getTitulo());
-            projectExists.setDescricao(projectDTO.getDescricao());
-            projectExists.setTags(projectDTO.getTags());
-            projectExists.setLinks(projectDTO.getLinks());
+            projectExists.setTitulo(projectSaveDTO.getTitulo());
+            projectExists.setDescricao(projectSaveDTO.getDescricao());
+            projectExists.setTags(projectSaveDTO.getTags());
+            projectExists.setLinks(projectSaveDTO.getLinks());
 
             if (!Objects.equals(projectExists.getImage_originalName(), file.getOriginalFilename())) {
                 //delete -> imagem antiga
-                String imageIdExists = projectDTO.getImage_id();
+                String imageIdExists = projectExists.getImage_id();
                 deleteImage(imageIdExists);
 
                 //upload -> imagem nova

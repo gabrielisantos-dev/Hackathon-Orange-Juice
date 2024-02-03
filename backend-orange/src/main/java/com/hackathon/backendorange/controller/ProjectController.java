@@ -1,27 +1,30 @@
 package com.hackathon.backendorange.controller;
 
 
-import com.hackathon.backendorange.dto.ProjectDTO;
+import com.hackathon.backendorange.dto.ProjectSaveDTO;
 import com.hackathon.backendorange.enums.TagsEnum;
 import com.hackathon.backendorange.exception.ProjectIdNotFoundException;
 import com.hackathon.backendorange.exception.ProjectsNotFoundException;
-import com.hackathon.backendorange.exception.UserNotFoundException;
 import com.hackathon.backendorange.model.Project;
 import com.hackathon.backendorange.service.ProjectService;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/project")
@@ -60,7 +63,7 @@ public class ProjectController {
     }
 
     @Operation(
-            description = "Retorna uma lista dos projetos a partir do id do usuário.",
+            description = "Retorna uma lista dos projetos do usuário logado no sistema.",
             summary = "Listar todos os projetos do usuário",
             responses = {
                     @ApiResponse(
@@ -68,17 +71,27 @@ public class ProjectController {
                             responseCode = "200"
                     ),
                     @ApiResponse(
-                            description = "Not Found Projects / Not Found User",
+                            description = "Not Found Projects",
                             responseCode = "404"
+                    ),
+                    @ApiResponse(
+                            description = "Usuário não possui credenciais de autenticação válidas",
+                            responseCode = "401"
                     )
             }
     )
-    @GetMapping("/list-userprojects/{id}")
-    public ResponseEntity listUserProject(@PathVariable Long id) {
+    @GetMapping("/list-userprojects")
+    public ResponseEntity listUserProject() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try{
-            List<Project> userProjects = service.getUserProjects(id);
-            return ResponseEntity.ok(userProjects);
-        }catch (ProjectsNotFoundException | UserNotFoundException e) {
+            if(authentication != null && authentication.isAuthenticated()) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                List<Project> userProjects = service.getUserProjects(userDetails.getUsername());
+                return ResponseEntity.ok(userProjects);
+            }else{
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autenticado.");
+            }
+        }catch (ProjectsNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -98,19 +111,28 @@ public class ProjectController {
                     @ApiResponse(
                             description = "Dados não preenchidos corretamente",
                             responseCode = "422"
+                    ),
+                    @ApiResponse(
+                            description = "Usuário não possui credenciais de autenticação válidas",
+                            responseCode = "401"
                     )
             }
     )
     @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> save(@RequestPart @Valid ProjectDTO projectDTO,
+    public ResponseEntity<String> save(@RequestPart @Valid ProjectSaveDTO projectSaveDTO,
                                        @RequestPart("image")  MultipartFile file) throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
-            service.saveProject(projectDTO, file);
-            return ResponseEntity.ok("Projeto registrado com sucesso!");
+            if (authentication != null && authentication.isAuthenticated()) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                service.saveProject(userDetails.getUsername(), projectSaveDTO, file);
+                return ResponseEntity.ok("Projeto registrado com sucesso!");
+            }else{
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autenticado.");
+            }
+
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
-        } catch (UserNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }
@@ -135,10 +157,10 @@ public class ProjectController {
             }
     )
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestPart @Valid ProjectDTO updateProjectDTO,
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestPart @Valid ProjectSaveDTO projectSaveDTO,
                                          @RequestPart("image") MultipartFile file) throws IOException {
         try {
-            service.updateProject(id, updateProjectDTO, file);
+            service.updateProject(id, projectSaveDTO, file);
             return ResponseEntity.ok("Projeto atualizado com sucesso!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
@@ -193,5 +215,18 @@ public class ProjectController {
         }catch (ProjectsNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException e){
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getAllErrors().forEach((error) -> {
+            String errorMessage = error.getDefaultMessage();
+            errors.put("Erro de validação ", errorMessage);
+        });
+
+        return errors;
     }
 }
