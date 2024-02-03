@@ -88,6 +88,7 @@ export default function CardPerfil(props){
       
         <AddProjectModal
           handleOpenModalProjeto={props.handleOpenModalProjeto}
+          respBk1={props.respBk1}
         />
         
         : null}

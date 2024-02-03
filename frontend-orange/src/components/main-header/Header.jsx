@@ -88,7 +88,7 @@ export default function MainHeader(props){
                 </Box>
                   <Divider/>
                   <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/meu-portfolio' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
+                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/meus-projetos' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
                   <Divider/>
                   <MenuItem onClick={handleClose} sx={{gap:'10px'}}>
                     <LogoutIcon/>
@@ -124,7 +124,7 @@ export default function MainHeader(props){
                 }}
             >
               <Link 
-              to='/meu-portfolio'
+              to='/meus-projetos'
               style={{textDecoration:'none', color:'#FCFDFF'}}>
               
               Meus projetos

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { GoogleLogin, GoogleLogout } from '@react-oauth/google';
+// import { GoogleLogin, GoogleLogout } from '@react-oauth/google';
+
+import { GoogleLogout, GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 
 const BotaoGoogleLogin = () => {
@@ -34,9 +36,9 @@ const BotaoGoogleLogin = () => {
 
   return (
     <div>
-      <h2>React Google Login</h2>
+      {/* <h2>React Google Login</h2>
       <br />
-      <br />
+      <br /> */}
       {profile ? (
         <div>
           <img src={profile.picture} alt="User Image" />
@@ -51,9 +53,9 @@ const BotaoGoogleLogin = () => {
         </div>
       ) : (
         <GoogleLogin onSuccess={handleSuccess} onError={handleError} clientId="755287664476-qvq0arrdis429fdk0e2b7366cc60rtmo.apps.googleusercontent.com">
-          <button>Login with Google 🚀</button>
         </GoogleLogin>
       )}
+      {/* <button>Login with Google 🚀</button> */}
     </div>
   );
 };

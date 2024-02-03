@@ -12,7 +12,7 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
+const AddProjectModal = ({ onClose, handleOpenModalProjeto, respBk1 }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [savePostModalOpen, setSavePostModalOpen] = useState(false);
@@ -87,13 +87,13 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     return (
     <ThemeProvider theme={theme}>
         {!savePostModalOpen && (
-        <Modal open={true} onClose={onClose}>
+        <Modal open={true} onClose={onClose} sx={{ overflow:'scroll', mt:5}} >
         <Box
             sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh',
+            
             }}
         >
             <Box

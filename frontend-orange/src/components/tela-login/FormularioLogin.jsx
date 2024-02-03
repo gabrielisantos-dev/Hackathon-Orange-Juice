@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Box,
   TextField,
   Typography,
   Button,
-  Link,
+  
   InputAdornment,
   IconButton,
 } from '@mui/material';
@@ -101,7 +102,8 @@ export default function FormularioLogin(props) {
         >
           Entrar
         </Button>
-        <Box>
+        <Box
+        >
           <Link
             color="neutral.main"
             marginTop="18px"
@@ -109,9 +111,11 @@ export default function FormularioLogin(props) {
             fontSize="16px"
             lineHeight="16px"
             letterSpacing="0.15px"
-            underline="none"
+            
             href="#"
-            onClick={()=>{console.log('clicando')}}
+            
+            to='/cadastro'
+            style={{textDecoration:'none', cursor:'pointer'}}
           >
             Cadastre-se
           </Link>

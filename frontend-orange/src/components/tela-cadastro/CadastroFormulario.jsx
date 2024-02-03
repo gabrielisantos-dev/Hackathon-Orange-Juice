@@ -35,6 +35,7 @@ const CadastroFormulario = ({ onCadastro }) => {
   
   const handleCadastro = async () => {
     try {
+      
       const response = await axios.post('https://orange-9dj9.onrender.com/api/auth/register', {
         nome: form.nome,
         sobrenome: form.sobrenome,
