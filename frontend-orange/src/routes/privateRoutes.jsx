@@ -1,14 +1,17 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
+import TelaLogin from '../pages/TelaLogin'
 
 export default function PrivateRoutes({children}) {
+  
 
-
-  const user = false
+  const token = localStorage.getItem('token')
+  
   
   return (
 
-    user ? children : <Navigate to='/login' />
+    token ? children : <Navigate to='/login' />
+    
   )
 }
 

@@ -39,7 +39,7 @@ const BotaoGoogleLogin = () => {
       {/* <h2>React Google Login</h2>
       <br />
       <br /> */}
-      {profile ? (
+      {/* {profile ? (
         <div>
           <img src={profile.picture} alt="User Image" />
           <h3>User Connected</h3>
@@ -54,7 +54,7 @@ const BotaoGoogleLogin = () => {
       ) : (
         <GoogleLogin onSuccess={handleSuccess} onError={handleError} clientId="755287664476-qvq0arrdis429fdk0e2b7366cc60rtmo.apps.googleusercontent.com">
         </GoogleLogin>
-      )}
+      )} */}
       {/* <button>Login with Google 🚀</button> */}
     </div>
   );

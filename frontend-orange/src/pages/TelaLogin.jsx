@@ -4,7 +4,8 @@ import BotaoGoogleLogin from "../components/tela-login/BotaoGoogleLogin"
 import FormularioLogin from "../components/tela-login/FormularioLogin";
 import TituloTelaLogin from "../components/tela-login/TituloTelaLogin";
 import { Box, useMediaQuery } from "@mui/material";
-import axios from 'axios'
+import { useNavigate, Navigate } from "react-router-dom";
+import {useEffect, useState} from 'react'
 
 
 const theme = createTheme({
@@ -41,18 +42,25 @@ const theme = createTheme({
 
 export default function TelaLogin(){
   
+  const [logado, setLogado] = useState(false);
   const responsivo1 = useMediaQuery(theme.breakpoints.up('lg')); 
   const responsivo2 = useMediaQuery(theme.breakpoints.up('xl'));
   
+  const navigate = useNavigate()
   
-  const logar = () => {
 
-    axios.post()
+useEffect(()=>{
+  if(logado){
+    navigate('/')
   }
 
+},[logado])
+  
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>      
+     
+
       <Box sx={{display: 'flex', gap:!responsivo2 ? '103px' : '403px'}}>
       {responsivo1 ?  
         <Box>
@@ -82,11 +90,12 @@ export default function TelaLogin(){
               widthTitle={responsivo1 ? '493px' : '288px'}
               heightTitle={responsivo1 ? '24px' : '16px'}
               formHeight={responsivo1 ? '271px' : '271px'}
+              setLogado={setLogado}
               />
                
-          </Box>
-          
-      </Box>
+          </Box>          
+      </Box>          
+      
     </ThemeProvider>
   )
 }

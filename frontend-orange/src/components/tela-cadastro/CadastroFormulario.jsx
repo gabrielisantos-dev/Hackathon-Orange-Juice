@@ -40,7 +40,7 @@ const CadastroFormulario = ({ onCadastro }) => {
         nome: form.nome,
         sobrenome: form.sobrenome,
         email: form.email,
-        senha: form.senha,
+        password: form.senha,
       });
   
       if (response.data.token) {

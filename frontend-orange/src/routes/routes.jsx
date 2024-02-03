@@ -24,16 +24,16 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: 
-          // <PrivateRoutes>
+          <PrivateRoutes>
             <Descobrir/>
-          // </PrivateRoutes>
+          </PrivateRoutes>
       },
       {
         path: "meus-projetos",        
         element: 
-          // <PrivateRoutes>
+          <PrivateRoutes>
             <MeuPortfolio/>
-          // </PrivateRoutes>
+          </PrivateRoutes>
       },
       {
         path:'*',
