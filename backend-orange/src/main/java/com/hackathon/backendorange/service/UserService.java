@@ -39,5 +39,11 @@ public class UserService {
 	public Boolean existsByEmail(String email) {
 		return userRepository.existsByEmail(email);
 	}
-	
+
+	public UserDTO details (String email){
+		User user = userRepository.findUserByEmail(email);
+		UserDTO userDTO = userAssembler.toDTO(user);
+
+		return userDTO;
+	}
 }

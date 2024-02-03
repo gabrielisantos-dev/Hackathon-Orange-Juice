@@ -11,11 +11,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 import com.hackathon.backendorange.dto.AutenticationDTO;
 import com.hackathon.backendorange.dto.LoginResponseDTO;
@@ -57,7 +54,6 @@ public class UserController {
 					)
 			}
 	)
-
 	@PostMapping("/logout")
 	public ResponseEntity<String> logout(HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -68,6 +64,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autenticado.");
 		}
 	}
+
 	@Operation(
 			description = "Permite que um usuário se cadastre no sistema.",
 			summary = "Cadastro de Usuário",
@@ -87,6 +84,7 @@ public class UserController {
 	public UserDTO register(@RequestBody @Valid UserDTO userDTO) {
 		return userService.register(userDTO);
 	}
+
 	@Operation(
 			description = "Permite que um usuário faça login no sistema.",
 			summary = "Operação de Login",
@@ -105,7 +103,6 @@ public class UserController {
 					)
 			}
 	)
-
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AutenticationDTO autenticationDTO) {
 
@@ -119,7 +116,31 @@ public class UserController {
 		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
 
-
+	@Operation(
+			description = "Retorna os dados do usuário logado no sistema.",
+			summary = "Detalhes do usuário",
+			responses = {
+					@ApiResponse(
+							description = "Sucesso",
+							responseCode = "200"
+					),
+					@ApiResponse(
+							description = "Usuário não encontrado",
+							responseCode = "404"
+					)
+			}
+	)
+	@GetMapping("/user")
+	public UserDTO details(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			UserDTO userDTO = userService.details(userDetails.getUsername());
+			return userDTO;
+		} else {
+			throw new UserNotFoundException();
+		}
+	}
 
 }
 
