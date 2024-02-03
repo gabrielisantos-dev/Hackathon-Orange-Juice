@@ -21,23 +21,15 @@ import com.hackathon.backendorange.repository.UserRepository;
 
 @Service
 public class UserService {
-	UserRepository userRepository;
 
-	UserAssembler userAssembler;
-
-	TokenService tokenService;
-
-	AuthenticationManager authenticationManager;
-
-	public UserService(UserRepository userRepository,
-					   UserAssembler userAssembler,
-					   TokenService tokenService,
-					   AuthenticationManager authenticationManager) {
-		this.userRepository = userRepository;
-		this.userAssembler = userAssembler;
-		this.tokenService = tokenService;
-		this.authenticationManager = authenticationManager;
-	}
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private UserAssembler userAssembler;
+	@Autowired
+	private TokenService tokenService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	public UserDTO register(UserDTO userDTO) {
 
