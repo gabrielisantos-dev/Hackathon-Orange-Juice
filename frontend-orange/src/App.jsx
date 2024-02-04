@@ -1,5 +1,5 @@
 import "./main.css"
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 // import ThemeProvider from "@mui/material/";
 // import { ThemeProvider } from "@mui/material/styles";
 // import {theme} from './utils/Theme'
@@ -18,7 +18,7 @@ import { Outlet } from "react-router-dom";
 // import Descobrir from "./pages/Descobrir";
 // import ModalProjeto from './components/meu-portfolio/ModalProjeto';
 // import DescobrirMobile from './pages/DescobrirMobile'
-import RegistrationPage from './pages/RegistrationPage.jsx'
+// import RegistrationPage from './pages/RegistrationPage.jsx'
 // import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 // import DeleteModal from "./components/modals/DeleteModal";
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-      <Outlet />
+      {/* <Outlet /> */}
       {/* <RegistrationPage/> */}
       {/* <TelaLogin/> */}
       {/* <CadastroFormulario/> */}
