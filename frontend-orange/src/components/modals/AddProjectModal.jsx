@@ -78,34 +78,33 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
 
     const handleSave = async () => {
         try {
-            setLoading(true);
-            const token = localStorage.getItem('token');
-
-            const formData = new FormData();
-            formData.append('titulo', projectData.titulo);
-            formData.append('tags', projectData.tags.join(', '));
-            formData.append('links', projectData.links);
-            formData.append('descrição', projectData.descrição);
-            formData.append('imagem', projectData.imagem);
-    
-            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `${token}`,
-                },
-            });
-    
-            if (response.status === 200 || response.status === 201) {
-                setSavePostModalOpen(true);
-                onClose();
-            }
-
+          setLoading(true);
+                    
+          const formData = new FormData();
+          formData.append('titulo', projectData.titulo);
+          formData.append('tags', projectData.tags);
+          formData.append('links', projectData.links);
+          formData.append('descricao', projectData.descrição);
+          formData.append('image', projectData.imagem);
+          
+          const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+          });
+          
+          if (response.status === 200 || response.status === 201) {
+            setSavePostModalOpen(true);
+            onClose();
+          }
         } catch (error) {
-            setSnackbarOpen(true);
+          console.error('Erro ao salvar o projeto:', error);
+          setSnackbarOpen(true);
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
+      };
+      
     
 
     const handleCloseSnackbar = (event, reason) => {

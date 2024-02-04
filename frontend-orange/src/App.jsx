@@ -1,5 +1,5 @@
 import "./main.css"
-// import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 // import ThemeProvider from "@mui/material/";
 // import { ThemeProvider } from "@mui/material/styles";
 // import {theme} from './utils/Theme'
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-      {/* <Outlet /> */}
+      <Outlet />
       {/* <RegistrationPage/> */}
       {/* <TelaLogin/> */}
       {/* <CadastroFormulario/> */}
