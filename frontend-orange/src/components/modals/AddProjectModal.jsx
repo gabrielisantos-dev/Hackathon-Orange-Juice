@@ -77,9 +77,9 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     };
 
     const handleSave = async () => {
-        const token = localStorage.getItem('token');
         try {
             setLoading(true);
+            const token = localStorage.getItem('token');
 
             const formData = new FormData();
             formData.append('titulo', projectData.titulo);
