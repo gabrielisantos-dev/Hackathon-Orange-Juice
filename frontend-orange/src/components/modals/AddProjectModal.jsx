@@ -15,7 +15,7 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const AddProjectModal = ({ onClose, handleOpenModalProjeto, respBk1 }) => {
+const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [savePostModalOpen, setSavePostModalOpen] = useState(false);
@@ -77,6 +77,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto, respBk1 }) => {
     };
 
     const handleSave = async () => {
+        const token = localStorage.getItem('token');
         try {
             setLoading(true);
 
@@ -87,7 +88,12 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto, respBk1 }) => {
             formData.append('descrição', projectData.descrição);
             formData.append('imagem', projectData.imagem);
     
-            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData);
+            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `${token}`,
+                },
+            });
     
             if (response.status === 200 || response.status === 201) {
                 setSavePostModalOpen(true);
