@@ -1,4 +1,4 @@
-import {theme} from '../../utils/Theme'
+import { theme } from '../../utils/Theme'
 import { Box, Typography, Chip, Link, Button } from "@mui/material";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { useState } from "react";
@@ -16,11 +16,11 @@ import Tooltip from '@mui/material/Tooltip';
 // import Logout from '@mui/icons-material/Logout';
 import CreateIcon from '@mui/icons-material/Create';
 import EditProjectModal from "../modals/EditProjectModal";
-import {useMediaQuery} from '@mui/material/';
+import { useMediaQuery } from '@mui/material/';
 import ModalProjeto from './ModalProjeto';
 
 
-export default function CardProjeto(props){
+export default function CardProjeto(props) {
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -30,63 +30,70 @@ export default function CardProjeto(props){
   const handleClose = () => {
     setAnchorEl(null);
   }
-  return(
-    <Box 
-    
-    sx={{
-      
-      height:'298px',
-      display:'flex',
-      flexDirection:'column',        
-      justifyContent:'center',
-      width:props.width,        
-    }}
+  // const handleEdit = (event)=>{
+  //  const teste =  props.setCardSelecionado(props.itemCard)
+
+  //  console.log(teste)
+  // }
+
+  return (
+    <Box
+
+      sx={{
+
+        height: '298px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        width: props.width,
+      }}
     >
-      <Box 
+      <Box
         sx={{
           backgroundImage: `url(${props.imagem})`,
-          backgroundRepeat:'no-repeat',
-          backgroundSize:'cover',          
-          width:'100%',
-          height:'100%',
-          borderRadius:'5px',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          width: '100%',
+          height: '100%',
+          borderRadius: '5px',
         }}
-          >
-         
-        
-            {/* ======inicio menu===== */}
-       <Box>
-          <Box 
-            sx={{ 
+      >
+
+
+        {/* ======inicio menu===== */}
+        <Box>
+          <Box
+            sx={{
               display: 'flex',
-              justifyContent:'right',
+              justifyContent: 'right',
               alignItems: 'center',
               textAlign: 'center'
-              }}
-              >
-            
-            <Tooltip              
+            }}
+          >
+
+            <Tooltip
               title="Menu"
-              >
-              
+            >
+
               <IconButton
                 onClick={handleClick}
                 size="small"
-                sx={{ mr: 2, mt:2, display:props.iconMenu}}
+                sx={{ mr: 2, mt: 2, display: props.iconMenu }}
                 aria-controls={open ? 'account-menu' : undefined}
                 aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}               
+                aria-expanded={open ? 'true' : undefined}
               >
-                <Avatar  
+                <Avatar
                   sx={{
                     width: 32,
                     height: 32,
-                    color:'black',
-                    backgroundColor:props.colorIconMenu }}
+                    color: 'black',
+                    backgroundColor: props.colorIconMenu
+                  }}
                 >
-                  <CreateIcon  />
+                  <CreateIcon />
                 </Avatar>
-                
+
               </IconButton>
             </Tooltip>
           </Box>
@@ -95,88 +102,95 @@ export default function CardProjeto(props){
             id="account-menu"
             open={open}
             onClose={handleClose}
-            onClick={handleClose}            
+            onClick={handleClose}
             slotProps={{
-            elevation: 0,
-            paper:{
-              sx: {
-                width:'208px',
-                overflow: 'visible',                
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                mt: 1.5,
-                
-                '&::before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',                                   
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                }
+              elevation: 0,
+              paper: {
+                sx: {
+                  width: '208px',
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+
+                  '&::before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  }
                 },
               },
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <MenuItem 
-              onClick={() => {props.handleEditProjectModal()}}
+            <MenuItem
+              onClick={() => {
+                props.handleEditProjectModal()
+                console.log(props.itemCard.id)
+              }}
               sx={{
-                '&:hover':{
-                  bgcolor:props.colorIconMenu
+                '&:hover': {
+                  bgcolor: props.colorIconMenu
                 }
               }}
-              >
+            >
               Editar
             </MenuItem>
             <MenuItem
-              onClick={handleClose} // INCLUIR ROTA AXIOS AQUI
+              onClick={() => {
+                handleClose
+                console.log(props.itemCard.id)
+              } // INCLUIR ROTA AXIOS AQUI
+              }
               sx={{
-                '&:hover':{
-                  bgcolor:props.colorIconMenu
+                '&:hover': {
+                  bgcolor: props.colorIconMenu
                 }
               }}
-              >
+            >
               Excluir
             </MenuItem>
-           
+
           </Menu>
         </Box>
-        
+
       </Box>
 
-      <Box 
+      <Box
         sx={{
-          display:'flex',
-          marginTop:'4px',
-          justifyContent:'space-between',         
+          display: 'flex',
+          marginTop: '4px',
+          justifyContent: 'space-between',
         }}
-        >
+      >
 
-        <Box 
+        <Box
           color={props.color}
-          sx={{display:'flex', gap:'8px', }}
+          sx={{ display: 'flex', gap: '8px', }}
         >
-          <img 
+          <img
             src={props.avatar}
             alt="Imagem usuario"
             width={props.widthAvatar}
             height={props.heightAvatar}
           />
-          <Box 
+          <Box
             sx={{
-              display:'flex',
-              alignItems:'center',
-              gap:'5px'
-              }}
-              >
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px'
+            }}
+          >
 
             <Typography variant="subtitle1">{props.nome}</Typography>
-            <FiberManualRecordIcon sx={{fontSize:'7px'}}/>         
+            <FiberManualRecordIcon sx={{ fontSize: '7px' }} />
             <Typography variant="subtitle1">{props.data}</Typography>
           </Box>
 
@@ -184,20 +198,20 @@ export default function CardProjeto(props){
         </Box>
         <Box
           sx={{
-            width:props.chipsWidth,
-            gap:'8px',
-            display:'flex',
-            justifyContent:props.chipDirection
+            width: props.chipsWidth,
+            gap: '8px',
+            display: 'flex',
+            justifyContent: props.chipDirection
 
           }}
         >
-          
-          <Chip label={props.labelChip}/>
+
+          <Chip label={props.labelChip} />
         </Box>
       </Box>
 
       {props.openEditProjectModal ?
-      
+
         <EditProjectModal
           openEditProjectModal={props.openEditProjectModal}
           setOpenEditProjectModal={props.setOpenEditProjectModal}
@@ -205,8 +219,8 @@ export default function CardProjeto(props){
 
         /> : null}
 
-        {/* {props.openModalProjeto ? <ModalProjeto/> : null} */}
-    
-    </Box> 
+      {/* {props.openModalProjeto ? <ModalProjeto/> : null} */}
+
+    </Box>
   )
 }

@@ -16,7 +16,7 @@ import axios from 'axios';
 
 export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))  
-  
+  const [respostaBd, setRespostaBd] = useState()
   // const [cardPerfil, setCardPerfil] = useState(mock)
   const [cardPerfil, setCardPerfil] = useState(mockBdResponseAllProjects)
 
@@ -24,6 +24,7 @@ export default function MeuPortfolio(){
 
   const [tagProjeto, setTagProjeto] = useState(cardPerfil)
   const [tagsSelecionadas, setTagsSelecionadas] = useState([])
+  
   const arrayTags = []
   tagProjeto.map(item => arrayTags.push(item.tags))
   
@@ -48,12 +49,13 @@ export default function MeuPortfolio(){
           
   }
 
+  
+ 
 
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
-      <Header
-         
+      <Header         
         avatar={cardPerfil[0].user.avatar} 
         email={cardPerfil[0].user.email} 
         nome={cardPerfil[0].user.nome}
@@ -167,8 +169,9 @@ export default function MeuPortfolio(){
                 setOpenEditProjectModal={setOpenEditProjectModal}
                 handleEditProjectModal={handleEditProjectModal}
 
-                // cardSelecionado={cardSelecionado}
-                // setCardSelecionado={setCardSelecionado(itemCard)}
+                cardSelecionado={cardSelecionado}
+                setCardSelecionado={setCardSelecionado}
+                itemCard={itemCard}
 
                 >           
               </CardProjeto>
@@ -198,6 +201,10 @@ export default function MeuPortfolio(){
                 openEditProjectModal={openEditProjectModal}
                 setOpenEditProjectModal={setOpenEditProjectModal}
                 handleEditProjectModal={handleEditProjectModal}
+
+                cardSelecionado={cardSelecionado}
+                setCardSelecionado={setCardSelecionado}
+                itemCard={itemCard}
                 >           
               </CardProjeto>
                 )

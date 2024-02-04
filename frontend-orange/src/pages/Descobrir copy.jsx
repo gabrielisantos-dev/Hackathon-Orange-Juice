@@ -6,7 +6,7 @@ import { mock, mockBdResponseAllProjects } from '../utils/mock';
 import {useState} from "react"
 
 export default function Descobrir(){
-  const responsivo1 = useMediaQuery(theme.breakpoints.up('md'))
+  const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
   const responsivo2 = useMediaQuery(theme.breakpoints.up('lg'))
 
   // const [cardPerfil, setCardPerfil] = useState(mock);
@@ -32,9 +32,10 @@ export default function Descobrir(){
     return self.indexOf(item) === index
   });
 
-  if(responsivo2){
   return(
-
+    <>
+      {responsivo2 ?
+      
       <DescobrirDesktop
         respBk1={responsivo1}
         cardPerfil={cardPerfil}
@@ -53,32 +54,31 @@ export default function Descobrir(){
         tagUnicas={tagUnicas}
 
       />
-    )}  else{
-      return(
 
-        <DescobrirMobile
-          respBk1={responsivo1}
-          cardPerfil={cardPerfil}
-          openDescobrir={openDescobrir}
-          setOpenDescobrir={setOpenDescobrir}
-          cardSelecionado={cardSelecionado}
-          setCardSelecionado={setCardSelecionado}
-          open={open}
-          setOpen={setOpen}
-          handleOpenMobile={handleOpenMobile}
-          handleCloseMobile={handleCloseMobile}
-          tagProjeto={tagProjeto}
-          setTagProjeto={setTagProjeto}
-          tagsSelecionadas={tagsSelecionadas}
-          setTagsSelecionadas={setTagsSelecionadas}
-          arrayTags={arrayTags}
-          tagUnicas={tagUnicas} />
-     
-     
-     
-        ) }}
-                 
-      
+       :
        
+      <DescobrirMobile
+        respBk1={responsivo1}
+        cardPerfil={cardPerfil}
+        openDescobrir={openDescobrir}
+        setOpenDescobrir={setOpenDescobrir}
+        cardSelecionado={cardSelecionado}
+        setCardSelecionado={setCardSelecionado}
+        open={open}
+        setOpen={setOpen}
+        handleOpenMobile={handleOpenMobile}
+        handleCloseMobile={handleCloseMobile}
+        tagProjeto={tagProjeto}
+        setTagProjeto={setTagProjeto}
+        tagsSelecionadas={tagsSelecionadas}
+        setTagsSelecionadas={setTagsSelecionadas}
+        arrayTags={arrayTags}
+        tagUnicas={tagUnicas}
       
-  
+
+      />
+      
+      }
+    </>
+   )
+}

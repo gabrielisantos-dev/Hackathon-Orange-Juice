@@ -18,26 +18,42 @@ export default function FormularioLogin(props) {
   const [showPassword, setShowPassword] = useState(false);
   const emailAdress = 'email';
   const password = 'password';
-
   
 
-  const [alerta, setAlerta] = useState();
-  // const navigate = useNavigate()
+  const [dadosPerfil, setDadosPerfil] = useState();
+  
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  
+  
+
+  const reqRespostaBd = async (token) =>{
+    // console.log(token)
+    // await axios.get('https://orange-9dj9.onrender.com/project/list-userprojects',{ headers:{'Authorization':`${token}`}})
+    // await axios.get('https://orange-9dj9.onrender.com/project/list',{ headers:{'Authorization':`${token}`}})
+   
+    await axios.get('https://orange-9dj9.onrender.com/api/auth/user',{ headers:{'Authorization':`${token}`}})
+               .then((response) => setDadosPerfil(response.data))
+              //  .then(()=> console.log(dadosPerfil))
+               .catch((e)=> console.log(e))
+              // setDadosPerfil(response.data)
+              // console.log(dadosPerfil)
+  };
 
   const onSubmit = async (data) => {
-   
-      axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
-
-      .then((response)=> localStorage.setItem('token', response.data.token))
-      .then( ()=> localStorage.getItem('token') ? props.setLogado(true): null)
-      .catch((e)=>(console.log(e)))
-
+    axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
+    .then((response) => {
+      localStorage.setItem('token', response.data.token)
+      reqRespostaBd(response.data.token)
+    })
+    .then(()=> console.log(dadosPerfil))
+    .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
+    .catch((e) => (console.log(e)))
+    
     }
 
 

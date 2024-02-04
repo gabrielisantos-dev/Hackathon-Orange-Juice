@@ -160,7 +160,7 @@ export default function DescobrirDesktop(props){
                     /> 
                   </Link>
 
-                  {props.open ?  
+                  {/* {props.open ?  
     
                   <VisualizacaoMobile
                     key={index}
@@ -175,10 +175,10 @@ export default function DescobrirDesktop(props){
                     imagem={props.cardSelecionado.image}
                     descricao={props.cardSelecionado.descricao}      
                   />
-                  : null} 
+                  : null}  */}
                 
 
-                  {/* {open ?  
+                  {open ?  
     
                     <ModalProjeto
                       open={open}
@@ -191,7 +191,7 @@ export default function DescobrirDesktop(props){
                       imagem={cardSelecionado.urlImagem}
                       descricao={cardSelecionado.descricao}                    
                     />
-                  : null} */}
+                  : null}
 
                 </>          
                 )
@@ -230,7 +230,7 @@ export default function DescobrirDesktop(props){
                   />
                 </Link>                  
                 
-                {props.open ?  
+                {/* {props.open ?  
     
                   <VisualizacaoMobile
                   key={index}
@@ -245,7 +245,7 @@ export default function DescobrirDesktop(props){
                   imagem={props.cardSelecionado.image}
                   descricao={props.cardSelecionado.descricao}      
                 />
-                : null} 
+                : null}  */}
   
               </>
 

@@ -43,6 +43,7 @@ const theme = createTheme({
 export default function TelaLogin(){
   
   const [logado, setLogado] = useState(false);
+  const [dadosDoUsuario, setDadosDoUsuario] = useState([])
   const responsivo1 = useMediaQuery(theme.breakpoints.up('lg')); 
   const responsivo2 = useMediaQuery(theme.breakpoints.up('xl'));
   
@@ -54,7 +55,7 @@ useEffect(()=>{
     navigate('/')
   }
 
-},[logado])
+},[logado, dadosDoUsuario])
   
 
   return (
@@ -91,6 +92,8 @@ useEffect(()=>{
               heightTitle={responsivo1 ? '24px' : '16px'}
               formHeight={responsivo1 ? '271px' : '271px'}
               setLogado={setLogado}
+              setDadosDoUsuario={setDadosDoUsuario}
+              dadosDoUsuario={dadosDoUsuario}
               />
                
           </Box>          
