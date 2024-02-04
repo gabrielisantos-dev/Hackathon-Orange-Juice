@@ -18,19 +18,15 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O título não pode estar em branco!")
     @Column
     private String titulo;
 
-    @NotBlank(message = "Adicione uma descrição sobre o projeto!")
-    @Size(max = 255, message = "A descrição não pode ultrapassar 255 caracteres")
     @Column
     private String descricao;
 
     @Enumerated
     private TagsEnum tags;
-
-    @NotBlank(message = "Adicione o link do repositório ou outros links para acessar seu projeto!")
+    
     @Column
     private String links;
 
