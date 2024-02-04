@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import Chip from '@mui/material/Chip';
 import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
-import picture from '../../assets/profile-picture/picture.svg';
+import picture from '../../assets/profile-picture/user-orange.png';
 import projectImage from '../../assets/projects/project1.svg';
 
 const ViewPostModal = ({ onClose, projectData }) => {

@@ -31,9 +31,9 @@ function App() {
 
   return (
     <>
-      
+        <MainHeader/>
           <Outlet />
-      
+          
       {/* <RegistrationPage/> */}
       {/* <TelaLogin/> */}
       {/* <CadastroFormulario/> */}

@@ -2,7 +2,7 @@ import figuraProjeto1 from '../assets/projects/project1.svg'
 import figuraProjeto2 from '../assets/projects/project2.svg'
 import figuraProjeto3 from '../assets/projects/project3.svg'
 import figuraProjeto4 from '../assets/projects/project4.svg'
-import profilePicture from '../assets/profile-picture/picture.svg'
+import profilePicture from '../assets/profile-picture/user-orange.png'
 
 
 

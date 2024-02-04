@@ -5,10 +5,12 @@ import Header from '../components/main-header/Header';
 // import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
 // import { useState } from "react";
 // import figuraProjeto from '../assets/projects/project1.svg'
-// import profilePicture from '../assets/profile-picture/picture.svg';
+import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import ModalProjeto from '../components/meu-portfolio/ModalProjeto';
 // import {mock} from '../utils/mock';
+import Loading from '../components/loading/Loading';
+
 
 
 export default function DescobrirDesktop(props){
@@ -36,16 +38,13 @@ export default function DescobrirDesktop(props){
   // const tagUnicas = props.arrayTags.filter((item, index, self) => {
   //   return self.indexOf(item) === index
   // });
-  
+//  console.log(`Card selecionado ${props.cardSelecionado}`)
+  // const { date, descricao, id, image, tags, titulo, user, links } = props.cardPerfil
+  // console.log(props.cardPerfil)
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
-      <Header
-        avatar={props.cardPerfil[0].user.avatar} 
-        email={props.cardPerfil[0].user.email} 
-        nome={props.cardPerfil[0].user.nome}
-        // pais={props.cardPerfil[0].pais}
-      />
+ 
       <Typography 
         sx={{
           margin:props.respBk1 ? '112px 268px' : '55px 24px',
@@ -86,7 +85,8 @@ export default function DescobrirDesktop(props){
               id
               sx={{
                 width:props.respBk1 ? '513px' : '312px',
-                height:'56px'
+                height:'56px',
+                
                 }}
               {...params}
                 
@@ -100,6 +100,9 @@ export default function DescobrirDesktop(props){
           />
       </Box>
 
+{/* //loading================ */}
+{props.listaDeProjetos.length === 0 ? ( <Loading/>) : 
+    (
       <Box sx={{
         display:'flex',
         gap:'26px',
@@ -111,8 +114,10 @@ export default function DescobrirDesktop(props){
           { props.tagsSelecionadas.length > 0 
             
             ?
-          props.cardPerfil.map((itemCard, index) => {
-
+          
+          props.listaDeProjetos.map((itemCard, index) => {
+                const {date, descricao, id, image, tags, titulo, user} = itemCard
+                
               const tag = props.tagsSelecionadas.filter(itemTag => itemCard.tags === itemTag)              
             
             if(tag.length > 0){
@@ -135,24 +140,28 @@ export default function DescobrirDesktop(props){
                   width='100%'
                   color='neutral.dark'
                   colorIconMenu='secondary.secondaryLight'
-                  avatar={itemCard.user.avatar}
+                  avatar={profilePicture}
                   widthAvatar='24px'
                   heightAvatar='24px'                
                   chipsHeight='32px'
-                  nome={itemCard.user.nome}
-                  labelChip={itemCard.tags}             
-                  data={itemCard.date}
-                  imagem={itemCard.image}
+                  // nome={itemCard.user.nome}
+                  nome={user.nome}
+                  // labelChip={itemCard.tags}             
+                  labelChip={tags}             
+                  // data={itemCard.date}
+                  data={date}
+                  // imagem={itemCard.image}
+                  imagem={image}
                   iconMenu={'none'}                                   
                   />
                   </Link>
 
                   {props.open ?  
-    
+                    
                     <ModalProjeto
                       open={props.open}
                       onClose={props.handleCloseDesk}
-                      avatar={props.cardSelecionado.user.avatar}
+                      avatar={profilePicture}
                       nome={props.cardSelecionado.user.nome}
                       data={props.cardSelecionado.date}
                       labelChip={props.cardSelecionado.tags}      
@@ -166,7 +175,11 @@ export default function DescobrirDesktop(props){
                 )
               }
           })
-          : props.cardPerfil.map((itemCard, index) => {
+          // : props.cardPerfil.map((itemCard, index) => {
+          : props.listaDeProjetos.map((itemCard, index) => {
+
+            const {date, descricao, id, image, tags, titulo, user} = itemCard
+            
             return(                
               <>
                 <Link
@@ -185,14 +198,18 @@ export default function DescobrirDesktop(props){
                   width='100%'
                   color='neutral.dark'
                   colorIconMenu='secondary.secondaryLight'
-                  avatar={itemCard.user.avatar}
+                  avatar={profilePicture}
                   widthAvatar='24px'
                   heightAvatar='24px'                
                   chipsHeight='32px'
-                  nome={itemCard.user.nome}
-                  labelChip={itemCard.tags}             
-                  data={itemCard.date}
-                  imagem={itemCard.image}
+                  // nome={itemCard.user.nome}
+                  nome={user.nome}
+                  // labelChip={itemCard.tags}             
+                  labelChip={tags}             
+                  // data={itemCard.date}
+                  data={date}
+                  // imagem={itemCard.image}
+                  imagem={image}
                   iconMenu={'none'}                                   
                   />
                 </Link>                  
@@ -202,7 +219,7 @@ export default function DescobrirDesktop(props){
                       <ModalProjeto
                       open={props.open}
                       onClose={props.handleCloseDesk}
-                      avatar={props.cardSelecionado.user.avatar}
+                      avatar={profilePicture}
                       nome={props.cardSelecionado.user.nome}
                       data={props.cardSelecionado.date}
                       labelChip={props.cardSelecionado.tags}      
@@ -217,6 +234,7 @@ export default function DescobrirDesktop(props){
         }
           
         </Box>
+    )}
       </Box>
     </Box>  
   </ThemeProvider>

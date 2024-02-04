@@ -5,16 +5,20 @@ import Header from '../components/main-header/Header';
 // import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
 import { useState } from "react";
 import figuraProjeto from '../assets/projects/project1.svg'
-import profilePicture from '../assets/profile-picture/picture.svg';
+import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import VisualizacaoMobile from '../pages/VisualizacaoMobile';
 import {mock} from '../utils/mock'
 
 export default function DescobrirDesktop(props){
   //ok
+
+  // const {nome, email, sobrenome} = dadosDoUsuario
+
+
   // const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
   //ok
-  // const [cardPerfil, setCardPerfil] = useState(mock)
+  // const [listaDeProjetos, setlistaDeProjetos] = useState(mock)
   //ok
   // const [openDescobrir, setOpenDescobrir] = useState(true);
   //ok
@@ -29,7 +33,7 @@ export default function DescobrirDesktop(props){
   //ok 
   const handleCloseMobile = () => setOpen(false);
   //ok
-  // const [tagProjeto, setTagProjeto] = useState(props.cardPerfil)
+  // const [tagProjeto, setTagProjeto] = useState(props.listaDeProjetos)
   //ok
   // const [tagsSelecionadas, setTagsSelecionadas] = useState([])
   //ok
@@ -42,28 +46,12 @@ export default function DescobrirDesktop(props){
   });
 
 
-  // const [cardPerfil, setCardPerfil] = useState({
-  //   pais:'Brasil',
-  //   avatar: profilePicture,
-  //   nome:'John Doe',
-  //   email:'john@doeux.com',
-  //   tag:{ui:'UI', ux:'UX', web:'Web'},
-  //   data:'12/23',
-  //   urlImagem:figuraProjeto,
-  //   tituloProj:'Ecommerce One Page',
-  //   descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
-  // })
+  
 
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
-      <Header
-        avatar={props.cardPerfil[0].user.avatar} 
-        email={props.cardPerfil[0].user.email} 
-        nome={props.cardPerfil[0].user.nome}
-        pais={'Brasil'}
-        fecharVisualizaMobile={handleCloseMobile}
-      />
+   
       
       {props.openDescobrir ?
      <Box>
@@ -123,7 +111,8 @@ export default function DescobrirDesktop(props){
       { props.tagsSelecionadas.length > 0 
             
             ?
-          props.cardPerfil.map((itemCard, index) => {
+          props.listaDeProjetos.map((itemCard, index) => {
+            const {date, descricao, id, image, tags, titulo, user} = itemCard
 
               const tag = props.tagsSelecionadas.filter(itemTag => itemCard.tags === itemTag)              
             
@@ -148,56 +137,26 @@ export default function DescobrirDesktop(props){
                       width='100%'
                       color='neutral.dark'
                       colorIconMenu='secondary.secondaryLight'
-                      avatar={itemCard.user.avatar}
+                      avatar={profilePicture}
                       widthAvatar='24px'
                       heightAvatar='24px'               
                       chipsHeight='32px'
-                      nome={itemCard.user.nome}
-                      labelChip={itemCard.tags}               
-                      data={itemCard.date}
-                      imagem={itemCard.image}
+                      nome={user.nome}
+                      labelChip={tags}               
+                      data={date}
+                      imagem={image}
                       iconMenu={'none'}                       
                     /> 
                   </Link>
 
-                  {/* {props.open ?  
-    
-                  <VisualizacaoMobile
-                    key={index}
-                    open={props.open}
-                    cardSelecionado={props.cardSelecionado}
-                    onClose={props.handleCloseMobile}
-                    avatar={props.cardSelecionado.user.avatar}
-                    nome={props.cardSelecionado.user.nome}
-                    data={props.cardSelecionado.date}
-                    labelChip={props.cardSelecionado.tags}      
-                    tituloProj={props.cardSelecionado.titulo}
-                    imagem={props.cardSelecionado.image}
-                    descricao={props.cardSelecionado.descricao}      
-                  />
-                  : null}  */}
-                
-
-                  {open ?  
-    
-                    <ModalProjeto
-                      open={open}
-                      onClose={handleCloseMobile}
-                      avatar={cardSelecionado.avatar}
-                      nome={cardSelecionado.nome}
-                      data={cardSelecionado.data}
-                      labelChip={cardSelecionado.tag}      
-                      tituloProj={cardSelecionado.tituloProj}
-                      imagem={cardSelecionado.urlImagem}
-                      descricao={cardSelecionado.descricao}                    
-                    />
-                  : null}
+                  
 
                 </>          
                 )
               }
           })
-          : props.cardPerfil.map((itemCard, index) => {
+          : props.listaDeProjetos.map((itemCard, index) => {
+            const {date, descricao, id, image, tags, titulo, user} = itemCard
 
             return(              
 
@@ -218,34 +177,19 @@ export default function DescobrirDesktop(props){
                   width='100%'
                   color='neutral.dark'
                   colorIconMenu='secondary.secondaryLight'
-                  avatar={itemCard.user.avatar}
+                  avatar={profilePicture}
                   widthAvatar='24px'
                   heightAvatar='24px'                
                   chipsHeight='32px'
-                  nome={itemCard.user.nome}
-                  labelChip={itemCard.tags}             
-                  data={itemCard.date}
-                  imagem={itemCard.image}
+                  nome={user.nome}
+                  labelChip={tags}             
+                  data={date}
+                  imagem={image}
                   iconMenu={'none'}                                   
                   />
                 </Link>                  
                 
-                {/* {props.open ?  
-    
-                  <VisualizacaoMobile
-                  key={index}
-                  open={props.open}
-                  cardSelecionado={props.cardSelecionado}
-                  onClose={props.handleCloseMobile}
-                  avatar={props.cardSelecionado.user.avatar}
-                  nome={props.cardSelecionado.user.nome}
-                  data={props.cardSelecionado.date}
-                  labelChip={props.cardSelecionado.tags}      
-                  tituloProj={props.cardSelecionado.titulo}
-                  imagem={props.cardSelecionado.image}
-                  descricao={props.cardSelecionado.descricao}      
-                />
-                : null}  */}
+               
   
               </>
 
@@ -267,7 +211,7 @@ export default function DescobrirDesktop(props){
       open={props.open}
       cardSelecionado={props.cardSelecionado}
       onClose={props.handleCloseMobile}
-      avatar={props.cardSelecionado.user.avatar}
+      avatar={profilePicture}
       nome={props.cardSelecionado.user.nome}
       data={props.cardSelecionado.date}
       labelChip={props.cardSelecionado.tags}      

@@ -48,14 +48,14 @@ const CadastroFormulario = ({ onCadastro }) => {
         localStorage.setItem('token', response.data.token);
   
         setMensagem('Cadastro feito com sucesso');
-        onCadastro('success');
+        // onCadastro('success');
       } else {
         setMensagem('Erro no cadastro. Por favor, tente novamente.');
-        onCadastro('error');
+        // onCadastro('error');
       }
     } catch (error) {
       setMensagem('Erro na solicitação. Por favor, tente novamente.');
-      onCadastro('error');
+      // onCadastro('error');
     }
   };
   

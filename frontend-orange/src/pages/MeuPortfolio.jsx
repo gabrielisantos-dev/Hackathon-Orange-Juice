@@ -1,12 +1,14 @@
-import { Box, ThemeProvider, Link, Typography, Stack, Autocomplete, TextField } from '@mui/material/';
+import { Box, ThemeProvider, Link, Typography,
+   Autocomplete, TextField, CircularProgress } from '@mui/material/';
 import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
 import Header from '../components/main-header/Header';
 import CardPerfil from '../components/meu-portfolio/CardPerfil';
 import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
 import ListaProjetos from '../components/meu-portfolio/ListaProjetos';
-import { useEffect, useState } from "react";
-import profilePicture from '../assets/profile-picture/picture.svg';
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from '../context/UserContext';
+import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import figuraProjeto from '../assets/projects/project1.svg'
 import figuraProjeto1 from '../assets/projects/project1.svg'
@@ -15,14 +17,20 @@ import {mock, mockBdResponseAllProjects} from '../utils/mock'
 import axios from 'axios';
 
 export default function MeuPortfolio(){
-  const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))  
+  const responsivo1 = useMediaQuery(theme.breakpoints.up('sm')) 
+  
+  const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser,
+          dadosProjetosDoUsuario, setDadosProjetosDoUsuario,reqRespostaBdUserList } = useContext(UserContext)
+  
+
+  const {nome, email, sobrenome} = dadosDoUsuario
+
   const [respostaBd, setRespostaBd] = useState()
-  // const [cardPerfil, setCardPerfil] = useState(mock)
-  const [cardPerfil, setCardPerfil] = useState(mockBdResponseAllProjects)
+
 
   const [cardSelecionado, setCardSelecionado] = useState({})
 
-  const [tagProjeto, setTagProjeto] = useState(cardPerfil)
+  const [tagProjeto, setTagProjeto] = useState(dadosProjetosDoUsuario)
   const [tagsSelecionadas, setTagsSelecionadas] = useState([])
   
   const arrayTags = []
@@ -48,23 +56,30 @@ export default function MeuPortfolio(){
     openEditProjectModal ? setOpenEditProjectModal(false) : setOpenEditProjectModal(true)
           
   }
-
   
+  
+
+const { user} = dadosProjetosDoUsuario
+  useEffect(()=>{
+    const token = localStorage.getItem('token')
+    reqRespostaBdUserList(token)
+  },[]) 
+
  
 
   return(
   <ThemeProvider theme={theme}>
-    <Box sx={{marginBottom:'70px'}}>
-      <Header         
-        avatar={cardPerfil[0].user.avatar} 
-        email={cardPerfil[0].user.email} 
-        nome={cardPerfil[0].user.nome}
-        pais='Brasil'
-      />
+    <>
+    
+    {dadosProjetosDoUsuario &&(
+    <Box sx={{marginBottom:'70px'}}>    
+     
       <CardPerfil
         pais='Brasil'
-        avatar={cardPerfil[0].user.avatar}
-        nome={cardPerfil[0].user.nome}
+        
+        avatar={profilePicture}
+        
+        nome={nome}
         marginAuto='auto'
         marginTop={responsivo1 ? '185px' : '49px'}
         flexDirection= {responsivo1 ? 'row' : 'column'}
@@ -73,11 +88,13 @@ export default function MeuPortfolio(){
         gapCard={responsivo1 ? '42px' : '5px'}
         alignItens={!responsivo1 ? 'center' : null}
         marginBottomTyp={!responsivo1 ? '10px' : null}
-        buttonOnOff={cardPerfil}
+        buttonOnOff={dadosProjetosDoUsuario}
         openModalProjeto={openModalProjeto}
         setOpenModalProjeto={setOpenModalProjeto}
         handleOpenModalProjeto={handleOpenModalProjeto}
+        
       />
+      
       <Box sx={{margin:'0px 32px', marginTop:'56px'}}>
         
       <Box 
@@ -123,7 +140,8 @@ export default function MeuPortfolio(){
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
           
           {/* {cardPerfil.length === 0 ? */}
-          {cardPerfil[0].length < 1 || cardPerfil[0] === null || cardPerfil[0] === undefined ?
+          {/* {cardPerfil[0].length < 1 || cardPerfil[0] === null || cardPerfil[0] === undefined ? */}
+          {dadosProjetosDoUsuario.length < 1 || dadosProjetosDoUsuario === null || dadosProjetosDoUsuario === undefined ?
 
           <Link 
           onClick={()=>{handleOpenModalProjeto()}} 
@@ -139,7 +157,7 @@ export default function MeuPortfolio(){
           { tagsSelecionadas.length > 0 
             
             ?
-          cardPerfil.map((itemCard, index) => {
+          dadosProjetosDoUsuario.map((itemCard, index) => {
 
               const tag = tagsSelecionadas.filter(itemTag => itemCard.tags === itemTag)
               
@@ -153,7 +171,7 @@ export default function MeuPortfolio(){
                 width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
                 color='neutral.dark'
                 colorIconMenu='secondary.secondaryLight'
-                avatar={itemCard.user.avatar}
+                avatar={profilePicture}
                 widthAvatar='24px'
                 heightAvatar='24px'               
                 chipsHeight='32px'
@@ -178,7 +196,7 @@ export default function MeuPortfolio(){
                 )
               }
           })
-          : cardPerfil.map((itemCard, index) => {
+          : dadosProjetosDoUsuario.map((itemCard, index) => {
             return(
 
               <CardProjeto 
@@ -186,7 +204,7 @@ export default function MeuPortfolio(){
                 width={responsivo1 ? 'calc(33.33% - 17.33px)' : '100%'}
                 color='neutral.dark'
                 colorIconMenu='secondary.secondaryLight'
-                avatar={itemCard.user.avatar}
+                avatar={profilePicture}
                 widthAvatar='24px'
                 heightAvatar='24px'                
                 chipsHeight='32px'
@@ -212,8 +230,11 @@ export default function MeuPortfolio(){
           }
           
         </Box>
-      </Box>
-    </Box>     
+      </Box>     
+    </Box>
+    ) }
+        
+    </>     
   </ThemeProvider>
   )
 }

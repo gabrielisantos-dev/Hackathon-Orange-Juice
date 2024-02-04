@@ -3,12 +3,13 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Chip, Link } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import profilePicture from '../../assets/profile-picture/user-orange.png'
 
 export default function ModalProjeto(props) {
  
   return (
     
-      //modal precisater uma tag filho inicial
+      
       <Modal
         open={props.open}
         // onClose={props.onClose}
@@ -46,7 +47,7 @@ export default function ModalProjeto(props) {
           <Typography variant='h5'>{props.tituloProj}</Typography>            
           <Box sx={{display:'flex', gap:'5px'}}>
             <Chip label={props.labelChip}/>
-            {/* <Chip label={props.labelChip2}/> */}
+            
           </Box>         
           </Box>          
           <Box          

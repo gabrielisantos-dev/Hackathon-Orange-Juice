@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery, CircularProgress } from '@mui/material';
+import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery } from '@mui/material';
 import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
 import ViewPostModal from './ViewPostModal';
@@ -15,7 +15,7 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
+const AddProjectModal = ({ onClose, handleOpenModalProjeto, respBk1 }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [savePostModalOpen, setSavePostModalOpen] = useState(false);
@@ -24,18 +24,17 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const [linkError, setLinkError] = useState('');
     const [hasErrors, setHasErrors] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
 
 
 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [projectData, setProjectData] = useState({
-    titulo: '',
+    title: '',
     tags: [],
-    links: '',
-    descrição: '',
-    imagem: null,
+    link: '',
+    description: '',
+    image: null,
     });
 
     const handleInputChange = (event) => {
@@ -49,7 +48,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
             case 'titulo':
             setTitleError(value.length < 4 || value.length > 30 ? 'O título deve ter entre 4 e 30 caracteres.' : '');
             break;
-            case 'descrição':
+            case 'descricao':
             setDescriptionError(value.length < 10 || value.length > 255 ? 'A descrição deve ter entre 10 e 255 caracteres.' : '');
             break;
             case 'links':
@@ -69,42 +68,56 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
-        if (prevData.imagem !== imageFile) {
-        return { ...prevData, imagem: imageFile };
-        }
-        return prevData;
+      if (prevData.image !== imageFile) {
+        return { ...prevData, image: imageFile };
+      }
+      return prevData;
     });
     };
 
+
+  //   {
+  //     "titulo": "orange portfolio",
+  //     "descricao": "aplicação fullstack",
+  //     "tags": "FULLSTACK",
+  //     "links": "https://localhost:8080/",
+  //     "date": "",
+  //     "image": "",
+  //     "image_id": "",
+  //     "image_originalName": "",
+  //     "idUser":1 
+  // }
+
     const handleSave = async () => {
+
+        const token = localStorage.getItem('token')
         try {
-          setLoading(true);
-                    
-          const formData = new FormData();
-          formData.append('titulo', projectData.titulo);
-          formData.append('tags', projectData.tags);
-          formData.append('links', projectData.links);
-          formData.append('descricao', projectData.descrição);
-          formData.append('image', projectData.imagem);
-          
-          const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-          });
-          
-          if (response.status === 200 || response.status === 201) {
-            setSavePostModalOpen(true);
-            onClose();
+
+            const formData = {
+              "titulo": "orange portfolio",
+              "descricao": "aplicação fullstack",
+              "tags": "FULLSTACK",
+              "links": "https://localhost:8080/",
+              "image": ""
           }
-        } catch (error) {
-          console.error('Erro ao salvar o projeto:', error);
-          setSnackbarOpen(true);
-        } finally {
-          setLoading(false);
-        }
-      };
-      
+
+            // const formData = new FormData();
+            // formData.append('titulo', projectData.title);
+            // formData.append('tags', projectData.tags.join(', '));
+            // formData.append('links', projectData.link);
+            // formData.append('descricao', projectData.description);
+            // formData.append('image', projectData.image);
+
+            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData, {headers:{'Authorization':`${token}`}});
+            if (response.status === 200 || response.status === 201) {
+              setSavePostModalOpen(true);
+              onClose();
+            }
+            
+          } catch (error) {
+            setSnackbarOpen(true);
+          }
+        };
     
 
     const handleCloseSnackbar = (event, reason) => {
@@ -116,23 +129,24 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     
 
     const backgroundImage = useMemo(() => {
-    if (projectData.imagem) {
-        return `url(${URL.createObjectURL(projectData.imagem)})`;
+    if (projectData.image) {
+        return `url(${URL.createObjectURL(projectData.image)})`;
     }
     return 'none';
     }
-    , [projectData.imagem]);
+    , [projectData.image]);
 
 
     return (
     <ThemeProvider theme={theme}>
         {!savePostModalOpen && (
-        <Modal open={true} onClose={onClose}>
+        <Modal open={true} onClose={onClose} sx={{ overflow:'scroll', mt:5}} >
         <Box
             sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            
             }}
         >
             <Box
@@ -153,7 +167,6 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 sx={{ marginBottom: '8px' }}
         >
                 Adicionar Projeto
-                {loading && <CircularProgress />}
             </Typography>
 
             <Box
@@ -202,7 +215,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     width: '56px',
                     height: '56px',
                     margin: 'auto',
-                    display: projectData.imagem ? 'none' : 'flex',
+                    display: projectData.image ? 'none' : 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -245,10 +258,10 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 }}
                 >
                 <TextField
-                    label='Titulo'
+                    label='Título'
                     variant='outlined'
-                    name='titulo'
-                    value={projectData.titulo}
+                    name='title'
+                    value={projectData.title}
                     onChange={handleInputChange}
                     error={Boolean(titleError)}
                     helperText={titleError}
@@ -263,8 +276,8 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 <TextField
                     label='Link'
                     variant='outlined'
-                    name='links'
-                    value={projectData.links}
+                    name='link'
+                    value={projectData.link}
                     onChange={handleInputChange}
                     error={Boolean(linkError)}
                     helperText={linkError}
@@ -274,8 +287,8 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     multiline
                     rows={4}
                     variant='outlined'
-                    name='descrição'
-                    value={projectData.descrição}
+                    name='description'
+                    value={projectData.description}
                     onChange={handleInputChange}
                     error={Boolean(descriptionError)}
                     helperText={descriptionError}
@@ -288,7 +301,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 href='#'
                 onClick={() => {
                     setViewPostModalOpen(true);
-                    setSelectedProject({ ...projectData, imagem: URL.createObjectURL(projectData.imagem) });
+                    setSelectedProject({ ...projectData, image: URL.createObjectURL(projectData.image) });
                 }}
                 sx={{
                     display: 'block',

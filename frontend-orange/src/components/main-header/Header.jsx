@@ -4,12 +4,14 @@ import { Box, ThemeProvider, Typography,
 import {theme} from '../../utils/Theme';
 import * as React from 'react'
 import { Link } from "react-router-dom";
-
+import {useState, useEffect, useContext} from 'react'
+import profilePicture from '../../assets/profile-picture/user-orange.png'
 import logoOrange from '../../assets/logo-orange/logo-orange.svg';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import LogoutIcon from '@mui/icons-material/Logout';
+import axios from 'axios'
+import { UserContext } from "../../context/UserContext";
 
 
 
@@ -18,6 +20,14 @@ export default function MainHeader(props){
 
   const responsivo = useMediaQuery(theme.breakpoints.up('sm'))
 
+  const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser} = useContext(UserContext)
+
+  const {nome, email, sobrenome} = dadosDoUsuario
+  
+  useEffect(()=>{
+    const token = localStorage.getItem('token')
+    reqRespostaBdUser(token)
+  },[]) 
  
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -30,6 +40,8 @@ export default function MainHeader(props){
 
   return (
     <ThemeProvider theme={theme}>
+
+      {dadosDoUsuario && (
       <Box component='header'
         sx={{
           backgroundColor:'primary.main',
@@ -83,8 +95,8 @@ export default function MainHeader(props){
                   
                 > 
                 <Box sx={{margin:'15px 0px 15px 15px'}}>
-                  <Typography fontWeight='600'>{props.nome}</Typography> 
-                  <Typography>{props.email}</Typography> 
+                  <Typography fontWeight='600'>{nome}</Typography> 
+                  <Typography>{email}</Typography> 
                 </Box>
                   <Divider/>
                   <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
@@ -125,7 +137,9 @@ export default function MainHeader(props){
             >
               <Link 
               to='/meus-projetos'
-              style={{textDecoration:'none', color:'#FCFDFF'}}>
+              style={{textDecoration:'none', color:'#FCFDFF'}}
+              
+              >
               
               Meus projetos
               </Link>
@@ -151,7 +165,7 @@ export default function MainHeader(props){
         <Box
           sx={{display:'flex', alignItems:'center', gap:'16px'}}>
           <Box >
-            <img src={props.avatar} alt="Figura de perfil" width='40px' height='40px' />
+            <img src={profilePicture} alt="Figura de perfil" width='40px' height='40px' />
           </Box>
           <Box color='neutral.lightest'>
             <NotificationsIcon/>
@@ -159,6 +173,7 @@ export default function MainHeader(props){
         </Box>
             
       </Box>
+      )}
     </ThemeProvider>
   )
 }
