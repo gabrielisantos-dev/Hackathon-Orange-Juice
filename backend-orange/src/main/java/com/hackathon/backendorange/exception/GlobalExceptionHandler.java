@@ -25,4 +25,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> passwordHandler(AuthenticationException exception){
      return new ResponseEntity<>("{\"message\":\"Usuário ou senha inválidos\"}", HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(value = RegisterException.class)
+    public ResponseEntity<String> registerExceptionHandler (RegisterException exception){
+        return new ResponseEntity<>("{\"message\":\"\"Senha inválida. Verifique se atende aos requisitos necessários.\"\"}",HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }
