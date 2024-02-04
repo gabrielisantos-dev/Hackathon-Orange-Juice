@@ -11,6 +11,8 @@ import { Outlet } from "react-router-dom";
 // import BotaoGoogleLogin from "./components/tela-login/BotaoGoogleLogin"
 // import TelaLogin from "./pages/TelaLogin"
 import MainHeader from "./components/main-header/Header"
+import TelaLogin from "./pages/TelaLogin"
+// import MainHeader from "./components/main-header/Header"
 // import CardPerfil from "./components/meu-portfolio/cardPerfil"
 // import FormBuscarTags from "./components/meu-portfolio/FormBuscarTags"
 // import ListaProjetos from './components/meu-portfolio/ListaProjetos';
@@ -18,7 +20,7 @@ import MainHeader from "./components/main-header/Header"
 // import Descobrir from "./pages/Descobrir";
 // import ModalProjeto from './components/meu-portfolio/ModalProjeto';
 // import DescobrirMobile from './pages/DescobrirMobile'
-import RegistrationPage from './pages/RegistrationPage.jsx'
+// import RegistrationPage from './pages/RegistrationPage.jsx'
 // import AddProjectModal from "./components/modals/AddProjectModal";
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 // import DeleteModal from "./components/modals/DeleteModal";
@@ -35,7 +37,7 @@ function App() {
           <Outlet />
           
       {/* <RegistrationPage/> */}
-      {/* <TelaLogin/> */}
+      <TelaLogin/>
       {/* <CadastroFormulario/> */}
 
     </>

@@ -1,6 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
-import { useState } from "react";
-import ModalProjeto from './ModalProjeto'
+import PropTypes from "prop-types";
+// import { useState } from "react";
+// import ModalProjeto from './ModalProjeto'
 import AddProjectModal from '../modals/AddProjectModal'
  
 
@@ -96,3 +97,21 @@ export default function CardPerfil(props){
   
  )
 }
+
+CardPerfil.propTypes = {
+  flexDirection: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+  gapCard: PropTypes.string,
+  marginAuto: PropTypes.string,
+  marginTop: PropTypes.string,
+  alignItens: PropTypes.string,
+  avatar: PropTypes.string,
+  nome: PropTypes.string,
+  pais: PropTypes.string,
+  marginBottomTyp: PropTypes.string,
+  buttonOnOff: PropTypes.string,
+  handleOpenModalProjeto: PropTypes.func,
+  openModalProjeto: PropTypes.bool,
+  respBk1: PropTypes.object
+}.isRequired;

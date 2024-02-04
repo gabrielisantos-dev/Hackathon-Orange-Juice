@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
 import { Button, TextField, Grid, Alert, Box, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import styles from '../../styles.jsx';
 import axios from 'axios';
 
-const CadastroFormulario = ({ onCadastro }) => {
+const CadastroFormulario = () => {
   const [form, setForm] = useState({
     nome: '',
     sobrenome: '',
@@ -14,24 +13,6 @@ const CadastroFormulario = ({ onCadastro }) => {
   });
   const [mensagem, setMensagem] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
-  const isValidForm = () => {
-    return (
-      isValidEmail(form.email) &&
-      isOnlyLetters(form.nome) &&
-      form.nome.length >= 3 &&
-      form.nome.length <= 30 &&
-      isOnlyLetters(form.sobrenome) &&
-      form.sobrenome.length >= 3 &&
-      form.sobrenome.length <= 40 &&
-      isValidPassword(form.senha)
-    );
-  };
-  
-  const isOnlyLetters = (value) => {
-    const regex = /^[a-zA-Z]+$/;
-    return regex.test(value);
-  };
   
   const handleCadastro = async () => {
     try {
@@ -43,19 +24,16 @@ const CadastroFormulario = ({ onCadastro }) => {
         password: form.senha,
       });
   
-      if (response.data.token) {
+      if (response.data.token && response.status === 200 || response.status === 201) {
         // Salva o token no localStorage
         localStorage.setItem('token', response.data.token);
   
         setMensagem('Cadastro feito com sucesso');
-        // onCadastro('success');
       } else {
         setMensagem('Erro no cadastro. Por favor, tente novamente.');
-        // onCadastro('error');
       }
     } catch (error) {
       setMensagem('Erro na solicitação. Por favor, tente novamente.');
-      // onCadastro('error');
     }
   };
   
@@ -66,7 +44,7 @@ const CadastroFormulario = ({ onCadastro }) => {
   };
 
   const isValidPassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,20}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\]:;<>,.?~\\/-]).{6,20}$/;
     return regex.test(password);
   };
 
@@ -86,7 +64,7 @@ const CadastroFormulario = ({ onCadastro }) => {
       <Box>
         {mensagem && (
           <Alert
-            severity={isValidForm() ? 'success' : 'error'}
+          severity={mensagem.includes('sucesso') ? 'success' : 'error'}
             variant="filled"
             style={styles.alert}
           >
@@ -151,7 +129,7 @@ const CadastroFormulario = ({ onCadastro }) => {
                 error={form.senha.length > 0 && !isValidPassword(form.senha)}
                 helperText={
                   form.senha.length > 0 &&
-                  'Mínimo de 6 caracteres, pelo menos uma letra maiúscula, uma letra minúscula e um número'
+                  'Mínimo de 6 caracteres, pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial'
                 }
                 InputProps={{
                   endAdornment: (
@@ -179,10 +157,6 @@ const CadastroFormulario = ({ onCadastro }) => {
       </Box>
     </>
   );
-};
-
-CadastroFormulario.propTypes = {
-  onCadastro: PropTypes.func.isRequired,
 };
 
 export default CadastroFormulario;

@@ -1,10 +1,13 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery } from '@mui/material';
+import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery, CircularProgress } from '@mui/material';
 import { theme } from '../../utils/Theme';
 import collections from '../../assets/collections/collections.svg';
 import ViewPostModal from './ViewPostModal';
 import SavePostModal from './SavePostModal';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Axios from 'axios';
 
 // Constantes para tamanhos e cores repetidas
 const modalWidth = '850px';
@@ -12,84 +15,125 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
+const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
-    const [savePostModalOpen, setSavePostModalOpen] = useState(false);
+    const [editedPostModalOpen, setEditedPostModalOpen] = useState(false);
+    const [titleError, setTitleError] = useState('');
+    const [descriptionError, setDescriptionError] = useState('');
+    const [linkError, setLinkError] = useState('');
+    const [hasErrors, setHasErrors] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+
 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [projectData, setProjectData] = useState({
-    title: '',
+    titulo: '',
     tags: [],
-    link: '',
-    description: '',
-    image: null,
+    links: '',
+    descrição: '',
+    imagem: null,
     });
 
     const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setProjectData({ ...projectData, [name]: value });
-    };
-
-    const handleTagsChange = (event) => {
-    const tagsArray = event.target.value.split(',').map((tag) => tag.trim());
-    setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
-    };  
-
+        const { name, value } = event.target;
+        setProjectData({ ...projectData, [name]: value });
+        validateField(name, value);
+        };
+        
+        const validateField = (name, value) => {
+        switch (name) {
+            case 'titulo':
+            setTitleError(value.length < 4 || value.length > 30 ? 'O título deve ter entre 4 e 30 caracteres.' : '');
+            break;
+            case 'descrição':
+            setDescriptionError(value.length < 10 || value.length > 255 ? 'A descrição deve ter entre 10 e 255 caracteres.' : '');
+            break;
+            case 'links':
+            setLinkError(value.length < 10 || value.length > 255 ? 'O link deve ter entre 10 e 255 caracteres.' : '');
+            break;
+            default:
+            break;
+        }
+        setHasErrors(!!(titleError || descriptionError || linkError));
+        };
+        
+        const handleTagsChange = (event) => {
+        const tagsArray = event.target.value.split(' ').filter(tag => tag.trim() !== ' ');
+        setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
+        };
+        
     const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
-        if (prevData.image !== imageFile) {
-        return { ...prevData, image: imageFile };
+        if (prevData.imagem !== imageFile) {
+        return { ...prevData, imagem: URL.createObjectURL(imageFile) };
         }
         return prevData;
     });
     };
-    
 
-    const handleCancel = () => {
-    setProjectData({
-        title: '',
-        tags: [],
-        link: '',
-        description: '',
-        image: null,
-    });
-    onClose();
-    };
+    const handleSave = async () => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
 
-    const handleSave = () => {
-    setSavePostModalOpen(true);
-    onClose();
-    };
+            const formData = new FormData();
+            formData.append('titulo', projectData.titulo);
+            formData.append('tags', projectData.tags);
+            formData.append('links', projectData.links);
+            formData.append('descrição', projectData.descrição);
 
-    const backgroundImage = useMemo(() => {
-        if (projectData.image) {
-            return `url(${URL.createObjectURL(projectData.image)})`;
+            const imageFile = projectData.imagem;
+
+            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, formData, imageFile, {
+                headers: {
+                    'Authorization': `${token}`,
+                },
+            });
+
+            if (response.status === 200 || response.status === 201) {
+                setEditedPostModalOpen(true);
+                onClose();
+            }
+        } catch (error) {
+            setSnackbarOpen(true);
+        } finally {
+            setLoading(false);
         }
-        return 'none';
-    }, [projectData.image]);
+    };    
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
+    };
+
 
     return (
     <ThemeProvider theme={theme}>
-        {!savePostModalOpen && (
-        <Modal open={true} onClose={onClose}>
+        {!editedPostModalOpen && (
+        <Modal open={true} onClose={onClose} >
         <Box
             sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh',
+            
             }}
         >
             <Box
             sx={{
                 width: modalWidth,
-                height: modalHeight,
+                height: hasErrors ? 'auto' : modalHeight,
                 backgroundColor: backgroundColor,
-                padding: '24px 30px',
+                padding: '35px 41px',
                 display: 'flex',
+                marginTop: '200px',
                 flexDirection: 'column',
             }}
             >
@@ -101,6 +145,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                 sx={{ marginBottom: '8px' }}
         >
                 Editar Projeto
+                {loading && <CircularProgress />}
             </Typography>
 
             <Box
@@ -141,46 +186,50 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     justifyContent: 'center',
                     backgroundColor: primaryColor,
                     marginTop: '32px',
-                    backgroundImage: backgroundImage,
                 }}
                 >
-                <Box
-                    sx={{
-                    width: '56px',
-                    height: '56px',
-                    margin: 'auto',
-                    display: projectData.image ? 'none' : 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    }}
-                >
-                    <input
-                    type='file'
-                    accept='image/*'
-                    style={{ display: 'none' }}
-                    onChange={handleImageChange}
-                    id='imageInput'
-                    />
-                    <label htmlFor='imageInput'>
-                    <img
-                        src={collections}
-                        alt='Collections'
-                        style={{ cursor: 'pointer' }}
-                    />
-                    </label>
-                    <Typography
-                    variant='body2'
-                    marginTop='14px'
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        color: 'neutral.secondaryDark',
-                        opacity: '60%',
-                    }}
-                    >
-                    Compartilhe seu talento com milhares de<wbr /> pessoas
-                    </Typography>
-                </Box>
+                        {projectData.imagem ? (
+        <img
+            style={{position: 'relative', marginBottom: '20px'}}
+            src={projectData.imagem}
+            alt="collections"
+            height='100%'
+            width='100%'
+        />
+    ) : (
+        <Box
+            sx={{
+                width: '56px',
+                height: '56px',
+                margin: 'auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+        >
+            <label>
+                <img
+                    src={collections}
+                    alt="collections"
+                    height='100%'
+                    width='100%'
+                />
+                <input type="file" accept='image/' style={{ display: 'none' }} onChange={handleImageChange} />
+            </label>
+            <Typography
+                variant='body2'
+                marginTop='14px'
+                sx={{
+                    whiteSpace: 'nowrap',
+                    color: 'neutral.secondaryDark',
+                    opacity: '60%',
+                }}
+            >
+                Compartilhe seu talento com milhares de<wbr /> pessoas
+            </Typography>
+        </Box>
+    )}
                 </Box>
 
                 <Box
@@ -188,38 +237,44 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     width: '433px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '16px',
+                    gap: '20px',
                 }}
                 >
                 <TextField
-                    label='Título'
+                    label='Titulo'
                     variant='outlined'
-                    name='title'
-                    value={projectData.title}
+                    name='titulo'
+                    value={projectData.titulo}
                     onChange={handleInputChange}
+                    error={Boolean(titleError)}
+                    helperText={titleError}
                 />
                 <TextField
                     label='Tags'
                     variant='outlined'
                     name='tags'
-                    value={projectData.tags.join(',')}
+                    value={projectData.tags.join(' ')}
                     onChange={handleTagsChange}
                 />
                 <TextField
                     label='Link'
                     variant='outlined'
-                    name='link'
-                    value={projectData.link}
+                    name='links'
+                    value={projectData.links}
                     onChange={handleInputChange}
+                    error={Boolean(linkError)}
+                    helperText={linkError}
                 />
                 <TextField
                     label='Descrição'
                     multiline
                     rows={4}
                     variant='outlined'
-                    name='description'
-                    value={projectData.description}
+                    name='descrição'
+                    value={projectData.descrição}
                     onChange={handleInputChange}
+                    error={Boolean(descriptionError)}
+                    helperText={descriptionError}
                 />
                 </Box>
             </Box>
@@ -229,7 +284,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                 href='#'
                 onClick={() => {
                     setViewPostModalOpen(true);
-                    setSelectedProject({ ...projectData, image: URL.createObjectURL(projectData.image) });
+                    setSelectedProject({ ...projectData, imagem: URL.createObjectURL(projectData.imagem) });
                 }}
                 sx={{
                     display: 'block',
@@ -261,13 +316,12 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                     marginRight: '16px',
                     color: '#FCFDFF',
                 }}
-                // INCLUIR ROTA AXIOS AQUI ============
                 >
-                <b>Salvar</b> 
+                <b>Salvar</b>
                 </Button>
                 <Button
                 variant='outlined'
-                onClick={()=>{handleEditProjectModal()}}
+                onClick={() => { handleEditProjectModal(); }}
                 sx={{
                     width: 'Hug (101px)',
                     height: 'Hug (42px)',
@@ -285,6 +339,12 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
         </Box>
         </Modal>
         )}
+        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <MuiAlert onClose={handleCloseSnackbar} severity='error' elevation={6} variant='filled'>
+            Erro ao editar o projeto. Por favor, tente novamente.
+            </MuiAlert>
+        </Snackbar>
+
         {viewPostModalOpen && (
         <ViewPostModal
             onClose={() => {
@@ -294,10 +354,10 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
             projectData={selectedProject}
         />
         )}
-        {savePostModalOpen && (
+        {editedPostModalOpen && (
         <SavePostModal
             onClose={() => {
-            setSavePostModalOpen(false);
+            setEditedPostModalOpen(false);
             }}
         />
         )}
@@ -306,7 +366,9 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
 };
 
 EditProjectModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-};
+    onClose: PropTypes.func,
+    handleEditProjectModal: PropTypes.func,
+    projectId: PropTypes.number,
+}.isRequired;
 
 export default EditProjectModal;

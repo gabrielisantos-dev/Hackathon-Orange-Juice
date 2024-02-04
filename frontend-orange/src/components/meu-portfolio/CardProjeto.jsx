@@ -1,5 +1,8 @@
 import { theme } from '../../utils/Theme'
 import { Box, Typography, Chip, Link, Button } from "@mui/material";
+import PropTypes from 'prop-types';
+
+
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { useState, useContext } from "react";
 import { UserContext } from '../../context/UserContext';
@@ -229,4 +232,24 @@ export default function CardProjeto(props) {
 
     </Box>
   )
+}
+
+CardProjeto.propTypes = {
+  width: PropTypes.string,
+  color: PropTypes.string,
+  colorIconMenu: PropTypes.string,
+  avatar: PropTypes.string,
+  widthAvatar: PropTypes.string,
+  heightAvatar: PropTypes.string,
+  chipsWidth: PropTypes.string,
+  chipDirection: PropTypes.string,
+  nome: PropTypes.string,
+  labelChip: PropTypes.string,
+  data: PropTypes.string,
+  imagem: PropTypes.string,
+  iconMenu: PropTypes.string,
+  openEditProjectModal: PropTypes.bool,
+  setOpenEditProjectModal: PropTypes.func,
+  handleEditProjectModal: PropTypes.func,
+  openModalProjeto: PropTypes.bool,
 }

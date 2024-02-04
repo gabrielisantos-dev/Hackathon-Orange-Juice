@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery, CircularProgress } from '@mui/material';
 import { theme } from '../../utils/Theme';
@@ -32,7 +32,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
 
     const [projectData, setProjectData] = useState({
     titulo: '',
-    tags: [],
+    tags: '',
     links: '',
     descrição: '',
     imagem: null,
@@ -70,7 +70,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
         if (prevData.imagem !== imageFile) {
-        return { ...prevData, imagem: imageFile };
+        return { ...prevData, imagem: URL.createObjectURL(imageFile) };
         }
         return prevData;
     });
@@ -78,33 +78,36 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
 
     const handleSave = async () => {
         try {
-          setLoading(true);
-                    
-          const formData = new FormData();
-          formData.append('titulo', projectData.titulo);
-          formData.append('tags', projectData.tags);
-          formData.append('links', projectData.links);
-          formData.append('descricao', projectData.descrição);
-          formData.append('image', projectData.imagem);
-          
-          const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-          });
-          
-          if (response.status === 200 || response.status === 201) {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+
+            const formData = new FormData();
+            formData.append('titulo', projectData.titulo);
+            formData.append('tags', projectData.tags);
+            formData.append('links', projectData.links);
+            formData.append('descricao', projectData.descrição); 
+
+            const imageFile = projectData.imagem;
+            
+            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', FormData, imageFile, {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+                );
+            
+            if (response.status === 200 || response.status === 201) {
             setSavePostModalOpen(true);
             onClose();
-          }
+            }
         } catch (error) {
-          console.error('Erro ao salvar o projeto:', error);
-          setSnackbarOpen(true);
+            console.error('Erro ao salvar o projeto:', error);
+            setSnackbarOpen(true);
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
-      };
-      
+        };
+        
     
 
     const handleCloseSnackbar = (event, reason) => {
@@ -113,15 +116,6 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         }
         setSnackbarOpen(false);
     };
-    
-
-    const backgroundImage = useMemo(() => {
-    if (projectData.imagem) {
-        return `url(${URL.createObjectURL(projectData.imagem)})`;
-    }
-    return 'none';
-    }
-    , [projectData.imagem]);
 
 
     return (
@@ -142,6 +136,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 backgroundColor: backgroundColor,
                 padding: '35px 41px',
                 display: 'flex',
+                marginTop: '200px',
                 flexDirection: 'column',
             }}
             >
@@ -194,46 +189,63 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     justifyContent: 'center',
                     backgroundColor: primaryColor,
                     marginTop: '32px',
-                    backgroundImage: backgroundImage,
                 }}
                 >
-                <Box
-                    sx={{
-                    width: '56px',
-                    height: '56px',
-                    margin: 'auto',
-                    display: projectData.imagem ? 'none' : 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    }}
-                >
-                    <input
-                    type='file'
-                    accept='image/*'
-                    style={{ display: 'none' }}
-                    onChange={handleImageChange}
-                    id='imageInput'
-                    />
-                    <label htmlFor='imageInput'>
-                    <img
-                        src={collections}
-                        alt='Collections'
-                        style={{ cursor: 'pointer' }}
-                    />
-                    </label>
-                    <Typography
-                    variant='body2'
-                    marginTop='14px'
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        color: 'neutral.secondaryDark',
-                        opacity: '60%',
-                    }}
-                    >
-                    Compartilhe seu talento com milhares de<wbr /> pessoas
-                    </Typography>
-                </Box>
+                    <Box
+    sx={{
+        flex: '1',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: '5px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: primaryColor,
+        marginTop: '32px',
+    }}
+>
+    {projectData.imagem ? (
+        <img
+            style={{position: 'relative', marginBottom: '20px'}}
+            src={projectData.imagem}
+            alt="collections"
+            height='100%'
+            width='100%'
+        />
+    ) : (
+        <Box
+            sx={{
+                width: '56px',
+                height: '56px',
+                margin: 'auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+        >
+            <label>
+                <img
+                    src={collections}
+                    alt="collections"
+                    height='100%'
+                    width='100%'
+                />
+                <input type="file" accept='image/' style={{ display: 'none' }} onChange={handleImageChange} />
+            </label>
+            <Typography
+                variant='body2'
+                marginTop='14px'
+                sx={{
+                    whiteSpace: 'nowrap',
+                    color: 'neutral.secondaryDark',
+                    opacity: '60%',
+                }}
+            >
+                Compartilhe seu talento com milhares de<wbr /> pessoas
+            </Typography>
+        </Box>
+    )}
+</Box>
                 </Box>
 
                 <Box
@@ -257,7 +269,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     label='Tags'
                     variant='outlined'
                     name='tags'
-                    value={projectData.tags.join(' ')}
+                    value={projectData.tags}
                     onChange={handleTagsChange}
                 />
                 <TextField
