@@ -3,6 +3,7 @@ package com.hackathon.backendorange.service;
 import com.hackathon.backendorange.dto.AutenticationDTO;
 import com.hackathon.backendorange.dto.LoginResponseDTO;
 import com.hackathon.backendorange.exception.LoginException;
+import com.hackathon.backendorange.exception.RegisterException;
 import com.hackathon.backendorange.exception.UserAlreadyExistsException;
 import com.hackathon.backendorange.security.TokenService;
 import org.springframework.beans.BeanUtils;
@@ -21,61 +22,59 @@ import com.hackathon.backendorange.repository.UserRepository;
 
 @Service
 public class UserService {
-	UserRepository userRepository;
 
-	UserAssembler userAssembler;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UserAssembler userAssembler;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-	TokenService tokenService;
+    public UserDTO register(UserDTO userDTO) {
 
-	AuthenticationManager authenticationManager;
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new UserAlreadyExistsException();
+        }
 
-	public UserService(UserRepository userRepository,
-					   UserAssembler userAssembler,
-					   TokenService tokenService,
-					   AuthenticationManager authenticationManager) {
-		this.userRepository = userRepository;
-		this.userAssembler = userAssembler;
-		this.tokenService = tokenService;
-		this.authenticationManager = authenticationManager;
-	}
+        if (!isPasswordValid(userDTO.getPassword())) {
+            throw new RegisterException();
+        }
+        String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
+        User user = new User();
+        BeanUtils.copyProperties(userDTO, user);
+        user.setPassword(encryptedPassword);
+        user = userRepository.save(user);
+        BeanUtils.copyProperties(user, userDTO);
 
-	public UserDTO register(UserDTO userDTO) {
+        return userDTO;
+    }
 
-		if(userRepository.existsByEmail(userDTO.getEmail())){
-		throw new UserAlreadyExistsException();
-		}
+    private boolean isPasswordValid(String password) {
+        return password.matches(".*\\d.*") && password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*") && password.matches(".*[A-Z].*");
+    }
 
-		String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
-		User user = new User();
-		BeanUtils.copyProperties(userDTO, user);
-		user.setPassword(encryptedPassword);
-		user = userRepository.save(user);
-		BeanUtils.copyProperties(user, userDTO);
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 
-		return userDTO;
-	}
+    public LoginResponseDTO login(AutenticationDTO autenticationDTO) throws AuthenticationException, LoginException {
 
-	public Boolean existsByEmail(String email) {
-		return userRepository.existsByEmail(email);
-	}
+        userRepository.getByEmail(autenticationDTO.getEmail()).orElseThrow(LoginException::new);
 
-	public LoginResponseDTO login(AutenticationDTO autenticationDTO) throws AuthenticationException, LoginException {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(autenticationDTO.getEmail(), autenticationDTO.getPassword());
+        var auth = authenticationManager.authenticate(usernamePassword);
+        String token = tokenService.generateToken((User) auth.getPrincipal());
 
-		userRepository.getByEmail(autenticationDTO.getEmail()).orElseThrow(LoginException::new);
+        return new LoginResponseDTO(token);
+    }
 
-			var usernamePassword = new UsernamePasswordAuthenticationToken(autenticationDTO.getEmail(), autenticationDTO.getPassword());
-			var auth = authenticationManager.authenticate(usernamePassword);
-			String token = tokenService.generateToken((User) auth.getPrincipal());
+    public UserDTO details(String email) {
+        User user = userRepository.findUserByEmail(email);
+        UserDTO userDTO = userAssembler.toDTO(user);
 
-		return new LoginResponseDTO(token);
-	}
-
-
-	public UserDTO details (String email){
-		User user = userRepository.findUserByEmail(email);
-		UserDTO userDTO = userAssembler.toDTO(user);
-
-		return userDTO;
-	}
+        return userDTO;
+    }
 
 }

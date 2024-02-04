@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,8 @@ import java.util.Map;
 @RequestMapping("/project")
 @Tag(name = "Projetos")
 public class ProjectController {
-
-    ProjectService service;
-
-    public ProjectController(ProjectService service) {
-        this.service = service;
-    }
-
+    @Autowired
+    private ProjectService service;
     @Operation(
             description = "Retorna uma lista de todos os projetos registrados no sistema.",
             summary = "Listar todos os projetos",

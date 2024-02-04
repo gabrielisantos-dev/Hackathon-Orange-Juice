@@ -2,6 +2,7 @@ package com.hackathon.backendorange.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,13 +20,9 @@ import javax.security.auth.login.LoginException;
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {
-	
-	
-	UserService userService;
 
-	public UserController(UserService userService) {
-	 this.userService = userService;
-	}
+	@Autowired
+	private UserService userService;
 
 	@Operation(
 			description = "Permite que um usuário se cadastre no sistema.",

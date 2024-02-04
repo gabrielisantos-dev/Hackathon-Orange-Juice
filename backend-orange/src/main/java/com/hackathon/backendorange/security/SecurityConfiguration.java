@@ -1,5 +1,6 @@
 package com.hackathon.backendorange.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,11 +23,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class SecurityConfiguration implements WebMvcConfigurer {
 
-    SecurityFilter securityFilter;
-
-    public SecurityConfiguration(SecurityFilter securityFilter) {
-        this.securityFilter = securityFilter;
-    }
+    @Autowired
+    private SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
