@@ -44,7 +44,7 @@ const CadastroFormulario = () => {
   };
 
   const isValidPassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,20}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\]:;<>,.?~\\/-]).{6,20}$/;
     return regex.test(password);
   };
 
