@@ -81,16 +81,15 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
             setLoading(true);
             const token = localStorage.getItem('token');
 
-            const formData = new FormData();
-            formData.append('titulo', projectData.titulo);
-            formData.append('tags', projectData.tags.join(', '));
-            formData.append('links', projectData.links);
-            formData.append('descricao', projectData.descrição);
-            formData.append('image', projectData.imagem);
-
-            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, formData, {
+            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, {
+                titulo: projectData.titulo,
+                tags: projectData.tags,
+                links: projectData.links,
+                descricao: projectData.descrição,
+                image: projectData.imagem,
+            }, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `${token}`,
                 },
             });
 

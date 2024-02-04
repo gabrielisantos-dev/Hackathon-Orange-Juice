@@ -21,7 +21,7 @@ const DeleteModal = ({ onClose, id }) => {
             const token = localStorage.getItem('token');
             await Axios.delete(`https://orange-9dj9.onrender.com/project/delete/${id}`, {
                 headers: {
-                    Authorization: `${token}`,
+                    'Authorization': `${token}`,
                 },
             });
 
@@ -54,6 +54,7 @@ const DeleteModal = ({ onClose, id }) => {
                 <Box sx={{ bgcolor: 'background.paper', p: 4, width: '421px', height: '209px' }}>
                     <Typography variant="h5" component="h2" color='#515255' mb={2} height='48px' marginLeft= '20px' marginTop= '10px' >
                         Deseja Excluir?
+                        {loading && <CircularProgress />}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', mb: 2, marginLeft: '20px' }}>
                         <Typography variant="h5" component="h2" color='#515255' mb={2} height='30px' width='337px' fontSize='18px' >
@@ -77,7 +78,6 @@ const DeleteModal = ({ onClose, id }) => {
                         }}
                     >
                         <b>Excluir</b>
-                        {loading && <CircularProgress />}
                     </Button>
                     <Button
                         variant='outlined'
