@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Box, Typography, Modal, Button } from '@mui/material';
+import DeletedPostModal from './DeletedProjectModal';
 
 const DeleteModal = ({ onClose }) => {
 
@@ -29,6 +30,7 @@ const handleCancel = () => {
                     <Button
                     variant='contained'
                     color='secondary'
+                    onClick={DeletedPostModal}
                     sx={{
                     width: 'Hug (109px)',
                     height: 'Hug (42px)',
