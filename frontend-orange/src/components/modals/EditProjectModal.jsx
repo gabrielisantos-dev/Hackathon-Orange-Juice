@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery, CircularProgress } from '@mui/material';
 import { theme } from '../../utils/Theme';
@@ -70,7 +70,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
         if (prevData.imagem !== imageFile) {
-        return { ...prevData, imagem: imageFile };
+        return { ...prevData, imagem: URL.createObjectURL(imageFile) };
         }
         return prevData;
     });
@@ -188,38 +188,48 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
                     marginTop: '32px',
                 }}
                 >
-                <Box
-                    sx={{
-                    width: '56px',
-                    height: '56px',
-                    margin: 'auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    }}
-                >
-                <label>
-                    <img
-                    src={projectData.imagem === null ? collections : projectData.imagem}
+                        {projectData.imagem ? (
+        <img
+            style={{position: 'relative', marginBottom: '20px'}}
+            src={projectData.imagem}
+            alt="collections"
+            height='100%'
+            width='100%'
+        />
+    ) : (
+        <Box
+            sx={{
+                width: '56px',
+                height: '56px',
+                margin: 'auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+        >
+            <label>
+                <img
+                    src={collections}
                     alt="collections"
                     height='100%'
                     width='100%'
-                    />
-                    <input type="file" accept='image/' style={{display: 'none'}} onChange={handleImageChange} />
-                </label>
-                    <Typography
-                    variant='body2'
-                    marginTop='14px'
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        color: 'neutral.secondaryDark',
-                        opacity: '60%',
-                    }}
-                    >
-                    Compartilhe seu talento com milhares de<wbr /> pessoas
-                    </Typography>
-                </Box>
+                />
+                <input type="file" accept='image/' style={{ display: 'none' }} onChange={handleImageChange} />
+            </label>
+            <Typography
+                variant='body2'
+                marginTop='14px'
+                sx={{
+                    whiteSpace: 'nowrap',
+                    color: 'neutral.secondaryDark',
+                    opacity: '60%',
+                }}
+            >
+                Compartilhe seu talento com milhares de<wbr /> pessoas
+            </Typography>
+        </Box>
+    )}
                 </Box>
 
                 <Box
