@@ -26,7 +26,7 @@ public class Project {
 
     @Enumerated
     private TagsEnum tags;
-    
+
     @Column
     private String links;
 

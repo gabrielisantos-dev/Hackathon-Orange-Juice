@@ -1,6 +1,7 @@
 package com.hackathon.backendorange.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import javax.security.auth.login.LoginException;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "User")
 public class UserController {
 
 	@Autowired

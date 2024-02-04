@@ -29,7 +29,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/project")
-@Tag(name = "Projetos")
+@Tag(name = "Projects")
 public class ProjectController {
     @Autowired
     private ProjectService service;
