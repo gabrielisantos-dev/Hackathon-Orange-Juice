@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery, CircularProgress } from '@mui/material';
 import { theme } from '../../utils/Theme';
@@ -32,7 +32,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
 
     const [projectData, setProjectData] = useState({
     titulo: '',
-    tags: [],
+    tags: '',
     links: '',
     descrição: '',
     imagem: null,
@@ -114,15 +114,6 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         }
         setSnackbarOpen(false);
     };
-    
-
-    const backgroundImage = useMemo(() => {
-    if (projectData.imagem) {
-        return `url(${URL.createObjectURL(projectData.imagem)})`;
-    }
-    return 'none';
-    }
-    , [projectData.imagem]);
 
 
     return (
@@ -195,7 +186,6 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     justifyContent: 'center',
                     backgroundColor: primaryColor,
                     marginTop: '32px',
-                    backgroundImage: backgroundImage,
                 }}
                 >
                 <Box
@@ -215,14 +205,18 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     style={{ display: 'none' }}
                     onChange={handleImageChange}
                     id='imageInput'
-                    />
-                    <label htmlFor='imageInput'>
+                    />  
                     <img
                         src={collections}
                         alt='Collections'
-                        style={{ cursor: 'pointer' }}
+                        style={{
+                            cursor: 'pointer',
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: '5px',
+                            display: projectData.imagem ? 'block' : 'none',
+                        }}
                     />
-                    </label>
                     <Typography
                     variant='body2'
                     marginTop='14px'
@@ -258,7 +252,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     label='Tags'
                     variant='outlined'
                     name='tags'
-                    value={projectData.tags.join(' ')}
+                    value={projectData.tags}
                     onChange={handleTagsChange}
                 />
                 <TextField
