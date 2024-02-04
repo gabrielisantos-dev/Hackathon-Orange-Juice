@@ -24,7 +24,8 @@ Bem-vindo ao Portfólio Orange! Este projeto foi desenvolvido como parte do hack
 
 ## Links 
 
-Deploy:
+Deploy Front-End:
+Deploy Back-End: https://orange-9dj9.onrender.com
 
 **Esperamos que o Orange Portfólio simplifique a promoção de conquistas individuais e ao mesmo tempo fomente a colaboração e o reconhecimento dentro da comunidade. Explore, compartilhe e celebre as histórias por trás de cada projeto!** 🌟
 
