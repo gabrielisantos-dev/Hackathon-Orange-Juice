@@ -81,13 +81,15 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
             setLoading(true);
             const token = localStorage.getItem('token');
 
-            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, {
-                titulo: projectData.titulo,
-                tags: projectData.tags,
-                links: projectData.links,
-                descricao: projectData.descrição,
-                image: projectData.imagem,
-            }, {
+            const formData = new FormData();
+            formData.append('titulo', projectData.titulo);
+            formData.append('tags', projectData.tags);
+            formData.append('links', projectData.links);
+            formData.append('descrição', projectData.descrição);
+
+            const imageFile = projectData.imagem;
+
+            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, formData, imageFile, {
                 headers: {
                     'Authorization': `${token}`,
                 },
@@ -110,15 +112,6 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
         }
         setSnackbarOpen(false);
     };
-    
-
-    const backgroundImage = useMemo(() => {
-    if (projectData.imagem) {
-        return `url(${URL.createObjectURL(projectData.imagem)})`;
-    }
-    return 'none';
-    },
-    [projectData.imagem]);
 
 
     return (
@@ -140,6 +133,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
                 backgroundColor: backgroundColor,
                 padding: '35px 41px',
                 display: 'flex',
+                marginTop: '200px',
                 flexDirection: 'column',
             }}
             >
@@ -192,7 +186,6 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
                     justifyContent: 'center',
                     backgroundColor: primaryColor,
                     marginTop: '32px',
-                    backgroundImage: backgroundImage,
                 }}
                 >
                 <Box
@@ -200,26 +193,21 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
                     width: '56px',
                     height: '56px',
                     margin: 'auto',
-                    display: projectData.imagem ? 'none' : 'flex',
+                    display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                     }}
                 >
-                    <input
-                    type='file'
-                    accept='image/*'
-                    style={{ display: 'none' }}
-                    onChange={handleImageChange}
-                    id='imageInput'
-                    />
-                    <label htmlFor='imageInput'>
+                <label>
                     <img
-                        src={collections}
-                        alt='Collections'
-                        style={{ cursor: 'pointer' }}
+                    src={projectData.imagem === null ? collections : projectData.imagem}
+                    alt="collections"
+                    height='100%'
+                    width='100%'
                     />
-                    </label>
+                    <input type="file" accept='image/' style={{display: 'none'}} onChange={handleImageChange} />
+                </label>
                     <Typography
                     variant='body2'
                     marginTop='14px'

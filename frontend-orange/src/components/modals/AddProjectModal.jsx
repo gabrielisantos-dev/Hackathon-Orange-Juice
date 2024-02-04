@@ -70,7 +70,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
         if (prevData.imagem !== imageFile) {
-        return { ...prevData, imagem: imageFile };
+        return { ...prevData, imagem: URL.createObjectURL(imageFile) };
         }
         return prevData;
     });
@@ -80,19 +80,21 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
+
+            const formData = new FormData();
+            formData.append('titulo', projectData.titulo);
+            formData.append('tags', projectData.tags);
+            formData.append('links', projectData.links);
+            formData.append('descricao', projectData.descrição); 
+
+            const imageFile = projectData.imagem;
             
-            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', {
-                titulo: projectData.titulo,
-                tags: projectData.tags,
-                links: projectData.links,
-                descricao: projectData.descrição,
-                image: projectData.imagem,
-                
-            }, {
+            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', FormData, imageFile, {
                 headers: {
-                    'Authorization': `${token}`,
+                    Authorization: `${token}`,
                 },
-            });
+            }
+                );
             
             if (response.status === 200 || response.status === 201) {
             setSavePostModalOpen(true);
@@ -134,6 +136,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 backgroundColor: backgroundColor,
                 padding: '35px 41px',
                 display: 'flex',
+                marginTop: '200px',
                 flexDirection: 'column',
             }}
             >
@@ -193,30 +196,21 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     width: '56px',
                     height: '56px',
                     margin: 'auto',
-                    display: projectData.imagem ? 'none' : 'flex',
+                    display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                     }}
                 >
-                    <input
-                    type='file'
-                    accept='image/*'
-                    style={{ display: 'none' }}
-                    onChange={handleImageChange}
-                    id='imageInput'
-                    />  
-                    <img
-                        src={collections}
-                        alt='Collections'
-                        style={{
-                            cursor: 'pointer',
-                            width: '100%',
-                            height: '100%',
-                            borderRadius: '5px',
-                            display: projectData.imagem ? 'block' : 'none',
-                        }}
-                    />
+        <label>
+        <img
+        src={projectData.imagem === null ? collections : projectData.imagem}
+        alt="collections"
+        height='100%'
+        width='100%'
+        />
+        <input type="file" accept='image/' style={{display: 'none'}} onChange={handleImageChange} />
+    </label>
                     <Typography
                     variant='body2'
                     marginTop='14px'
