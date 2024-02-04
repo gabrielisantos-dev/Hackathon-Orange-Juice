@@ -15,7 +15,7 @@ const modalHeight = '502px';
 const backgroundColor = '#FEFEFE';
 const primaryColor = theme.palette.neutral.secondaryLight;
 
-const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
+const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [editedPostModalOpen, setEditedPostModalOpen] = useState(false);
@@ -85,29 +85,25 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
             formData.append('titulo', projectData.titulo);
             formData.append('tags', projectData.tags.join(', '));
             formData.append('links', projectData.links);
-            formData.append('descrição', projectData.descrição);
-            formData.append('imagem', projectData.imagem);
-    
-            const response = await Axios.put('https://orange-9dj9.onrender.com/project/update/${id}', formData, {
-    headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `${token}`,
-    },
-});
+            formData.append('descricao', projectData.descrição);
+            formData.append('image', projectData.imagem);
 
-    
+            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
             if (response.status === 200 || response.status === 201) {
                 setEditedPostModalOpen(true);
                 onClose();
             }
-
         } catch (error) {
             setSnackbarOpen(true);
         } finally {
             setLoading(false);
         }
-    };
-    
+    };    
 
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -328,7 +324,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
                 </Button>
                 <Button
                 variant='outlined'
-                onClick={()=>{handleEditProjectModal()}}
+                onClick={() => { handleEditProjectModal(); }}
                 sx={{
                     width: 'Hug (101px)',
                     height: 'Hug (42px)',
@@ -375,6 +371,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
 EditProjectModal.propTypes = {
     onClose: PropTypes.func,
     handleEditProjectModal: PropTypes.func,
+    projectId: PropTypes.number,
 }.isRequired;
 
 export default EditProjectModal;
