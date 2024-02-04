@@ -88,12 +88,13 @@ const EditProjectModal = ({ onClose, handleEditProjectModal }) => {
             formData.append('descrição', projectData.descrição);
             formData.append('imagem', projectData.imagem);
     
-            const response = await Axios.post('https://orange-9dj9.onrender.com/project/update/${id}', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `${token}`,
-                },
-            });
+            const response = await Axios.put('https://orange-9dj9.onrender.com/project/update/${id}', formData, {
+    headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `${token}`,
+    },
+});
+
     
             if (response.status === 200 || response.status === 201) {
                 setEditedPostModalOpen(true);

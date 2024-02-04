@@ -5,7 +5,7 @@ import DeletedPostModal from './DeletedProjectModal';
 import MuiAlert from '@mui/material/Alert';
 import { useState } from 'react';
 
-const DeleteModal = ({ onClose, projectId }) => {
+const DeleteModal = ({ onClose, id }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -19,7 +19,7 @@ const DeleteModal = ({ onClose, projectId }) => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            await Axios.delete(`https://orange-9dj9.onrender.com/project/delete/${projectId}`, {
+            await Axios.delete(`https://orange-9dj9.onrender.com/project/delete/${id}`, {
                 headers: {
                     Authorization: `${token}`,
                 },
@@ -77,7 +77,7 @@ const DeleteModal = ({ onClose, projectId }) => {
                         }}
                     >
                         <b>Excluir</b>
-                        {loading && <CircularProgress size={24} sx={{ marginLeft: 1, color: '#FCFDFF' }} />}
+                        {loading && <CircularProgress />}
                     </Button>
                     <Button
                         variant='outlined'
@@ -117,7 +117,7 @@ const DeleteModal = ({ onClose, projectId }) => {
 
 DeleteModal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    projectId: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 };
 
 export default DeleteModal;
