@@ -1,46 +1,19 @@
 import { Box, ThemeProvider, Link, Typography, Autocomplete, TextField} from '@mui/material/';
-import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
-import Header from '../components/main-header/Header';
-// import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
-import { useState } from "react";
 import figuraProjeto from '../assets/projects/project1.svg'
 import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import VisualizacaoMobile from '../pages/VisualizacaoMobile';
-import {mock} from '../utils/mock'
+
 
 export default function DescobrirDesktop(props){
-  //ok
-
-  // const {nome, email, sobrenome} = dadosDoUsuario
-
-
-  // const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
-  //ok
-  // const [listaDeProjetos, setlistaDeProjetos] = useState(mock)
-  //ok
-  // const [openDescobrir, setOpenDescobrir] = useState(true);
-  //ok
-  // const [open, setOpen] = useState(false);
-  //ok
-  // const [cardSelecionado, setCardSelecionado] = useState({})
-  // //ok
-  // const handleOpenMobile = () => {
-  //   setOpen(true)
-  //   setOpenDescobrir(false)
-  // }; 
-  //ok 
+  
   const handleCloseMobile = () => setOpen(false);
-  //ok
-  // const [tagProjeto, setTagProjeto] = useState(props.listaDeProjetos)
-  //ok
-  // const [tagsSelecionadas, setTagsSelecionadas] = useState([])
-  //ok
+  
   const arrayTags = []
-  //ok
+  
   props.tagProjeto.map(item => arrayTags.push(item.tag)) 
-  //ok
+  
   const tagUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
   });

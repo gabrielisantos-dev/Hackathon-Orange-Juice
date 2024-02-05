@@ -14,6 +14,7 @@ import figuraProjeto from '../assets/projects/project1.svg'
 import figuraProjeto1 from '../assets/projects/project1.svg'
 import EditProjectModal from '../components/modals/EditProjectModal'
 import {mock, mockBdResponseAllProjects} from '../utils/mock'
+import Loading from '../components/loading/Loading'
 import axios from 'axios';
 
 export default function MeuPortfolio(){
@@ -58,7 +59,7 @@ export default function MeuPortfolio(){
   }
   
   
-
+// console.log('dadosDoUsuario', dadosDoUsuario)
 const { user} = dadosProjetosDoUsuario
   useEffect(()=>{
     const token = localStorage.getItem('token')
@@ -74,11 +75,9 @@ const { user} = dadosProjetosDoUsuario
     {dadosProjetosDoUsuario &&(
     <Box sx={{marginBottom:'70px'}}>    
      
-      <CardPerfil
-        pais='Brasil'
-        
-        avatar={profilePicture}
-        
+      {dadosDoUsuario.length === 0 ? (<Loading/>) : (<CardPerfil
+        pais='Brasil'        
+        avatar={profilePicture}        
         nome={nome}
         marginAuto='auto'
         marginTop={responsivo1 ? '185px' : '49px'}
@@ -94,6 +93,7 @@ const { user} = dadosProjetosDoUsuario
         handleOpenModalProjeto={handleOpenModalProjeto}
         
       />
+      )}
       
       <Box sx={{margin:'0px 32px', marginTop:'56px'}}>
         
@@ -137,6 +137,7 @@ const { user} = dadosProjetosDoUsuario
       />
   </Box>
 
+        {dadosProjetosDoUsuario.length === 0 ? (<Loading/>) : (
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
           
           {/* {cardPerfil.length === 0 ? */}
@@ -230,6 +231,9 @@ const { user} = dadosProjetosDoUsuario
           }
           
         </Box>
+        )}
+
+
       </Box>     
     </Box>
     ) }

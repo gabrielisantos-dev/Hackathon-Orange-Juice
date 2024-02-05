@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Chip, Link } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import profilePicture from '../../assets/profile-picture/user-orange.png'
+
 
 export default function ModalProjeto(props) {
  
@@ -12,7 +12,6 @@ export default function ModalProjeto(props) {
       
       <Modal
         open={props.open}
-        // onClose={props.onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         sx={{overflow:'scroll'}}
@@ -22,7 +21,7 @@ export default function ModalProjeto(props) {
         
           sx={{
             position: 'absolute',
-            top: '75%',
+            top: '100%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: '1042px',

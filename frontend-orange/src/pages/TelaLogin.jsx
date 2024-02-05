@@ -1,4 +1,4 @@
-import { createTheme,ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import ContainerImagemTelaLogin from "../components/tela-login/ContainerImagemTelaLogin";
 import BotaoGoogleLogin from "../components/tela-login/BotaoGoogleLogin"
 import FormularioLogin from "../components/tela-login/FormularioLogin";
@@ -7,38 +7,9 @@ import { Box, useMediaQuery } from "@mui/material";
 import { useNavigate, Navigate } from "react-router-dom";
 import {useEffect, useState} from 'react'
 import { CircularProgress } from '@mui/material'
+import {theme} from '../utils/Theme'
 
 
-const theme = createTheme({
-  palette:{
-    primary:{
-      main: '#111133',
-      light:'#444466',
-      dark:'#222244',
-      contrastText: '#EDEFF2'      
-    },
-    secondary:{
-      main: '#FF5522',
-      secondaryMain:'#FF8833',
-      light:'#FFAA66',
-      secondaryLight:'#FFCC99',
-      dark:'#CC4400',
-      secondaryDark:'#993300',
-      darkest:'#662200',
-      contrastText: '#FFEECC',
-      secondContrastText: '#FFCC99'      
-    },
-    neutral:{
-      main:'#818388',
-      secondaryMain:'#A1A3AA',
-      light:'#C2C4CC',
-      secondaryLight:'#E6E9F2',
-      dark:'#515255',
-      secondaryDark:'#303133',
-      darkest:'#0B0C0D'
-    }
-  }
-});
 
 
 export default function TelaLogin(){

@@ -15,10 +15,10 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 
 export default function FormularioLogin(props) {
+
   const [showPassword, setShowPassword] = useState(false);
   const emailAdress = 'email';
-  const password = 'password';
-  
+  const password = 'password';  
   
   
   const {
@@ -26,46 +26,18 @@ export default function FormularioLogin(props) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  
-  
-  
-  // const reqRespostaBd = async (token) =>{
-  //     // console.log(token)
-  //     // await axios.get('https://orange-9dj9.onrender.com/project/list-userprojects',{ headers:{'Authorization':`${token}`}})
-  //     // await axios.get('https://orange-9dj9.onrender.com/project/list',{ headers:{'Authorization':`${token}`}})
     
-    
-  //   await axios.get('https://orange-9dj9.onrender.com/api/auth/user',{ headers:{'Authorization':`${token}`}})
-  //                .then((response) => props.setDadosDoUsuario(response.data))
-    
-  //                .catch((e)=> console.log(e))
-    
-  //   };
-    
-    const onSubmit = async (data) => {
-      axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
-      .then((response) => localStorage.setItem('token', response.data.token))
-      .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
-      .catch((e) => (console.log(e)))      
-    }
-    
-    // const onSubmit = async (data) => {
-      //   axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
-      //     .then((response) => {
-        //       localStorage.setItem('token', response.data.token)
-        //       reqRespostaBd(response.data.token)
-        //     })
-        //     .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
-        //     .catch((e) => (console.log(e)))      
-        //     }
+  const onSubmit = async (data) => {
+    axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
+    .then((response) => localStorage.setItem('token', response.data.token))
+    .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
+    .catch((e) => (console.log(e)))      
+  }       
         
         
-        
-        
-        const handleTogglePassword = () => {
-          setShowPassword((prevShowPassword) => !prevShowPassword);
-        };
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
         
         
         return (
