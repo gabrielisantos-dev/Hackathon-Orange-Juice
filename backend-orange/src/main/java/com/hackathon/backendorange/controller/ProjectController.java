@@ -114,14 +114,13 @@ public class ProjectController {
                     )
             }
     )
-    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> save(@RequestPart @Valid ProjectSaveDTO projectSaveDTO,
-                                       @RequestPart(required = false, name = "image")  MultipartFile file) throws IOException {
+    @PostMapping(value = "/save")
+    public ResponseEntity<String> save(@RequestBody @Valid ProjectSaveDTO projectSaveDTO) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
             if (authentication != null && authentication.isAuthenticated()) {
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                service.saveProject(userDetails.getUsername(), projectSaveDTO, file);
+                service.saveProject(userDetails.getUsername(), projectSaveDTO, null);
                 return ResponseEntity.ok("Projeto registrado com sucesso!");
             }else{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não autenticado.");
@@ -130,7 +129,6 @@ public class ProjectController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
         }
-
     }
 
 
