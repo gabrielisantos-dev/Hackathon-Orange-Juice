@@ -61,37 +61,32 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         setHasErrors(!!(titleError || descriptionError || linkError));
         };
         
-        const handleTagsChange = (event) => {
-        const tagsArray = event.target.value.split(' ').filter(tag => tag.trim() !== ' ');
-        setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
-        };
-        
     const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
         if (prevData.imagem !== imageFile) {
-        return { ...prevData, imagem: URL.createObjectURL(imageFile) };
+        return { ...prevData, imagem: imageFile };
         }
         return prevData;
     });
     };
 
-    const handleSave = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const imageFile = projectData.imagem;
+
+        const formData = new FormData();
+         formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
+        formData.append('image', imageFile);
+        
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-
-            const formData = new FormData();
-            formData.append('titulo', projectData.titulo);
-            formData.append('tags', projectData.tags);
-            formData.append('links', projectData.links);
-            formData.append('descricao', projectData.descrição); 
-
-            const imageFile = projectData.imagem;
             
-            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', FormData, imageFile, {
+            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', formData, {
                 headers: {
-                    Authorization: `${token}`,
+                    'Authorization': `${token}`, 'Content-Type': 'multipart/form-data'
                 },
             }
                 );
@@ -122,6 +117,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     <ThemeProvider theme={theme}>
         {!savePostModalOpen && (
         <Modal open={true} onClose={onClose}>
+        <form onSubmit={handleSubmit}>
         <Box
             sx={{
             display: 'flex',
@@ -270,7 +266,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     variant='outlined'
                     name='tags'
                     value={projectData.tags}
-                    onChange={handleTagsChange}
+                    onChange={handleInputChange}
                 />
                 <TextField
                     label='Link'
@@ -300,7 +296,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 href='#'
                 onClick={() => {
                     setViewPostModalOpen(true);
-                    setSelectedProject({ ...projectData, imagem: URL.createObjectURL(projectData.imagem) });
+                    setSelectedProject({ ...projectData, imagem: projectData.imagem });
                 }}
                 sx={{
                     display: 'block',
@@ -323,7 +319,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 <Button
                 variant='contained'
                 color='secondary'
-                onClick={handleSave}
+                type='submit'
                 sx={{
                     width: 'Hug (109px)',
                     height: 'Hug (42px)',
@@ -353,6 +349,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
             </Box>
             </Box>
         </Box>
+        </form>
         </Modal>
         )}
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
