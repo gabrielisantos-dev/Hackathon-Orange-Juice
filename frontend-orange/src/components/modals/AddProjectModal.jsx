@@ -65,11 +65,11 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
         if (prevData.imagem !== imageFile) {
-        return { ...prevData, imagem: imageFile };
+        return { ...prevData, imagem: URL.createObjectURL(imageFile) };
         }
         return prevData;
     });
-    };
+};
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,9 +77,9 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         const imageFile = projectData.imagem;
 
         const formData = new FormData();
-         formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
+        formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
         formData.append('image', imageFile);
-        
+        console.log(formData);
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
@@ -112,6 +112,13 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         setSnackbarOpen(false);
     };
 
+    // const convertImage = (image) => {
+        // const reader = new FileReader();
+        // reader.readAsDataURL(image);
+        // reader.onload = () => {
+            // setProjectData({ ...projectData, imagem: reader.result });
+        // };
+    // }
 
     return (
     <ThemeProvider theme={theme}>
@@ -296,7 +303,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 href='#'
                 onClick={() => {
                     setViewPostModalOpen(true);
-                    setSelectedProject({ ...projectData, imagem: projectData.imagem });
+                    setSelectedProject({ ...projectData, imagem: URL.createObjectURL(projectData.imagem) });
                 }}
                 sx={{
                     display: 'block',
