@@ -130,8 +130,10 @@ public class ProjectService {
     public void deleteProject(Long id) throws IOException {
         Project projectExists = repository.findById(id).orElseThrow(() -> new ProjectIdNotFoundException());
 
-        String image_id = projectExists.getImage_id();
-        deleteImage(image_id);
+        if (projectExists.getImage_id() != null){
+            String imageIdExists = projectExists.getImage_id();
+            deleteImage(imageIdExists);
+        }
 
         repository.deleteById(projectExists.getId());
     }
