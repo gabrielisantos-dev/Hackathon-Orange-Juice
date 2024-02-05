@@ -115,6 +115,7 @@ public class ProjectController {
             }
     )
     @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @CrossOrigin(origins = "https://orange-hackathon-fcs3.onrender.com")
     public ResponseEntity<String> save(@RequestPart @Valid ProjectSaveDTO projectSaveDTO,
                                        @RequestPart(required = false, name = "image")  MultipartFile file) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -153,6 +154,7 @@ public class ProjectController {
             }
     )
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @CrossOrigin(origins = "https://orange-hackathon-fcs3.onrender.com")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestPart @Valid ProjectSaveDTO projectSaveDTO,
                                          @RequestPart(required = false, name = "image") MultipartFile file) throws IOException {
         try {
@@ -180,6 +182,7 @@ public class ProjectController {
             }
     )
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "https://orange-hackathon-fcs3.onrender.com")
     public ResponseEntity<String> delete(@PathVariable Long id) throws IOException {
         try {
             service.deleteProject(id);
