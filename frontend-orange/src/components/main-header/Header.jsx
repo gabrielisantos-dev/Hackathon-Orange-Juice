@@ -32,7 +32,7 @@ export default function MainHeader(props){
     setBotaoSair(true)
     localStorage.removeItem('token')
   }
-  console.log(botaoSair)
+  
   
   useEffect(()=>{
     const token = localStorage.getItem('token')

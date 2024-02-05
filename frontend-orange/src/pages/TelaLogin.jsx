@@ -1,12 +1,14 @@
-import { ThemeProvider } from "@mui/material";
+import { createTheme,ThemeProvider } from "@mui/material";
 import ContainerImagemTelaLogin from "../components/tela-login/ContainerImagemTelaLogin";
+// import BotaoGoogleLogin from "../components/tela-login/BotaoGoogleLogin"
 import FormularioLogin from "../components/tela-login/FormularioLogin";
 import TituloTelaLogin from "../components/tela-login/TituloTelaLogin";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, Alert } from "@mui/material";
 import { useNavigate, Navigate } from "react-router-dom";
-import {useEffect, useState} from 'react'
-import { CircularProgress } from '@mui/material'
+import {useEffect, useState, useContext} from 'react'
+import Loading from '../components/loading/Loading'
 import {theme} from '../utils/Theme'
+import { UserContext } from "../context/UserContext";
 
 
 
@@ -20,16 +22,19 @@ export default function TelaLogin(){
   
   const navigate = useNavigate()
    
+  const {dadosDoUsuario, mensagemLogin} = useContext(UserContext)
 
-  
+  const token = localStorage.getItem('token')
 
 useEffect(()=>{
   if(logado){
     navigate('/')
   }
-
 },[logado])
   
+// useEffect(()=>{
+
+// },[])
 
   return (
     <ThemeProvider theme={theme}>      
@@ -52,8 +57,17 @@ useEffect(()=>{
               alignItems:'center',
                           
             }}>
+
+            {/* {mensagemLogin && (
+                <Alert
+                  severity={mensagemLogin.includes('sucesso') ? 'success' : 'error'}
+                  variant="filled"                  
+                >
+                  {mensagemLogin}
+                </Alert>
+              )} */}
             <TituloTelaLogin variant={responsivo1 ? 'h3' : 'h5'} sx={{marginTop:responsivo1 ? '210px' : '109px'}}/>
-            {/* <BotaoGoogleLogin sx={{marginTop:responsivo1 ? '282px' : '165px'}}/> */}
+            
             <FormularioLogin 
               sx={{marginTop:responsivo1 ? '360px' : '243px'}}
               titulo= {responsivo1 ? 'h5' : 'subtitle1'}
@@ -69,7 +83,7 @@ useEffect(()=>{
               setLogado={setLogado}
              
               />
-               
+            {/* ) } */}
           </Box>          
       </Box>     
       

@@ -21,7 +21,7 @@ export default function MeuPortfolio(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm')) 
   
   const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser,
-          dadosProjetosDoUsuario, setDadosProjetosDoUsuario,reqRespostaBdUserList } = useContext(UserContext)
+          dadosProjetosDoUsuario, setDadosProjetosDoUsuario,reqRespostaBdUserList,erroUserList } = useContext(UserContext)
   
 
   const {nome, email, sobrenome} = dadosDoUsuario
@@ -136,8 +136,8 @@ const { user} = dadosProjetosDoUsuario
         )}
       />
   </Box>
-
-        {dadosProjetosDoUsuario.length === 0 ? (<Loading/>) : (
+              {console.log(erroUserList)}
+        {dadosProjetosDoUsuario.length === 0 && erroUserList !== 'Nenhum projeto foi encontrado!' ? (<Loading/>) : (
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
           
           {/* {cardPerfil.length === 0 ? */}

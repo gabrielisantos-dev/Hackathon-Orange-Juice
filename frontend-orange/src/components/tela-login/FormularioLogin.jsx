@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext} from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -12,6 +12,8 @@ import {
   IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Loading from '../../components/loading/Loading'
+import { UserContext } from "../../context/UserContext";
 import axios from 'axios';
 
 export default function FormularioLogin(props) {
@@ -20,6 +22,8 @@ export default function FormularioLogin(props) {
   const emailAdress = 'email';
   const password = 'password';  
   
+  const[loading, setLoading] = useState(false)
+  const {dadosDoUsuario, mensagemLogin} = useContext(UserContext)
   
   const {
     register,
@@ -28,6 +32,7 @@ export default function FormularioLogin(props) {
   } = useForm();
     
   const onSubmit = async (data) => {
+    setLoading(true)
     axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
     .then((response) => localStorage.setItem('token', response.data.token))
     .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
@@ -129,6 +134,7 @@ export default function FormularioLogin(props) {
           >
             Cadastre-se
           </Link>
+          {dadosDoUsuario.length === 0 && loading ? (<Loading/>) : null}
         </Box>
       </Box>
     </Box>

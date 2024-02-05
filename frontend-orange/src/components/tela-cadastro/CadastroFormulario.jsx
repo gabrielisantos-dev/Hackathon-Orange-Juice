@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../context/UserContext.jsx';
 import { Button, TextField, Grid, Alert, Box, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import styles from '../../styles.jsx';
@@ -13,6 +14,7 @@ const CadastroFormulario = () => {
   });
   const [mensagem, setMensagem] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const { setRedirCadastro } = useContext(UserContext)
   
   const handleCadastro = async () => {
     try {
@@ -26,8 +28,8 @@ const CadastroFormulario = () => {
   
       if (response.data.token && response.status === 200 || response.status === 201) {
         // Salva o token no localStorage
-        localStorage.setItem('token', response.data.token);
-  
+        localStorage.setItem('token', response.data.token);  
+        setRedirCadastro(true)
         setMensagem('Cadastro feito com sucesso');
       } else {
         setMensagem('Erro no cadastro. Por favor, tente novamente.');
@@ -129,7 +131,7 @@ const CadastroFormulario = () => {
                 error={form.senha.length > 0 && !isValidPassword(form.senha)}
                 helperText={
                   form.senha.length > 0 &&
-                  'Mínimo de 6 caracteres, pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial'
+                  'Mínimo de 8 caracteres, pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial'
                 }
                 InputProps={{
                   endAdornment: (
