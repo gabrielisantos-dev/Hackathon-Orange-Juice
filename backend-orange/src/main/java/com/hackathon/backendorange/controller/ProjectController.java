@@ -115,7 +115,7 @@ public class ProjectController {
             }
     )
     @PostMapping(value = "/save")
-    public ResponseEntity<String> save(@RequestBody @Valid ProjectSaveDTO projectSaveDTO) throws IOException {
+    public ResponseEntity<String> save(@RequestBody ProjectSaveDTO projectSaveDTO) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
             if (authentication != null && authentication.isAuthenticated()) {
