@@ -123,7 +123,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     <ThemeProvider theme={theme}>
         {!savePostModalOpen && (
         <Modal open={true} onClose={onClose}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Box
             sx={{
             display: 'flex',
