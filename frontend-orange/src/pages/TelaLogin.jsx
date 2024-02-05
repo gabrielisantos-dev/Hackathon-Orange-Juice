@@ -6,6 +6,7 @@ import TituloTelaLogin from "../components/tela-login/TituloTelaLogin";
 import { Box, useMediaQuery } from "@mui/material";
 import { useNavigate, Navigate } from "react-router-dom";
 import {useEffect, useState} from 'react'
+import { CircularProgress } from '@mui/material'
 
 
 const theme = createTheme({
@@ -43,10 +44,13 @@ const theme = createTheme({
 export default function TelaLogin(){
   
   const [logado, setLogado] = useState(false);
+  
   const responsivo1 = useMediaQuery(theme.breakpoints.up('lg')); 
   const responsivo2 = useMediaQuery(theme.breakpoints.up('xl'));
   
   const navigate = useNavigate()
+   
+
   
 
 useEffect(()=>{
@@ -62,6 +66,8 @@ useEffect(()=>{
      
 
       <Box sx={{display: 'flex', gap:!responsivo2 ? '103px' : '403px'}}>
+
+
       {responsivo1 ?  
         <Box>
           <ContainerImagemTelaLogin width='525px' height='832px'/>     
@@ -91,10 +97,13 @@ useEffect(()=>{
               heightTitle={responsivo1 ? '24px' : '16px'}
               formHeight={responsivo1 ? '271px' : '271px'}
               setLogado={setLogado}
+             
               />
                
           </Box>          
-      </Box>          
+      </Box>     
+      
+         
       
     </ThemeProvider>
   )

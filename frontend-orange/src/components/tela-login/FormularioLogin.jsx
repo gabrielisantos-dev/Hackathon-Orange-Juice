@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -18,55 +18,58 @@ export default function FormularioLogin(props) {
   const [showPassword, setShowPassword] = useState(false);
   const emailAdress = 'email';
   const password = 'password';
-
   
-
-  const [alerta, setAlerta] = useState();
-  // const navigate = useNavigate()
-
+  
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-   
-      axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
-
-      .then((response)=> localStorage.setItem('token', response.data.token))
-      .then( ()=> localStorage.getItem('token') ? props.setLogado(true): null)
-      .catch((e)=>(console.log(e)))
-
-    }
-
-
-
-  const handleTogglePassword = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword);
-  };
-
-  // const handleClick = () =>{
-  //   const token = localStorage.getItem('token')
-
-  //   .then((response)=> {
-      
-  //     return(
-  //       response ? props.setLogado(true) : null,
-  //       console.log(response)
-        
-  //       )
-
-  //   }
-      
-  //     )
-
-  //   // token ? props.setLogado(true) : null
-  //   console.log('funcionando')
-  // }
   
-  return (
-    <Box sx={{ width: props.boxWidth, height: '271px' }}>
+  
+  
+  // const reqRespostaBd = async (token) =>{
+  //     // console.log(token)
+  //     // await axios.get('https://orange-9dj9.onrender.com/project/list-userprojects',{ headers:{'Authorization':`${token}`}})
+  //     // await axios.get('https://orange-9dj9.onrender.com/project/list',{ headers:{'Authorization':`${token}`}})
+    
+    
+  //   await axios.get('https://orange-9dj9.onrender.com/api/auth/user',{ headers:{'Authorization':`${token}`}})
+  //                .then((response) => props.setDadosDoUsuario(response.data))
+    
+  //                .catch((e)=> console.log(e))
+    
+  //   };
+    
+    const onSubmit = async (data) => {
+      axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
+      .then((response) => localStorage.setItem('token', response.data.token))
+      .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
+      .catch((e) => (console.log(e)))      
+    }
+    
+    // const onSubmit = async (data) => {
+      //   axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
+      //     .then((response) => {
+        //       localStorage.setItem('token', response.data.token)
+        //       reqRespostaBd(response.data.token)
+        //     })
+        //     .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
+        //     .catch((e) => (console.log(e)))      
+        //     }
+        
+        
+        
+        
+        const handleTogglePassword = () => {
+          setShowPassword((prevShowPassword) => !prevShowPassword);
+        };
+        
+        
+        return (
+          <Box sx={{ width: props.boxWidth, height: '271px' }}>
       <Box sx={{ width: props.widthTitle, height: props.heightTitle }}>
         <Typography variant={props.titulo}>
           Faça login com email

@@ -4,7 +4,7 @@ import {theme} from '../utils/Theme'
 import Header from '../components/main-header/Header';
 import { useState } from "react";
 import figuraProjeto from '../assets/projects/project1.svg'
-import profilePicture from '../assets/profile-picture/picture.svg';
+import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import ModalProjeto from '../components/meu-portfolio/ModalProjeto';
 import { mock } from '../utils/mock'
@@ -18,20 +18,7 @@ export default function VisualizacaoMobile(props){
 
   const [cardPerfil, setCardPerfil] = useState(mock)
 
-  // const [cardPerfil, setCardPerfil] = useState({
-  //   pais:'Brasil',
-  //   avatar: profilePicture,
-  //   nome:'John Doe',
-  //   email:'john@doeux.com',
-  //   tag:{ui:'UI', ux:'UX', web:'Web'},
-  //   data:'12/23',
-  //   urlImagem:figuraProjeto,
-  //   tituloProj:'Ecommerce One Page',
-  //   descricao: 'Temos o prazer de compartilhar com vocês uma variação do nosso primeiro recurso gratuito. É um modelo de IA. Tentamos redesenhar uma versão mais minimalista do nosso primeiro projeto.'
-  // })
-
-
-  // console.log(props.cardSelecionado)
+  
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
@@ -77,37 +64,7 @@ export default function VisualizacaoMobile(props){
         </Box>
       </Box>
     </Box>  
-    {/* {open ?  
     
-    <ModalProjeto
-      open={open}
-      onClose={handleClose}
-      avatar={cardPerfil.avatar}
-      nome={cardPerfil.nome}
-      data={cardPerfil.data}
-      labelChip1={cardPerfil.tag.ui}
-      labelChip2={cardPerfil.tag.ux}
-      tituloProj={cardPerfil.tituloProj}
-      imagem={cardPerfil.urlImagem}
-      descricao={cardPerfil.descricao}
-
-    />
-    : null}  */}
-    {/* {props.respBk1 ? 
-    
-      <VisualizarMobile
-      avatar={cardPerfil.avatar}
-      nome={cardPerfil.nome}
-      data={cardPerfil.data}
-      labelChip1={cardPerfil.tag.ui}
-      labelChip2={cardPerfil.tag.ux}
-      tituloProj={cardPerfil.tituloProj}
-      imagem={cardPerfil.urlImagem}
-      descricao={cardPerfil.descricao}
-      
-      />
-      
-      : null}   */}
   </ThemeProvider>
   )
 }
