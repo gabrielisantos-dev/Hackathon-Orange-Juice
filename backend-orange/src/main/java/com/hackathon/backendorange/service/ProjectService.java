@@ -55,10 +55,6 @@ public class ProjectService {
         if (projectSaveDTO != null) {
             User user = userRepository.findUserByEmail(email);
 
-            Map imageInfo = uploadImage(file);
-            String imageUrl = imageInfo.get("url").toString();
-            String imageId = imageInfo.get("public_id").toString();
-
             ProjectDTO projectDTO = new ProjectDTO();
             projectDTO.setTitulo(projectSaveDTO.getTitulo());
             projectDTO.setDescricao(projectSaveDTO.getDescricao());
@@ -67,10 +63,20 @@ public class ProjectService {
 
             Project projectEntity = projectAssembler.toEntity(projectDTO);
 
+            String imageUrlPadrao = "https://apexensino.com.br/wp-content/uploads/2017/03/linguagens-de-programa%C3%A7%C3%A3o.jpg";
+
+            if(file != null && !file.isEmpty()){
+                Map imageInfo = uploadImage(file);
+                String imageUrl = imageInfo.get("url").toString();
+                String imageId = imageInfo.get("public_id").toString();
+                projectEntity.setImage(imageUrl);
+                projectEntity.setImage_id(imageId);
+                projectEntity.setImage_originalName(file.getOriginalFilename());
+            }else{
+                projectEntity.setImage(imageUrlPadrao);
+            }
+
             projectEntity.setDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            projectEntity.setImage(imageUrl);
-            projectEntity.setImage_id(imageId);
-            projectEntity.setImage_originalName(file.getOriginalFilename());
             projectEntity.setUser(user);
 
             Project savedProject = repository.save(projectEntity);
@@ -92,21 +98,25 @@ public class ProjectService {
             projectExists.setTags(projectSaveDTO.getTags());
             projectExists.setLinks(projectSaveDTO.getLinks());
 
-            if (!Objects.equals(projectExists.getImage_originalName(), file.getOriginalFilename())) {
-                //delete -> imagem antiga
-                String imageIdExists = projectExists.getImage_id();
-                deleteImage(imageIdExists);
+            if(file != null && !file.isEmpty()){
+                if (!Objects.equals(projectExists.getImage_originalName(), file.getOriginalFilename())) {
 
-                //upload -> imagem nova
-                Map imageInfo = uploadImage(file);
-                String imageUrl = imageInfo.get("url").toString();
-                String image_id = imageInfo.get("public_id").toString();
+                    //delete -> imagem antiga
+                    if (projectExists.getImage_id() != null){
+                        String imageIdExists = projectExists.getImage_id();
+                        deleteImage(imageIdExists);
+                    }
+                    
+                    //upload -> imagem nova
+                    Map imageInfo = uploadImage(file);
+                    String imageUrl = imageInfo.get("url").toString();
+                    String image_id = imageInfo.get("public_id").toString();
 
-                projectExists.setImage(imageUrl);
-                projectExists.setImage_id(image_id);
-                projectExists.setImage_originalName(file.getOriginalFilename());
+                    projectExists.setImage(imageUrl);
+                    projectExists.setImage_id(image_id);
+                    projectExists.setImage_originalName(file.getOriginalFilename());
+                }
             }
-
 
             Project savedProject = repository.save(projectExists);
             ProjectDTO savedProjectDTO = projectAssembler.toDTO(savedProject);

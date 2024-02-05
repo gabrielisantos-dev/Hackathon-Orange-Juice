@@ -116,7 +116,7 @@ public class ProjectController {
     )
     @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> save(@RequestPart @Valid ProjectSaveDTO projectSaveDTO,
-                                       @RequestPart("image")  MultipartFile file) throws IOException {
+                                       @RequestPart(required = false, name = "image")  MultipartFile file) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
             if (authentication != null && authentication.isAuthenticated()) {
@@ -154,7 +154,7 @@ public class ProjectController {
     )
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> update(@PathVariable Long id, @RequestPart @Valid ProjectSaveDTO projectSaveDTO,
-                                         @RequestPart("image") MultipartFile file) throws IOException {
+                                         @RequestPart(required = false, name = "image") MultipartFile file) throws IOException {
         try {
             service.updateProject(id, projectSaveDTO, file);
             return ResponseEntity.ok("Projeto atualizado com sucesso!");
