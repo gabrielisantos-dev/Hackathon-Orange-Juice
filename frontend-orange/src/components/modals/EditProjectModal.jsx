@@ -81,17 +81,15 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
             setLoading(true);
             const token = localStorage.getItem('token');
 
-            const formData = new FormData();
-            formData.append('titulo', projectData.titulo);
-            formData.append('tags', projectData.tags);
-            formData.append('links', projectData.links);
-            formData.append('descrição', projectData.descrição);
-
             const imageFile = projectData.imagem;
+            const formData = new FormData();
+            formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
+            formData.append('image', imageFile);
+            console.log(formData);
 
-            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, formData, imageFile, {
+            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, formData, {
                 headers: {
-                    'Authorization': `${token}`,
+                    'Authorization': `${token}`, 'Content-Type': 'multipart/form-data'
                 },
             });
 
@@ -118,6 +116,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     <ThemeProvider theme={theme}>
         {!editedPostModalOpen && (
         <Modal open={true} onClose={onClose} >
+        <form>
         <Box
             sx={{
             display: 'flex',
@@ -337,6 +336,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
             </Box>
             </Box>
         </Box>
+        </form>
         </Modal>
         )}
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
