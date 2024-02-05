@@ -77,7 +77,13 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         const imageFile = projectData.imagem;
 
         const formData = new FormData();
-         formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
+        formData.append('projectSaveDTO', JSON.stringify({
+            'titulo': projectData.titulo,
+            'tags': projectData.tags,
+            'links': projectData.links,
+            'descricao': projectData.descrição
+        }));
+        
         formData.append('image', imageFile);
         
         try {
