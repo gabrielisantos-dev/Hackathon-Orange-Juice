@@ -4,12 +4,14 @@ import com.hackathon.backendorange.enums.TagsEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ProjectSaveDTO{
     @NotBlank(message = "O campo 'título' não pode estar em branco.")
     @Size(min = 4, max = 30, message = "O campo 'título' deve ter entre 4 e 30 caracteres")

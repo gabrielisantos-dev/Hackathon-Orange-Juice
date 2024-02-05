@@ -163,4 +163,15 @@ public class ProjectService {
             return projectsByTag;
         }
     }
+
+    public ProjectSaveDTO findById(Long id) {
+        Project project = repository.findById(id).orElseThrow(null);
+
+        return  ProjectSaveDTO
+                .builder()
+                .titulo(project.getTitulo())
+                .descricao(project.getDescricao())
+                .tags(project.getTags())
+                .links(project.getLinks()).build();
+    }
 }
