@@ -26,11 +26,9 @@ const CadastroFormulario = () => {
         password: form.senha,
       });
   
-      if (response.data.token && response.status === 200 || response.status === 201) {
-        // Salva o token no localStorage
-        localStorage.setItem('token', response.data.token);  
-        setRedirCadastro(true)
+      if (response.status === 200 || response.status === 201) { 
         setMensagem('Cadastro feito com sucesso');
+        setTimeout(function() {setRedirCadastro(true)}, 2000) 
       } else {
         setMensagem('Erro no cadastro. Por favor, tente novamente.');
       }
@@ -64,6 +62,7 @@ const CadastroFormulario = () => {
   return (
     <>
       <Box>
+        <form style={styles.formularioContainer}>
         {mensagem && (
           <Alert
           severity={mensagem.includes('sucesso') ? 'success' : 'error'}
@@ -73,9 +72,6 @@ const CadastroFormulario = () => {
             {mensagem}
           </Alert>
         )}
-      </Box>
-      <Box>
-        <form style={styles.formularioContainer}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField

@@ -40,11 +40,17 @@ useEffect(()=>{
     <ThemeProvider theme={theme}>      
      
 
-      <Box sx={{display: 'flex', gap:!responsivo2 ? '103px' : '403px'}}>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap:!responsivo2 ? '103px' : '403px'
+      }}>
 
 
       {responsivo1 ?  
-        <Box>
+        <Box
+          sx={{position: 'relative', right: '6%'}}>
           <ContainerImagemTelaLogin width='525px' height='832px'/>     
         </Box> : null}
         <Box 
@@ -53,8 +59,8 @@ useEffect(()=>{
               flexDirection:'column',
               gap:'10px',
               marginTop:responsivo1 ? '210px' : '109px',
-              marginLeft: '32px',              
-              alignItems:'center',
+              // marginLeft: '32px',              
+              alignItems:'center'
                           
             }}>
 

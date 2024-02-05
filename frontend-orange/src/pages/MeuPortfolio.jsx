@@ -136,7 +136,6 @@ const { user} = dadosProjetosDoUsuario
         )}
       />
   </Box>
-              {console.log(erroUserList)}
         {dadosProjetosDoUsuario.length === 0 && erroUserList !== 'Nenhum projeto foi encontrado!' ? (<Loading/>) : (
         <Box sx={{display:'flex', gap:'26px', flexWrap:'wrap'}}>
           

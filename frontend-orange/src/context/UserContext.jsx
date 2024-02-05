@@ -42,7 +42,10 @@ export const UserProvider = ({children}) => {
     <UserContext.Provider 
       value={{
         dadosDoUsuario,setDadosDoUsuario,reqRespostaBdUser,
-        dadosProjetosDoUsuario,setDadosProjetosDoUsuario,reqRespostaBdUserList,mensagemLogin,redirCadastro,erroUserList }}
+        dadosProjetosDoUsuario,setDadosProjetosDoUsuario,reqRespostaBdUserList,
+        mensagemLogin,
+        setRedirCadastro, redirCadastro,
+        erroUserList }}
     >
       {children}
     </UserContext.Provider>
