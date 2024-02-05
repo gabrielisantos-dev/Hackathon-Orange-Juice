@@ -2,14 +2,29 @@ import React from 'react'
 import { Box, Typography, Button, useMediaQuery } from '@mui/material'
 import {theme} from '../utils/Theme';
 import eita from '../assets/404/404.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 
 export default function Erro() {
 
   const responsivo = useMediaQuery(theme.breakpoints.up('sm'))
+  const navigate = useNavigate()
 
+  const [buttonNav, setButtonNav] = useState(false)
 
+  const homeButtonOn = () => {
+    setButtonNav(true)
+  }
+  
+  useEffect(()=>{
 
+    if(buttonNav){
+      navigate('/')
+    }
+
+  },[buttonNav])
+ 
   return (
     
     <>
@@ -24,7 +39,7 @@ export default function Erro() {
         </Typography>
 
         <Button
-          onClick={''}
+          onClick={homeButtonOn}
           variant='contained'
           color='secondary'
           sx={{
@@ -51,6 +66,7 @@ export default function Erro() {
         </Typography>
 
         <Button
+          onClick={homeButtonOn}
           variant='contained'
           color='secondary'
           sx={{

@@ -25,6 +25,7 @@ import TelaLogin from "./pages/TelaLogin"
 // import ProjectDeletedModal from "./components/modals/ProjectDeletedModal";
 // import DeleteModal from "./components/modals/DeleteModal";
 // import CadastroFormulario from './components/tela-cadastro/CadastroFormulario';
+import AdicionaProjeto from './components/modals/AdicionaProjeto'
 
 
 
@@ -32,14 +33,8 @@ import TelaLogin from "./pages/TelaLogin"
 function App() {
 
   return (
-    <>
-        <MainHeader/>
-          <Outlet />
-          
-      {/* <RegistrationPage/> */}
-      <TelaLogin/>
-      {/* <CadastroFormulario/> */}
-
+    <>    
+      <Outlet />         
     </>
 
   )

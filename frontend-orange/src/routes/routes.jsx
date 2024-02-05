@@ -5,6 +5,7 @@ import MeuPortfolio from "../pages/MeuPortfolio.jsx"
 import PrivateRoutes from "./privateRoutes.jsx"
 import TelaLogin from "../pages/TelaLogin.jsx"
 import RegistrationPage from "../pages/RegistrationPage.jsx"
+import Header from '../components/main-header/Header.jsx'
 import Erro from "../pages/Erro.jsx"
 
 export const router = createBrowserRouter([
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: 
           <PrivateRoutes>
+            <Header/>
             <Descobrir/>
           </PrivateRoutes>
       },
@@ -32,6 +34,7 @@ export const router = createBrowserRouter([
         path: "meus-projetos",        
         element: 
           <PrivateRoutes>
+            <Header/>
             <MeuPortfolio/>
           </PrivateRoutes>
       },

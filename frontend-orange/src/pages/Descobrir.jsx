@@ -11,10 +11,9 @@ export default function Descobrir(){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('md'))
   const responsivo2 = useMediaQuery(theme.breakpoints.up('lg'))
 
-  // const [cardPerfil, setCardPerfil] = useState(mock);
+  
   const [listaDeProjetos, setListaDeProjetos] = useState([])
-  // const [cardPerfil, setCardPerfil] = useState(mockBdResponseAllProjects);
-  // const [cardPerfil, setCardPerfil] = useState(listaDeProjetos);
+  
   const [openDescobrir, setOpenDescobrir] = useState(true);
   const [cardSelecionado, setCardSelecionado] = useState({});
   const [open, setOpen] = useState(false);
@@ -37,18 +36,13 @@ export default function Descobrir(){
   });
 
   const reqRespostaBdList = async (token) =>{    
-    // await axios.get('https://orange-9dj9.onrender.com/project/list-userprojects',{ headers:{'Authorization':`${token}`}})
-    await axios.get('https://orange-9dj9.onrender.com/project/list',{ headers:{'Authorization':`${token}`}})
-  
-  
-    // await axios.get('https://orange-9dj9.onrender.com/api/auth/user',{ headers:{'Authorization':`${token}`}})
+    
+    await axios.get('https://orange-9dj9.onrender.com/project/list',{ headers:{'Authorization':`${token}`}})  
+    
                 .then((response) => setListaDeProjetos(response.data))                 
                 .catch((e)=> console.log(e))  
     };
   
-// console.log('cardSelecionado',cardSelecionado)
-console.log('listaProjetos',listaDeProjetos)
-// console.log('cardPErfil', cardPerfil)
 
   useEffect(()=>{
     const token = localStorage.getItem('token')
@@ -62,8 +56,7 @@ console.log('listaProjetos',listaDeProjetos)
     
       <DescobrirDesktop
         respBk1={responsivo1}
-        // cardPerfil={cardPerfil}
-        // setCardPerfil={setCardPerfil}
+        respBk2={responsivo2}        
         open={open}
         setOpen={setOpen}
         handleOpenDesk={handleOpenDesk}
@@ -89,8 +82,7 @@ console.log('listaProjetos',listaDeProjetos)
         <>
        
         <DescobrirMobile
-          respBk1={responsivo1}
-          // cardPerfil={cardPerfil}
+          respBk1={responsivo1}          
           openDescobrir={openDescobrir}
           setOpenDescobrir={setOpenDescobrir}
           cardSelecionado={cardSelecionado}
@@ -108,10 +100,7 @@ console.log('listaProjetos',listaDeProjetos)
           listaDeProjetos={listaDeProjetos}
           setListaDeProjetos={setListaDeProjetos} 
           
-          />
-        
-     
-     
+          />    
      </>
         ) }}
                  

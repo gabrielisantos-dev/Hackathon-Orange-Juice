@@ -1,46 +1,18 @@
 import { Box, ThemeProvider, Link, Typography, Autocomplete, TextField, Button} from '@mui/material/';
-// import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
-import Header from '../components/main-header/Header';
-// import FormBuscarTags from '../components/meu-portfolio/FormBuscarTags';
-// import { useState } from "react";
-// import figuraProjeto from '../assets/projects/project1.svg'
 import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import ModalProjeto from '../components/meu-portfolio/ModalProjeto';
-// import {mock} from '../utils/mock';
 import Loading from '../components/loading/Loading';
 
 
 
 export default function DescobrirDesktop(props){
-  //ok
-  // const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
-  //ok
-  // const [cardPerfil, setCardPerfil] = useState(mock)
-  //ok
-  // const [open, setOpen] = useState(false);
-  //ok
-  // const [cardSelecionado, setCardSelecionado] = useState({})
-  //ok
-  // const handleOpenDesk = () => setOpen(true);
-  //ok
-  // const handleCloseDesk = () => setOpen(false);
-  //ok
-  // const [tagProjeto, setTagProjeto] = useState(props.cardPerfil)
-  //ok
-  // const [tagsSelecionadas, setTagsSelecionadas] = useState([])
-  //ok
+  
   const arrayTagsDesktop = []
-  //ok
+  
   props.tagProjeto.map(item => arrayTagsDesktop.push(item.tag)) 
-  //ok
-  // const tagUnicas = props.arrayTags.filter((item, index, self) => {
-  //   return self.indexOf(item) === index
-  // });
-//  console.log(`Card selecionado ${props.cardSelecionado}`)
-  // const { date, descricao, id, image, tags, titulo, user, links } = props.cardPerfil
-  // console.log(props.cardPerfil)
+  
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>
@@ -137,22 +109,18 @@ export default function DescobrirDesktop(props){
                     }}
                   >
                     <CardProjeto                   
-                  width='100%'
-                  color='neutral.dark'
-                  colorIconMenu='secondary.secondaryLight'
-                  avatar={profilePicture}
-                  widthAvatar='24px'
-                  heightAvatar='24px'                
-                  chipsHeight='32px'
-                  // nome={itemCard.user.nome}
-                  nome={user.nome}
-                  // labelChip={itemCard.tags}             
-                  labelChip={tags}             
-                  // data={itemCard.date}
-                  data={date}
-                  // imagem={itemCard.image}
-                  imagem={image}
-                  iconMenu={'none'}                                   
+                      width='100%'
+                      color='neutral.dark'
+                      colorIconMenu='secondary.secondaryLight'
+                      avatar={profilePicture}
+                      widthAvatar='24px'
+                      heightAvatar='24px'                
+                      chipsHeight='32px'                  
+                      nome={user.nome}                               
+                      labelChip={tags}                 
+                      data={date}                  
+                      imagem={image}
+                      iconMenu={'none'}                                   
                   />
                   </Link>
 
@@ -175,7 +143,7 @@ export default function DescobrirDesktop(props){
                 )
               }
           })
-          // : props.cardPerfil.map((itemCard, index) => {
+          
           : props.listaDeProjetos.map((itemCard, index) => {
 
             const {date, descricao, id, image, tags, titulo, user} = itemCard
@@ -201,14 +169,10 @@ export default function DescobrirDesktop(props){
                   avatar={profilePicture}
                   widthAvatar='24px'
                   heightAvatar='24px'                
-                  chipsHeight='32px'
-                  // nome={itemCard.user.nome}
-                  nome={user.nome}
-                  // labelChip={itemCard.tags}             
-                  labelChip={tags}             
-                  // data={itemCard.date}
-                  data={date}
-                  // imagem={itemCard.image}
+                  chipsHeight='32px'                  
+                  nome={user.nome}                               
+                  labelChip={tags}                  
+                  data={date}                  
                   imagem={image}
                   iconMenu={'none'}                                   
                   />

@@ -7,7 +7,7 @@ import ViewPostModal from './ViewPostModal';
 import SavePostModal from './SavePostModal';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import Axios from 'axios';
+import axios from 'axios';
 
 // Constantes para tamanhos e cores repetidas
 const modalWidth = '850px';
@@ -34,8 +34,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
     titulo: '',
     tags: '',
     links: '',
-    descrição: '',
-    imagem: null,
+    descricao: '',
     });
 
     const handleInputChange = (event) => {
@@ -85,13 +84,13 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
             formData.append('titulo', projectData.titulo);
             formData.append('tags', projectData.tags);
             formData.append('links', projectData.links);
-            formData.append('descricao', projectData.descrição); 
+            formData.append('descricao', projectData.descricao); 
 
             const imageFile = projectData.imagem;
-            
-            const response = await Axios.post('https://orange-9dj9.onrender.com/project/save', FormData, imageFile, {
+            console.log(projectData)
+            const response = await axios.post('https://orange-9dj9.onrender.com/project/save', { FormData, imageFile }, {
                 headers: {
-                    Authorization: `${token}`,
+                    'Authorization': `${token}`,
                 },
             }
                 );
@@ -241,7 +240,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     opacity: '60%',
                 }}
             >
-                Compartilhe seu talento com milhares de<wbr /> pessoas
+                Compartilhe seu talento com milhares de<br /> pessoas
             </Typography>
         </Box>
     )}
@@ -286,8 +285,8 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     multiline
                     rows={4}
                     variant='outlined'
-                    name='descrição'
-                    value={projectData.descrição}
+                    name='descricao'
+                    value={projectData.descricao}
                     onChange={handleInputChange}
                     error={Boolean(descriptionError)}
                     helperText={descriptionError}

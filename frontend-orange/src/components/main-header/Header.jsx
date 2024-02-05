@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios'
 import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -19,15 +20,30 @@ import { UserContext } from "../../context/UserContext";
 export default function MainHeader(props){
 
   const responsivo = useMediaQuery(theme.breakpoints.up('sm'))
+  const navigate = useNavigate()
 
   const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser} = useContext(UserContext)
 
   const {nome, email, sobrenome} = dadosDoUsuario
+
+  const [botaoSair, setBotaoSair] = useState(false)
+
+  const handleBotaoSair = () => {
+    setBotaoSair(true)
+    localStorage.removeItem('token')
+  }
+  console.log(botaoSair)
   
   useEffect(()=>{
     const token = localStorage.getItem('token')
     reqRespostaBdUser(token)
   },[]) 
+
+  useEffect(()=>{
+    if(botaoSair){
+      navigate('/login')
+    }
+  },[botaoSair])
  
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -105,7 +121,14 @@ export default function MainHeader(props){
                   <MenuItem onClick={handleClose} sx={{gap:'10px'}}>
                     <LogoutIcon/>
                     <Typography>
-                    Sair
+                    <Link
+                      onClick={()=>{handleBotaoSair()}} 
+                      style={{
+                        textDecoration:'none',
+                        color:'#0B0C0D',
+                        cursor:'pointer'
+                        }}
+                        >Sair</Link>
                     </Typography>                    
                   </MenuItem>
                 </Menu>  
