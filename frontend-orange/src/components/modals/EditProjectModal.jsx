@@ -32,7 +32,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
 
     const [projectData, setProjectData] = useState({
     titulo: '',
-    tags: [],
+    tags: '',
     links: '',
     descrição: '',
     imagem: null,
@@ -61,11 +61,6 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
         setHasErrors(!!(titleError || descriptionError || linkError));
         };
         
-        const handleTagsChange = (event) => {
-        const tagsArray = event.target.value.split(' ').filter(tag => tag.trim() !== ' ');
-        setProjectData((prevData) => ({ ...prevData, tags: tagsArray }));
-        };
-        
     const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
@@ -76,7 +71,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     });
     };
 
-    const handleSave = async () => {
+    const handleSubmit = async () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
@@ -116,7 +111,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     <ThemeProvider theme={theme}>
         {!editedPostModalOpen && (
         <Modal open={true} onClose={onClose} >
-        <form>
+        <form onSubmit={handleSubmit}>
         <Box
             sx={{
             display: 'flex',
@@ -253,7 +248,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
                     variant='outlined'
                     name='tags'
                     value={projectData.tags.join(' ')}
-                    onChange={handleTagsChange}
+                    onChange={handleInputChange}
                 />
                 <TextField
                     label='Link'
@@ -306,7 +301,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
                 <Button
                 variant='contained'
                 color='secondary'
-                onClick={handleSave}
+                type='submit'
                 sx={{
                     width: 'Hug (109px)',
                     height: 'Hug (42px)',
