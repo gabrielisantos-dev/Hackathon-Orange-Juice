@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { GoogleLogin, GoogleLogout } from '@react-oauth/google';
 
-import { GoogleLogout, GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 
 const BotaoGoogleLogin = () => {
@@ -21,18 +19,18 @@ const BotaoGoogleLogin = () => {
     setProfile(null);
   };
 
-  useEffect(() => {
-    if (user) {
-      axios
-        .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-          headers: { Authorization: `Bearer ${user.access_token}`, Accept: 'application/json' },
-        })
-        .then((res) => {
-          setProfile(res.data);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     axios
+  //       .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+  //         headers: { Authorization: `Bearer ${user.access_token}`, Accept: 'application/json' },
+  //       })
+  //       .then((res) => {
+  //         setProfile(res.data);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [user]);
 
   return (
     <div>

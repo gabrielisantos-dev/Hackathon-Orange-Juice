@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@mui/material";
 import ContainerImagemTelaLogin from "../components/tela-login/ContainerImagemTelaLogin";
-import BotaoGoogleLogin from "../components/tela-login/BotaoGoogleLogin"
 import FormularioLogin from "../components/tela-login/FormularioLogin";
 import TituloTelaLogin from "../components/tela-login/TituloTelaLogin";
 import { Box, useMediaQuery } from "@mui/material";
@@ -54,7 +53,7 @@ useEffect(()=>{
                           
             }}>
             <TituloTelaLogin variant={responsivo1 ? 'h3' : 'h5'} sx={{marginTop:responsivo1 ? '210px' : '109px'}}/>
-            <BotaoGoogleLogin sx={{marginTop:responsivo1 ? '282px' : '165px'}}/>
+            {/* <BotaoGoogleLogin sx={{marginTop:responsivo1 ? '282px' : '165px'}}/> */}
             <FormularioLogin 
               sx={{marginTop:responsivo1 ? '360px' : '243px'}}
               titulo= {responsivo1 ? 'h5' : 'subtitle1'}
