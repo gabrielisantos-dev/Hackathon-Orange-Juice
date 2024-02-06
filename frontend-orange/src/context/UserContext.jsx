@@ -9,7 +9,7 @@ export const UserProvider = ({children}) => {
   const[mensagemLogin, setMensagemLogin] = useState('')
   const [redirCadastro, setRedirCadastro] = useState(false)
   const [erroUserList, setErroUserList] = useState(false)
-
+  const [openVisMobile, setOpenVisMobile] = useState(false)
 
   const [dadosDoUsuario, setDadosDoUsuario] = useState([])
   const [dadosProjetosDoUsuario, setDadosProjetosDoUsuario] = useState([])
@@ -45,7 +45,8 @@ export const UserProvider = ({children}) => {
         dadosProjetosDoUsuario,setDadosProjetosDoUsuario,reqRespostaBdUserList,
         mensagemLogin,
         setRedirCadastro, redirCadastro,
-        erroUserList }}
+        erroUserList,
+        openVisMobile, setOpenVisMobile }}
     >
       {children}
     </UserContext.Provider>

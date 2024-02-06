@@ -78,7 +78,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
 
             const imageFile = projectData.imagem;
             const formData = new FormData();
-            formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
+            formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags.toUpperCase(), 'links': projectData.links, 'descricao': projectData.descrição});
             formData.append('image', imageFile);
             console.log(formData);
 

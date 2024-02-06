@@ -17,7 +17,6 @@ export default function Descobrir(){
   const [openDescobrir, setOpenDescobrir] = useState(true);
   const [cardSelecionado, setCardSelecionado] = useState({});
   const [open, setOpen] = useState(false);
-  const [openVm, setOpenVm] = useState(false)
   const handleOpenDesk = () => setOpen(true);
   const handleOpenMobile = () => {
     setOpen(true)

@@ -49,7 +49,7 @@ const tagUnicas = arrayTags.filter((item, index, self) => {
             label="Buscar tags"
             InputProps={{
               ...params.InputProps,
-              type: 'search',            
+              type: 'search',           
             }}
           />
         )}

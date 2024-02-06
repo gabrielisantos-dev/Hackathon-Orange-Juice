@@ -16,15 +16,12 @@ import { useNavigate } from "react-router-dom";
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 
-
-
-
 export default function MainHeader(props){
 
   const responsivo = useMediaQuery(theme.breakpoints.up('sm'))
   const navigate = useNavigate()
 
-  const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser} = useContext(UserContext)
+  const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser, openVisMobile, setOpenVisMobile} = useContext(UserContext)
 
   const {nome, email, sobrenome} = dadosDoUsuario
 
@@ -117,8 +114,8 @@ export default function MainHeader(props){
                   <Typography>{email}</Typography> 
                 </Box>
                   <Divider/>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/meus-projetos' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
+                  <MenuItem onClick={() => {handleClose(), setOpenVisMobile(false)}}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
+                  <MenuItem onClick={() => handleClose()}><Typography variant='body1' ><Link to='/meus-projetos' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
                   <Divider/>
                   <MenuItem onClick={handleClose} sx={{gap:'10px'}}>
                     <LogoutIcon/>

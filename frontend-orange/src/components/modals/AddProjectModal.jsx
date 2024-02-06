@@ -76,7 +76,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         const imageFile = projectData.imagem;
 
         const formData = new FormData();
-        formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
+        formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags.toUpperCase(), 'links': projectData.links, 'descricao': projectData.descrição});
         formData.append('image', imageFile);
         console.log(formData);
         try {
@@ -138,7 +138,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                 backgroundColor: backgroundColor,
                 padding: '35px 41px',
                 display: 'flex',
-                marginTop: '200px',
+                marginTop: '20px',
                 flexDirection: 'column',
             }}
             >
@@ -271,7 +271,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                     label='Tags'
                     variant='outlined'
                     name='tags'
-                    value={projectData.tags}
+                    value={projectData.tags.toUpperCase()}
                     onChange={handleInputChange}
                 />
                 <TextField
