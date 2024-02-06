@@ -71,33 +71,52 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const imageFile = projectData.imagem;
+    
+        const formData = new FormData();
+        formData.append("image", imageFile);
         try {
-            setLoading(true);
-            const token = localStorage.getItem('token');
-
-            const imageFile = projectData.imagem;
-            const formData = new FormData();
-            formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
-            formData.append('image', imageFile);
-            console.log(formData);
-
-            const response = await Axios.put(`https://orange-9dj9.onrender.com/project/update/${projectId}`, formData, {
-                headers: {
-                    'Authorization': `${token}`, 'Content-Type': 'multipart/form-data'
-                },
-            });
-
-            if (response.status === 200 || response.status === 201) {
-                setEditedPostModalOpen(true);
-                onClose();
+          setLoading(true);
+          const token = localStorage.getItem("token");
+    
+          const projectResponse = await Axios.put(
+            `https://orange-9dj9.onrender.com/project/update/${projectId}`,
+            projectData,
+            {
+              headers: {
+                Authorization: `${token}`,
+                "Content-Type": "application/json",
+              },
             }
+          );
+    
+          const id = projectResponse.data.id;
+    
+          const response = await Axios.put(
+            `https://orange-9dj9.onrender.com/project/update/${id}/file`,
+            formData,
+            {
+              headers: {
+                Authorization: `${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+    
+          if (response.status === 200 || response.status === 201) {
+            setEditedPostModalOpen(true);
+            onClose();
+          }
         } catch (error) {
-            setSnackbarOpen(true);
+          setSnackbarOpen(true);
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };    
+      };
+    
 
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -111,7 +130,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
     <ThemeProvider theme={theme}>
         {!editedPostModalOpen && (
         <Modal open={true} onClose={onClose} >
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType='multipart/form-data'>
         <Box
             sx={{
             display: 'flex',
@@ -247,7 +266,7 @@ const EditProjectModal = ({ onClose, handleEditProjectModal, projectId }) => {
                     label='Tags'
                     variant='outlined'
                     name='tags'
-                    value={projectData.tags.join(' ')}
+                    value={projectData.tags}
                     onChange={handleInputChange}
                 />
                 <TextField

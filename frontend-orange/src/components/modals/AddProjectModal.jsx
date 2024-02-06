@@ -1,392 +1,437 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Modal, Button, TextField, Typography, Box, ThemeProvider, Link, useMediaQuery, CircularProgress } from '@mui/material';
-import { theme } from '../../utils/Theme';
-import collections from '../../assets/collections/collections.svg';
-import ViewPostModal from './ViewPostModal';
-import SavePostModal from './SavePostModal';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import axios from 'axios';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import {
+  Modal,
+  Button,
+  TextField,
+  Typography,
+  Box,
+  ThemeProvider,
+  Link,
+  useMediaQuery,
+  CircularProgress,
+} from "@mui/material";
+import { theme } from "../../utils/Theme";
+import collections from "../../assets/collections/collections.svg";
+import ViewPostModal from "./ViewPostModal";
+import SavePostModal from "./SavePostModal";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import axios from "axios";
 
 // Constantes para tamanhos e cores repetidas
-const modalWidth = '850px';
-const modalHeight = '502px';
-const backgroundColor = '#FEFEFE';
+const modalWidth = "850px";
+const modalHeight = "502px";
+const backgroundColor = "#FEFEFE";
 const primaryColor = theme.palette.neutral.secondaryLight;
 
 const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
-    const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
-    const [selectedProject, setSelectedProject] = useState(null);
-    const [savePostModalOpen, setSavePostModalOpen] = useState(false);
-    const [titleError, setTitleError] = useState('');
-    const [descriptionError, setDescriptionError] = useState('');
-    const [linkError, setLinkError] = useState('');
-    const [hasErrors, setHasErrors] = useState(false);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const [viewPostModalOpen, setViewPostModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [savePostModalOpen, setSavePostModalOpen] = useState(false);
+  const [titleError, setTitleError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+  const [linkError, setLinkError] = useState("");
+  const [hasErrors, setHasErrors] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const [projectData, setProjectData] = useState({
+    titulo: "",
+    tags: "",
+    links: "",
+    descricao: "",
+  });
 
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setProjectData({ ...projectData, [name]: value });
+    validateField(name, value);
+  };
 
-    const [projectData, setProjectData] = useState({
-    titulo: '',
-    tags: '',
-    links: '',
-    descricao: '',
-    });
+  const validateField = (name, value) => {
+    switch (name) {
+      case "titulo":
+        setTitleError(
+          value.length < 4 || value.length > 30
+            ? "O título deve ter entre 4 e 30 caracteres."
+            : ""
+        );
+        break;
+      case "descrição":
+        setDescriptionError(
+          value.length < 10 || value.length > 255
+            ? "A descrição deve ter entre 10 e 255 caracteres."
+            : ""
+        );
+        break;
+      case "links":
+        setLinkError(
+          value.length < 10 || value.length > 255
+            ? "O link deve ter entre 10 e 255 caracteres."
+            : ""
+        );
+        break;
+      default:
+        break;
+    }
+    setHasErrors(!!(titleError || descriptionError || linkError));
+  };
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setProjectData({ ...projectData, [name]: value });
-        validateField(name, value);
-        };
-        
-        const validateField = (name, value) => {
-        switch (name) {
-            case 'titulo':
-            setTitleError(value.length < 4 || value.length > 30 ? 'O título deve ter entre 4 e 30 caracteres.' : '');
-            break;
-            case 'descrição':
-            setDescriptionError(value.length < 10 || value.length > 255 ? 'A descrição deve ter entre 10 e 255 caracteres.' : '');
-            break;
-            case 'links':
-            setLinkError(value.length < 10 || value.length > 255 ? 'O link deve ter entre 10 e 255 caracteres.' : '');
-            break;
-            default:
-            break;
-        }
-        setHasErrors(!!(titleError || descriptionError || linkError));
-        };
-        
-    const handleImageChange = (e) => {
+  const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setProjectData((prevData) => {
-        if (prevData.imagem !== imageFile) {
+      if (prevData.imagem !== imageFile) {
         return { ...prevData, imagem: URL.createObjectURL(imageFile) };
-        }
-        return prevData;
+      }
+      return prevData;
     });
-};
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        const imageFile = projectData.imagem;
+    const imageFile = projectData.imagem;
 
-        const formData = new FormData();
-        formData.append('projectSaveDTO', {'titulo': projectData.titulo, 'tags': projectData.tags, 'links': projectData.links, 'descricao': projectData.descrição});
-        formData.append('image', imageFile);
-        console.log(formData);
-        try {
-            setLoading(true);
-            const token = localStorage.getItem('token');
-            
-            const response = await axios.post('https://orange-9dj9.onrender.com/project/save', formData, {
-                headers: {
-                    'Authorization': `${token}`, 'Content-Type': 'multipart/form-data'
-                },
-            }
-                );
-            
-            if (response.status === 200 || response.status === 201) {
-            setSavePostModalOpen(true);
-            onClose();
-            }
-        } catch (error) {
-            console.error('Erro ao salvar o projeto:', error);
-            setSnackbarOpen(true);
-        } finally {
-            setLoading(false);
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      const projectResponse = await axios.post(
+        "https://orange-9dj9.onrender.com/project/save",
+        projectData,
+        {
+          headers: {
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+          },
         }
-        };
-        
-    
+      );
 
-    const handleCloseSnackbar = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
+      const id = projectResponse.data.id;
+
+      const response = await axios.post(
+        `https://orange-9dj9.onrender.com/project/${id}/file`,
+        formData,
+        {
+          headers: {
+            Authorization: `${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         }
-        setSnackbarOpen(false);
-    };
+      );
 
-    // const convertImage = (image) => {
-        // const reader = new FileReader();
-        // reader.readAsDataURL(image);
-        // reader.onload = () => {
-            // setProjectData({ ...projectData, imagem: reader.result });
-        // };
-    // }
+      if (response.status === 200 || response.status === 201) {
+        setSavePostModalOpen(true);
+        onClose();
+      }
+    } catch (error) {
+      setSnackbarOpen(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
+  return (
     <ThemeProvider theme={theme}>
-        {!savePostModalOpen && (
+      {!savePostModalOpen && (
         <Modal open={true} onClose={onClose}>
-        <form onSubmit={handleSubmit}>
-        <Box
-            sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            }}
-        >
+          <form onSubmit={handleSubmit}>
             <Box
-            sx={{
-                width: modalWidth,
-                height: hasErrors ? 'auto' : modalHeight,
-                backgroundColor: backgroundColor,
-                padding: '35px 41px',
-                display: 'flex',
-                marginTop: '200px',
-                flexDirection: 'column',
-            }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-            <Typography
-                variant='h4'
-                font='Roboto'
-                fontSize='26px'
-                color='neutral.dark'
-                sx={{ marginBottom: '8px' }}
-        >
-                Adicionar Projeto
-                {loading && <CircularProgress />}
-            </Typography>
-
-            <Box
+              <Box
                 sx={{
-                width: '140%',
-                height: '30px',
-                marginTop: '7px',
+                  width: modalWidth,
+                  height: hasErrors ? "auto" : modalHeight,
+                  backgroundColor: backgroundColor,
+                  padding: "35px 41px",
+                  display: "flex",
+                  marginTop: "200px",
+                  flexDirection: "column",
                 }}
-            >
+              >
                 <Typography
-                marginTop='10px'
-                color='neutral.dark'
-                letterSpacing='0.20px'
-                font='Roboto'
-                fontSize='1.0rem'
+                  variant="h4"
+                  font="Roboto"
+                  fontSize="26px"
+                  color="neutral.dark"
+                  sx={{ marginBottom: "8px" }}
                 >
-                Selecione o conteúdo que você deseja fazer upload
+                  Adicionar Projeto
+                  {loading && <CircularProgress />}
                 </Typography>
-            </Box>
 
-            <Box
-                sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: isSmallScreen ? 'column-reverse' : 'row',
-                justifyContent: 'space-between',
-                gap: '26px',
-                marginTop: '-15px',
-                }}
-            >
                 <Box
-                sx={{
-                    flex: '1',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    borderRadius: '5px',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: primaryColor,
-                    marginTop: '32px',
-                }}
+                  sx={{
+                    width: "140%",
+                    height: "30px",
+                    marginTop: "7px",
+                  }}
                 >
+                  <Typography
+                    marginTop="10px"
+                    color="neutral.dark"
+                    letterSpacing="0.20px"
+                    font="Roboto"
+                    fontSize="1.0rem"
+                  >
+                    Selecione o conteúdo que você deseja fazer upload
+                  </Typography>
+                </Box>
+
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: isSmallScreen ? "column-reverse" : "row",
+                    justifyContent: "space-between",
+                    gap: "26px",
+                    marginTop: "-15px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      flex: "1",
+                      display: "flex",
+                      flexDirection: "column",
+                      borderRadius: "5px",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: primaryColor,
+                      marginTop: "32px",
+                    }}
+                  >
                     <Box
-    sx={{
-        flex: '1',
-        display: 'flex',
-        flexDirection: 'column',
-        borderRadius: '5px',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: primaryColor,
-        marginTop: '32px',
-    }}
->
-    {projectData.imagem ? (
-        <img
-            style={{position: 'relative', marginBottom: '20px'}}
-            src={projectData.imagem}
-            alt="collections"
-            height='100%'
-            width='100%'
-        />
-    ) : (
-        <Box
-            sx={{
-                width: '56px',
-                height: '56px',
-                margin: 'auto',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
-        >
-            <label>
-                <img
-                    src={collections}
-                    alt="collections"
-                    height='100%'
-                    width='100%'
-                />
-                <input type="file" accept='image/' style={{ display: 'none' }} onChange={handleImageChange} />
-            </label>
-            <Typography
-                variant='body2'
-                marginTop='14px'
-                sx={{
-                    whiteSpace: 'nowrap',
-                    color: 'neutral.secondaryDark',
-                    opacity: '60%',
-                }}
-            >
-                Compartilhe seu talento com milhares de<br /> pessoas
-            </Typography>
-        </Box>
-    )}
-</Box>
+                      sx={{
+                        flex: "1",
+                        display: "flex",
+                        flexDirection: "column",
+                        borderRadius: "5px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: primaryColor,
+                        marginTop: "32px",
+                      }}
+                    >
+                      {projectData.imagem ? (
+                        <img
+                          style={{ position: "relative", marginBottom: "20px" }}
+                          src={projectData.imagem}
+                          alt="collections"
+                          height="100%"
+                          width="100%"
+                        />
+                      ) : (
+                        <Box
+                          sx={{
+                            width: "56px",
+                            height: "56px",
+                            margin: "auto",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <label>
+                            <img
+                              src={collections}
+                              alt="collections"
+                              height="100%"
+                              width="100%"
+                            />
+                            <input
+                              type="file"
+                              accept="image/"
+                              style={{ display: "none" }}
+                              onChange={handleImageChange}
+                            />
+                          </label>
+                          <Typography
+                            variant="body2"
+                            marginTop="14px"
+                            sx={{
+                              whiteSpace: "nowrap",
+                              color: "neutral.secondaryDark",
+                              opacity: "60%",
+                            }}
+                          >
+                            Compartilhe seu talento com milhares de
+                            <br /> pessoas
+                          </Typography>
+                        </Box>
+                      )}
+                    </Box>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      width: "433px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "20px",
+                    }}
+                  >
+                    <TextField
+                      label="Titulo"
+                      variant="outlined"
+                      name="titulo"
+                      value={projectData.titulo}
+                      onChange={handleInputChange}
+                      error={Boolean(titleError)}
+                      helperText={titleError}
+                    />
+                    <TextField
+                      label="Tags"
+                      variant="outlined"
+                      name="tags"
+                      value={projectData.tags}
+                      onChange={handleInputChange}
+                    />
+                    <TextField
+                      label="Link"
+                      variant="outlined"
+                      name="links"
+                      value={projectData.links}
+                      onChange={handleInputChange}
+                      error={Boolean(linkError)}
+                      helperText={linkError}
+                    />
+                    <TextField
+                      label="Descrição"
+                      multiline
+                      rows={4}
+                      variant="outlined"
+                      name="descricao"
+                      value={projectData.descricao}
+                      onChange={handleInputChange}
+                      error={Boolean(descriptionError)}
+                      helperText={descriptionError}
+                    />
+                  </Box>
                 </Box>
 
+                <Box>
+                  <Link
+                    href="#"
+                    onClick={() => {
+                      setViewPostModalOpen(true);
+                      setSelectedProject({
+                        ...projectData,
+                        imagem: URL.createObjectURL(projectData.imagem),
+                      });
+                    }}
+                    sx={{
+                      display: "block",
+                      marginTop: "16px",
+                      color: "neutral.dark",
+                      textDecoration: "none",
+                      fontSize: "18px",
+                    }}
+                  >
+                    Visualizar publicação
+                  </Link>
+                </Box>
                 <Box
-                sx={{
-                    width: '433px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px',
-                }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    marginTop: "16px",
+                  }}
                 >
-                <TextField
-                    label='Titulo'
-                    variant='outlined'
-                    name='titulo'
-                    value={projectData.titulo}
-                    onChange={handleInputChange}
-                    error={Boolean(titleError)}
-                    helperText={titleError}
-                />
-                <TextField
-                    label='Tags'
-                    variant='outlined'
-                    name='tags'
-                    value={projectData.tags}
-                    onChange={handleInputChange}
-                />
-                <TextField
-                    label='Link'
-                    variant='outlined'
-                    name='links'
-                    value={projectData.links}
-                    onChange={handleInputChange}
-                    error={Boolean(linkError)}
-                    helperText={linkError}
-                />
-                <TextField
-                    label='Descrição'
-                    multiline
-                    rows={4}
-                    variant='outlined'
-                    name='descricao'
-                    value={projectData.descricao}
-                    onChange={handleInputChange}
-                    error={Boolean(descriptionError)}
-                    helperText={descriptionError}
-                />
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    sx={{
+                      width: "Hug (109px)",
+                      height: "Hug (42px)",
+                      padding: "8px 22px",
+                      borderRadius: "4px",
+                      marginRight: "16px",
+                      color: "#FCFDFF",
+                    }}
+                  >
+                    <b>Salvar</b>
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      handleOpenModalProjeto();
+                    }}
+                    sx={{
+                      width: "Hug (101px)",
+                      height: "Hug (42px)",
+                      padding: "8px 22px",
+                      borderRadius: "4px",
+                      backgroundColor: "neutral.secondaryMain",
+                      opacity: "37%",
+                      color: "black",
+                    }}
+                  >
+                    <b>Cancelar</b>
+                  </Button>
                 </Box>
+              </Box>
             </Box>
-
-            <Box>
-                <Link
-                href='#'
-                onClick={() => {
-                    setViewPostModalOpen(true);
-                    setSelectedProject({ ...projectData, imagem: URL.createObjectURL(projectData.imagem) });
-                }}
-                sx={{
-                    display: 'block',
-                    marginTop: '16px',
-                    color: 'neutral.dark',
-                    textDecoration: 'none',
-                    fontSize: '18px',
-                }}
-                >
-                Visualizar publicação
-                </Link>
-            </Box>
-            <Box
-                sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                marginTop: '16px',
-                }}
-            >
-                <Button
-                variant='contained'
-                color='secondary'
-                type='submit'
-                sx={{
-                    width: 'Hug (109px)',
-                    height: 'Hug (42px)',
-                    padding: '8px 22px',
-                    borderRadius: '4px',
-                    marginRight: '16px',
-                    color: '#FCFDFF',
-                }}
-                >
-                <b>Salvar</b>
-                </Button>
-                <Button
-                variant='outlined'
-                onClick={()=>{handleOpenModalProjeto()}}
-                sx={{
-                    width: 'Hug (101px)',
-                    height: 'Hug (42px)',
-                    padding: '8px 22px',
-                    borderRadius: '4px',
-                    backgroundColor: 'neutral.secondaryMain',
-                    opacity: '37%',
-                    color: 'black',
-                }}
-                >
-                <b>Cancelar</b>
-                </Button>
-            </Box>
-            </Box>
-        </Box>
-        </form>
+          </form>
         </Modal>
-        )}
-        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-            <MuiAlert onClose={handleCloseSnackbar} severity='error' elevation={6} variant='filled'>
-            Erro ao salvar o projeto. Por favor, tente novamente.
-            </MuiAlert>
-        </Snackbar>
+      )}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <MuiAlert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          elevation={6}
+          variant="filled"
+        >
+          Erro ao salvar o projeto. Por favor, tente novamente.
+        </MuiAlert>
+      </Snackbar>
 
-        {viewPostModalOpen && (
+      {viewPostModalOpen && (
         <ViewPostModal
-            onClose={() => {
+          onClose={() => {
             setViewPostModalOpen(false);
             setSelectedProject(null);
-            }}
-            projectData={selectedProject}
+          }}
+          projectData={selectedProject}
         />
-        )}
-        {savePostModalOpen && (
+      )}
+      {savePostModalOpen && (
         <SavePostModal
-            onClose={() => {
+          onClose={() => {
             setSavePostModalOpen(false);
-            }}
+          }}
         />
-        )}
+      )}
     </ThemeProvider>
-    );
+  );
 };
 
 AddProjectModal.propTypes = {
-    onClose: PropTypes.func,
-    handleOpenModalProjeto: PropTypes.func,
+  onClose: PropTypes.func,
+  handleOpenModalProjeto: PropTypes.func,
 }.isRequired;
 
 export default AddProjectModal;
