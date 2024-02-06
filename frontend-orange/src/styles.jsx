@@ -30,6 +30,7 @@ const styles = {
     left: '50%',
     transform: 'translateX(-50%)',
     borderRadius: '4px',
+    marginTop: '30px'
   },
 };
 

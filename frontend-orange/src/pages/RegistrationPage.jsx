@@ -11,8 +11,6 @@ const RegistrationPage = () => {
   const isSmallScreen = useMediaQuery('(max-width: 1300px)');
   const navigate = useNavigate()
   const {redirCadastro} = useContext(UserContext)
-
-  console.log(redirCadastro)
   
   useEffect(()=>{
     if(redirCadastro){
