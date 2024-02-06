@@ -4,6 +4,8 @@ import figuraProjeto from '../assets/projects/project1.svg'
 import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import VisualizacaoMobile from '../pages/VisualizacaoMobile';
+import { UserContext } from '../context/UserContext';
+import { useContext} from 'react';
 
 
 export default function DescobrirDesktop(props){
@@ -17,6 +19,8 @@ export default function DescobrirDesktop(props){
   const tagUnicas = arrayTags.filter((item, index, self) => {
     return self.indexOf(item) === index
   });
+
+  const {openVisMobile, setOpenVisMobile} = useContext(UserContext)
 
 
   
@@ -144,6 +148,7 @@ export default function DescobrirDesktop(props){
                   onClick={()=>{
                     props.handleOpenMobile()
                     props.setCardSelecionado(itemCard)
+                    setOpenVisMobile(true)
                   }}                                 
                   >             
                 <CardProjeto                   
@@ -177,7 +182,7 @@ export default function DescobrirDesktop(props){
         : null}
       
 
-    {props.open ?  
+    {props.open && openVisMobile ?  
     
     <VisualizacaoMobile
       key={''}

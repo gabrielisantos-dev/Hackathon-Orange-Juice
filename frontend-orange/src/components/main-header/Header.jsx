@@ -13,16 +13,15 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios'
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-
-
-
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 
 export default function MainHeader(props){
 
   const responsivo = useMediaQuery(theme.breakpoints.up('sm'))
   const navigate = useNavigate()
 
-  const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser} = useContext(UserContext)
+  const {dadosDoUsuario, setDadosDoUsuario, reqRespostaBdUser, openVisMobile, setOpenVisMobile} = useContext(UserContext)
 
   const {nome, email, sobrenome} = dadosDoUsuario
 
@@ -32,7 +31,7 @@ export default function MainHeader(props){
     setBotaoSair(true)
     localStorage.removeItem('token')
   }
-  console.log(botaoSair)
+  
   
   useEffect(()=>{
     const token = localStorage.getItem('token')
@@ -115,8 +114,8 @@ export default function MainHeader(props){
                   <Typography>{email}</Typography> 
                 </Box>
                   <Divider/>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
-                  <MenuItem onClick={handleClose}><Typography variant='body1' ><Link to='/meus-projetos' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
+                  <MenuItem onClick={() => {handleClose(), setOpenVisMobile(false)}}><Typography variant='body1' ><Link to='/' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Descobrir</Link></Typography></MenuItem>
+                  <MenuItem onClick={() => handleClose()}><Typography variant='body1' ><Link to='/meus-projetos' style={{textDecoration:'none', color:'#0B0C0D', cursor:'pointer'}}>Meus projetos</Link></Typography></MenuItem>
                   <Divider/>
                   <MenuItem onClick={handleClose} sx={{gap:'10px'}}>
                     <LogoutIcon/>
@@ -185,15 +184,95 @@ export default function MainHeader(props){
             </Typography>
           </Box> : null}      
         </Box>
-        <Box
+        
+        
+        
+
+        {responsivo ? 
+        (<Box
           sx={{display:'flex', alignItems:'center', gap:'16px'}}>
-          <Box >
-            <img src={profilePicture} alt="Figura de perfil" width='40px' height='40px' />
+          <Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'right',
+              alignItems: 'center',
+              textAlign: 'center'
+            }}
+          >
+
+            <Tooltip
+              title="Menu"
+            >
+
+              <IconButton
+                onClick={handleClick}
+                size="small"
+                aria-controls={open ? 'account-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+              >
+                <img src={profilePicture} alt="Figura de perfil" width='40px' height='40px' />
+
+              </IconButton>
+            </Tooltip>
+          </Box>
+
+          <Menu
+               
+                transformOrigin={{horizontal:'right'}}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      width: '250px',
+                                           
+                    },
+                  }
+                }}
+                  sx={{marginTop:'12px', marginLeft: '50px'}}
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                  
+                > 
+                <Box sx={{margin:'15px 0px 15px 15px'}}>
+                  <Typography fontWeight='600'>{nome}</Typography> 
+                  <Typography>{email}</Typography> 
+                </Box>
+                  <Divider/>
+                  <MenuItem onClick={handleClose} sx={{gap:'10px'}}>
+                    <LogoutIcon/>
+                    <Typography>
+                    <Link
+                      onClick={()=>{handleBotaoSair()}} 
+                      style={{
+                        textDecoration:'none',
+                        color:'#0B0C0D',
+                        cursor:'pointer'
+                        }}
+                        >Sair</Link>
+                    </Typography>                    
+                  </MenuItem>
+                </Menu>  
+
           </Box>
           <Box color='neutral.lightest'>
             <NotificationsIcon/>
           </Box>
-        </Box>
+        </Box>) : 
+        (<Box>
+          <img src={profilePicture} alt="Figura de perfil" width='40px' height='40px' />
+          </Box>
+          )}
+
+
+
+
             
       </Box>
       )}

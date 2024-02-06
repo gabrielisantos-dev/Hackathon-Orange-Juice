@@ -2,12 +2,13 @@ import { Box, ThemeProvider, Link, Typography} from '@mui/material/';
 import {useMediaQuery} from '@mui/material/';
 import {theme} from '../utils/Theme'
 import Header from '../components/main-header/Header';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import figuraProjeto from '../assets/projects/project1.svg'
 import profilePicture from '../assets/profile-picture/user-orange.png';
 import CardProjeto from '../components/meu-portfolio/CardProjeto';
 import ModalProjeto from '../components/meu-portfolio/ModalProjeto';
 import { mock } from '../utils/mock'
+import { UserContext } from '../context/UserContext';
 
 export default function VisualizacaoMobile(props){
   const responsivo1 = useMediaQuery(theme.breakpoints.up('sm'))
@@ -17,8 +18,8 @@ export default function VisualizacaoMobile(props){
   const handleClose = () => setOpen(false);
 
   const [cardPerfil, setCardPerfil] = useState(mock)
+  const {openVisMobile, setOpenVisMobile} = useContext(UserContext)
 
-  
   return(
   <ThemeProvider theme={theme}>
     <Box sx={{marginBottom:'70px'}}>

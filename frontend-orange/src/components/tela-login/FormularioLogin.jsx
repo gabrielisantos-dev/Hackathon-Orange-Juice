@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext} from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -12,7 +12,11 @@ import {
   IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Loading from '../../components/loading/Loading'
+import { UserContext } from "../../context/UserContext";
 import axios from 'axios';
+import { theme } from '../../utils/Theme';
+import { ThemeProvider } from '@mui/material';
 
 export default function FormularioLogin(props) {
 
@@ -20,6 +24,8 @@ export default function FormularioLogin(props) {
   const emailAdress = 'email';
   const password = 'password';  
   
+  const[loading, setLoading] = useState(false)
+  const {dadosDoUsuario, mensagemLogin} = useContext(UserContext)
   
   const {
     register,
@@ -28,6 +34,7 @@ export default function FormularioLogin(props) {
   } = useForm();
     
   const onSubmit = async (data) => {
+    setLoading(true)
     axios.post('https://orange-9dj9.onrender.com/api/auth/login', data)
     .then((response) => localStorage.setItem('token', response.data.token))
     .then(() => localStorage.getItem('token') ? props.setLogado(true): null)
@@ -41,12 +48,13 @@ export default function FormularioLogin(props) {
         
         
         return (
+          <ThemeProvider theme={theme}>
           <Box sx={{ width: props.boxWidth, height: '271px' }}>
-      <Box sx={{ width: props.widthTitle, height: props.heightTitle }}>
-        <Typography variant={props.titulo}>
-          Faça login com email
-        </Typography>
-      </Box>
+            <Box sx={{ width: props.widthTitle, height: props.heightTitle }}>
+              <Typography variant={props.titulo}>
+                Faça login com email
+              </Typography>
+            </Box>
       <Box
         component="form"
         sx={{
@@ -112,26 +120,25 @@ export default function FormularioLogin(props) {
         >
           Entrar
         </Button>
-        <Box
+        <Typography
         >
           <Link
-            color="neutral.main"
-            marginTop="18px"
-            fontWeight="400"
-            fontSize="16px"
-            lineHeight="16px"
-            letterSpacing="0.15px"
-            
-            href="#"
-            
+            sx={{
+              display: 'block',
+              marginTop: '16px',
+              color: 'neutral.dark',
+              fontSize: '18px',
+          }}
             to='/cadastro'
-            style={{textDecoration:'none', cursor:'pointer'}}
+            style={{textDecoration:'none', cursor:'pointer', color: 'neutral.dark'}}
           >
             Cadastre-se
           </Link>
-        </Box>
+          {dadosDoUsuario.length === 0 && loading ? (<Loading/>) : null}
+        </Typography>
       </Box>
     </Box>
+    </ThemeProvider>
   );
 }
 
