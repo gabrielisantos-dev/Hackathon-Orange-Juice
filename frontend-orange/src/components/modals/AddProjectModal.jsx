@@ -162,7 +162,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
                   backgroundColor: backgroundColor,
                   padding: "35px 41px",
                   display: "flex",
-                  marginTop: "200px",
+                  marginTop: "20px",
                   flexDirection: "column",
                 }}
               >
@@ -393,7 +393,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
           </form>
         </Modal>
       )}
-      <Snackbar
+      {/* <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
@@ -407,7 +407,7 @@ const AddProjectModal = ({ onClose, handleOpenModalProjeto }) => {
         >
           Erro ao salvar o projeto. Por favor, tente novamente.
         </MuiAlert>
-      </Snackbar>
+      </Snackbar> */}
 
       {viewPostModalOpen && (
         <ViewPostModal
