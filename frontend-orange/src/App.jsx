@@ -1,11 +1,21 @@
+import "./main.css"
+import { Outlet } from "react-router-dom";
+
+
+
+
+
 function App() {
-  
 
   return (
     <>
-      Hello World
+    
+        <Outlet />
+
+     
     </>
+
   )
 }
 
-export default App
+export default App;
