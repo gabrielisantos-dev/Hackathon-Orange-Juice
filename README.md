@@ -20,13 +20,3 @@ Bem-vindo ao Portfólio Orange! Este projeto foi desenvolvido como parte do hack
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
-
-
-## Links 
-
-Você pode acessar nossa aplicação através do link: https://orange-hackathon-fcs3.onrender.com/
-
-Deploy Back-End: https://orange-9dj9.onrender.com
-
-**Esperamos que o Orange Portfólio simplifique a promoção de conquistas individuais e ao mesmo tempo fomente a colaboração e o reconhecimento dentro da comunidade. Explore, compartilhe e celebre as histórias por trás de cada projeto!** 🌟
-
